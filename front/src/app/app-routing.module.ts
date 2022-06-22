@@ -19,6 +19,7 @@ import { ProductComponent } from "./dashboard/dashboard-components/product/produ
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { FullComponent } from "./layouts/full/full.component";
 import { LoginComponent } from "./layouts/login/login.component";
+import { RegisterComponent } from "./layouts/register/register.component";
 
 const routes: Routes = [
   {
@@ -46,7 +47,7 @@ const routes: Routes = [
     ],
   },
   { path: "login", component: LoginComponent },
-
+  { path: "register", component: RegisterComponent },
   { path: "", redirectTo: "/home", pathMatch: "full" },
   { path: "**", redirectTo: "/home", pathMatch: "full" },
 ];
