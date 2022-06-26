@@ -20,6 +20,9 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { FullComponent } from "./layouts/full/full.component";
 import { LoginComponent } from "./layouts/login/login.component";
 import { RegisterComponent } from "./layouts/register/register.component";
+import { DepositComponent } from "./transactions/deposit/deposit.component";
+import { TransferComponent } from "./transactions/transfer/transfer.component";
+import { WithdrawalComponent } from "./transactions/withdrawal/withdrawal.component";
 
 const routes: Routes = [
   {
@@ -45,6 +48,15 @@ const routes: Routes = [
       { path: "tooltip", component: TooltipsComponent },
       { path: "button", component: ButtonsComponent },
     ],
+  },
+  {
+    path: "transacoes",
+    component: FullComponent,
+    children: [
+      { path: "depositar", component: DepositComponent },
+      { path: "sacar", component: WithdrawalComponent },
+      { path: "transferir", component: TransferComponent },
+    ]
   },
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
