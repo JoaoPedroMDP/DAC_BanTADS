@@ -16,6 +16,7 @@ import { ComponentsModule } from "./components/components.module";
 import { LoginComponent } from "./layouts/login/login.component";
 import { RegisterComponent } from "./layouts/register/register.component";
 import { IMaskModule } from "angular-imask";
+import { TransactionsModule } from "./transactions/transactions.module";
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { IMaskModule } from "angular-imask";
     ComponentsModule,
     FormsModule,
     IMaskModule,
+    TransactionsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

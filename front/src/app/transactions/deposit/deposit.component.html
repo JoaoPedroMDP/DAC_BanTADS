@@ -1,0 +1,8 @@
+<form>
+  <mat-form-field class="w-100 fs-16" appearance="outline">
+    <mat-label>Quantia</mat-label>
+    <input matInput #quantia type="text" placeholder="Digite a quantia a ser depositada">
+  </mat-form-field>
+
+  <button mat-button class="btn btn-info fw-normal" (click)="depositar(quantia.value)">Depositar</button>
+</form>
