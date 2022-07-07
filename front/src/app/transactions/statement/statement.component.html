@@ -1,0 +1,29 @@
+<div class="d-flex statements">
+    <div class="date-selection">
+        <mat-form-field appearance="fill">
+            <mat-label>Selecione o período</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <input matStartDate formControlName="start" placeholder="Início">
+              <input matEndDate formControlName="end" placeholder="Fim">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          
+            <mat-error *ngIf="range.controls['start']hasError('matStartDateInvalid')">Início inválido</mat-error>
+            <mat-error *ngIf="range.controls['end']hasError('matEndDateInvalid')">Fim inválido</mat-error>
+          </mat-form-field>
+    </div>
+
+    <h1>Extrato</h1>
+    <mat-card class="d-flex card" *ngFor="let day of statement.days">
+        <mat-card-content class="d-flex card-content">
+            <h2>{{day.date.toLocaleDateString('pt-BR')}}</h2>
+            <h3 class="mb-30">Consolidado: {{day.consolidatedValue}}</h3>
+            <div class="d-flex align-items-center content-line" [style.background-color]="transaction.typeColor" *ngFor="let transaction of day.transactions" >
+                <span class="fw-bold fs-20 me-20">{{ transaction.datetime.toLocaleTimeString('pt-BR') }}</span>
+                <span class="fs-20">R$ {{ transaction.value }}</span>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+    

@@ -9,6 +9,7 @@ import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FullComponent } from "./layouts/full/full.component";
 import { DemoFlexyModule } from "./demo-flexy-module";
+import { HttpClientModule } from "@angular/common/http";
 
 // Modules
 import { DashboardModule } from "./dashboard/dashboard.module";
@@ -23,7 +24,7 @@ import { TransactionsModule } from "./transactions/transactions.module";
     AppComponent,
     FullComponent,
     LoginComponent,
-    RegisterComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +36,8 @@ import { TransactionsModule } from "./transactions/transactions.module";
     ComponentsModule,
     FormsModule,
     IMaskModule,
-    TransactionsModule
+    TransactionsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],
