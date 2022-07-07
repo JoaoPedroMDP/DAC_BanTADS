@@ -21,6 +21,7 @@ import { FullComponent } from "./layouts/full/full.component";
 import { LoginComponent } from "./layouts/login/login.component";
 import { RegisterComponent } from "./layouts/register/register.component";
 import { DepositComponent } from "./transactions/deposit/deposit.component";
+import { StatementComponent } from "./transactions/statement/statement.component";
 import { TransferComponent } from "./transactions/transfer/transfer.component";
 import { WithdrawalComponent } from "./transactions/withdrawal/withdrawal.component";
 
@@ -56,6 +57,7 @@ const routes: Routes = [
       { path: "depositar", component: DepositComponent },
       { path: "sacar", component: WithdrawalComponent },
       { path: "transferir", component: TransferComponent },
+      { path: "extrato", component: StatementComponent },
     ]
   },
   { path: "login", component: LoginComponent },
