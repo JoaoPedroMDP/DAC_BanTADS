@@ -18,6 +18,8 @@ import { LoginComponent } from "./layouts/login/login.component";
 import { RegisterComponent } from "./layouts/register/register.component";
 import { IMaskModule } from "angular-imask";
 import { TransactionsModule } from "./transactions/transactions.module";
+import { GerenteModule } from "./gerente";
+
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { TransactionsModule } from "./transactions/transactions.module";
     FormsModule,
     IMaskModule,
     TransactionsModule,
-    HttpClientModule
+    HttpClientModule,
+    GerenteModule
   ],
   providers: [],
   bootstrap: [AppComponent],

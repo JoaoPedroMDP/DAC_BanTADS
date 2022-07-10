@@ -17,6 +17,9 @@ import { ToolbarComponent } from "./components/toolbar/toolbar.component";
 import { TooltipsComponent } from "./components/tooltips/tooltips.component";
 import { ProductComponent } from "./dashboard/dashboard-components/product/product.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
+import { ConsultaClienteComponent } from "./gerente/consulta-cliente/consulta-cliente.component";
+import { ConsultaClientesComponent } from "./gerente/consulta-clientes/consulta-clientes.component";
+import { SolicitacoesComponent } from "./gerente/solicitacoes/solicitacoes.component";
 import { FullComponent } from "./layouts/full/full.component";
 import { LoginComponent } from "./layouts/login/login.component";
 import { RegisterComponent } from "./layouts/register/register.component";
@@ -60,6 +63,15 @@ const routes: Routes = [
       { path: "extrato", component: StatementComponent },
     ]
   },
+  {
+    path: "gerente",
+    component: FullComponent,
+    children: [
+      { path: "solicitacoes", component: SolicitacoesComponent },
+      { path: "consulta-clientes", component: ConsultaClientesComponent },
+      { path: "consulta-cliente", component: ConsultaClienteComponent },
+    ]
+  },  
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
   { path: "", redirectTo: "/home", pathMatch: "full" },
