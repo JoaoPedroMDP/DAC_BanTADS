@@ -20,6 +20,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { ConsultaClienteComponent } from "./gerente/consulta-cliente/consulta-cliente.component";
 import { ConsultaClientesComponent } from "./gerente/consulta-clientes/consulta-clientes.component";
 import { SolicitacoesComponent } from "./gerente/solicitacoes/solicitacoes.component";
+import { ClientComponent } from "./layouts/client/client.component";
 import { FullComponent } from "./layouts/full/full.component";
 import { LoginComponent } from "./layouts/login/login.component";
 import { RegisterComponent } from "./layouts/register/register.component";
@@ -61,7 +62,7 @@ const routes: Routes = [
       { path: "sacar", component: WithdrawalComponent },
       { path: "transferir", component: TransferComponent },
       { path: "extrato", component: StatementComponent },
-    ]
+    ],
   },
   {
     path: "gerente",
@@ -70,10 +71,15 @@ const routes: Routes = [
       { path: "solicitacoes", component: SolicitacoesComponent },
       { path: "consulta-clientes", component: ConsultaClientesComponent },
       { path: "consulta-cliente", component: ConsultaClienteComponent },
-    ]
-  },  
+    ],
+  },
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
+  { path: "client", component: ClientComponent },
+
+  // transacoes/depositar
+  // transacoes/sacar
+  // transacoes/transferir
   { path: "", redirectTo: "/home", pathMatch: "full" },
   { path: "**", redirectTo: "/home", pathMatch: "full" },
 ];

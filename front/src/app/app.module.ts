@@ -19,14 +19,15 @@ import { RegisterComponent } from "./layouts/register/register.component";
 import { IMaskModule } from "angular-imask";
 import { TransactionsModule } from "./transactions/transactions.module";
 import { GerenteModule } from "./gerente";
-
+import { ClientComponent } from "./layouts/client/client.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     FullComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ClientComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +41,7 @@ import { GerenteModule } from "./gerente";
     IMaskModule,
     TransactionsModule,
     HttpClientModule,
-    GerenteModule
+    GerenteModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
