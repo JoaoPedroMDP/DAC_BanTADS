@@ -1,0 +1,28 @@
+.statements {
+    min-width: 40vw;
+    width: 100%;
+}
+
+.card-content{
+    text-align: center;
+}
+
+.content-line{
+    border: 3px solid;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    flex-flow: column;
+}
+
+.statements{
+    padding: 0;
+    margin: 0;
+    justify-items: center;
+    align-items: center;
+    flex-flow: column;
+}
+
+.card{
+    min-width: 400px;
+}

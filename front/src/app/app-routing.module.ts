@@ -17,9 +17,16 @@ import { ToolbarComponent } from "./components/toolbar/toolbar.component";
 import { TooltipsComponent } from "./components/tooltips/tooltips.component";
 import { ProductComponent } from "./dashboard/dashboard-components/product/product.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
+import { ConsultaClienteComponent } from "./gerente/consulta-cliente/consulta-cliente.component";
+import { ConsultaClientesComponent } from "./gerente/consulta-clientes/consulta-clientes.component";
+import { SolicitacoesComponent } from "./gerente/solicitacoes/solicitacoes.component";
 import { FullComponent } from "./layouts/full/full.component";
 import { LoginComponent } from "./layouts/login/login.component";
 import { RegisterComponent } from "./layouts/register/register.component";
+import { DepositComponent } from "./transactions/deposit/deposit.component";
+import { StatementComponent } from "./transactions/statement/statement.component";
+import { TransferComponent } from "./transactions/transfer/transfer.component";
+import { WithdrawalComponent } from "./transactions/withdrawal/withdrawal.component";
 
 const routes: Routes = [
   {
@@ -46,6 +53,25 @@ const routes: Routes = [
       { path: "button", component: ButtonsComponent },
     ],
   },
+  {
+    path: "transacoes",
+    component: FullComponent,
+    children: [
+      { path: "depositar", component: DepositComponent },
+      { path: "sacar", component: WithdrawalComponent },
+      { path: "transferir", component: TransferComponent },
+      { path: "extrato", component: StatementComponent },
+    ]
+  },
+  {
+    path: "gerente",
+    component: FullComponent,
+    children: [
+      { path: "solicitacoes", component: SolicitacoesComponent },
+      { path: "consulta-clientes", component: ConsultaClientesComponent },
+      { path: "consulta-cliente", component: ConsultaClienteComponent },
+    ]
+  },  
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
   { path: "", redirectTo: "/home", pathMatch: "full" },

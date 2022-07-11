@@ -9,6 +9,7 @@ import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FullComponent } from "./layouts/full/full.component";
 import { DemoFlexyModule } from "./demo-flexy-module";
+import { HttpClientModule } from "@angular/common/http";
 
 // Modules
 import { DashboardModule } from "./dashboard/dashboard.module";
@@ -16,13 +17,16 @@ import { ComponentsModule } from "./components/components.module";
 import { LoginComponent } from "./layouts/login/login.component";
 import { RegisterComponent } from "./layouts/register/register.component";
 import { IMaskModule } from "angular-imask";
+import { TransactionsModule } from "./transactions/transactions.module";
+import { GerenteModule } from "./gerente";
+
 
 @NgModule({
   declarations: [
     AppComponent,
     FullComponent,
     LoginComponent,
-    RegisterComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +38,9 @@ import { IMaskModule } from "angular-imask";
     ComponentsModule,
     FormsModule,
     IMaskModule,
+    TransactionsModule,
+    HttpClientModule,
+    GerenteModule
   ],
   providers: [],
   bootstrap: [AppComponent],
