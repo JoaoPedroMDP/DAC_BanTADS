@@ -1,5 +1,8 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { LoginComponent } from "./auth/login/login.component";
+import { ClientComponent } from "./cliente/client/client.component";
+import { RegisterComponent } from "./cliente/register/register.component";
 import { AlertsComponent } from "./components/alerts/alerts.component";
 import { ButtonsComponent } from "./components/buttons/buttons.component";
 import { ChipsComponent } from "./components/chips/chips.component";
@@ -20,10 +23,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { ConsultaClienteComponent } from "./gerente/consulta-cliente/consulta-cliente.component";
 import { ConsultaClientesComponent } from "./gerente/consulta-clientes/consulta-clientes.component";
 import { SolicitacoesComponent } from "./gerente/solicitacoes/solicitacoes.component";
-import { ClientComponent } from "./layouts/client/client.component";
 import { FullComponent } from "./layouts/full/full.component";
-import { LoginComponent } from "./layouts/login/login.component";
-import { RegisterComponent } from "./layouts/register/register.component";
 import { DepositComponent } from "./transactions/deposit/deposit.component";
 import { StatementComponent } from "./transactions/statement/statement.component";
 import { TransferComponent } from "./transactions/transfer/transfer.component";
@@ -74,14 +74,20 @@ const routes: Routes = [
     ],
   },
   { path: "login", component: LoginComponent },
-  { path: "register", component: RegisterComponent },
-  { path: "client", component: ClientComponent },
+  {
+    path: "cliente",
+    children: [
+      { path: "", component: ClientComponent },
+      { path: "register", component: RegisterComponent },
+      { path: "**", redirectTo: "", pathMatch: "full" },
+    ],
+  },
 
   // transacoes/depositar
   // transacoes/sacar
   // transacoes/transferir
-  { path: "", redirectTo: "/home", pathMatch: "full" },
-  { path: "**", redirectTo: "/home", pathMatch: "full" },
+  { path: "", redirectTo: "/login", pathMatch: "full" },
+  { path: "**", redirectTo: "/login", pathMatch: "full" },
 ];
 
 @NgModule({

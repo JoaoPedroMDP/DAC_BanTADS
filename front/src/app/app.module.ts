@@ -14,21 +14,14 @@ import { HttpClientModule } from "@angular/common/http";
 // Modules
 import { DashboardModule } from "./dashboard/dashboard.module";
 import { ComponentsModule } from "./components/components.module";
-import { LoginComponent } from "./layouts/login/login.component";
-import { RegisterComponent } from "./layouts/register/register.component";
 import { IMaskModule } from "angular-imask";
 import { TransactionsModule } from "./transactions/transactions.module";
 import { GerenteModule } from "./gerente";
-import { ClientComponent } from "./layouts/client/client.component";
+import { ClienteModule } from "./cliente/cliente.module";
+import { AuthModule } from "./auth/auth.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    FullComponent,
-    LoginComponent,
-    RegisterComponent,
-    ClientComponent,
-  ],
+  declarations: [AppComponent, FullComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -42,6 +35,8 @@ import { ClientComponent } from "./layouts/client/client.component";
     TransactionsModule,
     HttpClientModule,
     GerenteModule,
+    ClienteModule,
+    AuthModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
