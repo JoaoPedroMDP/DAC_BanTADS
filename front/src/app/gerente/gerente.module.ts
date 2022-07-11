@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ConsultaClientesComponent } from './consulta-clientes/consulta-clientes.component';
 import { ConsultaClienteComponent } from './consulta-cliente/consulta-cliente.component';
 import { SolicitacoesComponent } from './solicitacoes/solicitacoes.component';
+import { DemoFlexyModule } from '../demo-flexy-module';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -13,7 +15,9 @@ import { SolicitacoesComponent } from './solicitacoes/solicitacoes.component';
     SolicitacoesComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    DemoFlexyModule,
+    RouterModule
   ],
   exports: [
     ConsultaClienteComponent,
