@@ -1,5 +1,5 @@
 .statements {
-    min-width: 30vw;
+    min-width: 40vw;
     width: 100%;
 }
 
@@ -8,9 +8,11 @@
 }
 
 .content-line{
+    border: 3px solid;
     border-radius: 5px;
     padding: 5px;
     margin: 5px;
+    flex-flow: column;
 }
 
 .statements{
@@ -22,5 +24,5 @@
 }
 
 .card{
-    min-width: 300px;
+    min-width: 400px;
 }

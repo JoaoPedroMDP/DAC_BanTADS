@@ -15,15 +15,18 @@ import { HttpClientModule } from "@angular/common/http";
 // Modules
 import { DashboardModule } from "./dashboard/dashboard.module";
 import { ComponentsModule } from "./components/components.module";
-import { LoginComponent } from "./layouts/login/login.component";
-import { RegisterComponent } from "./layouts/register/register.component";
 import { IMaskModule } from "angular-imask";
 import { TransactionsModule } from "./transactions/transactions.module";
+import { GerenteModule } from "./gerente";
+import { ClienteModule } from "./cliente/cliente.module";
+import { AuthModule } from "./auth/auth.module";
 
 import { CriarGerenteComponent } from "./layouts/admin/gerente/criar-gerente/criar-gerente.component";
 import { MatSortModule } from "@angular/material/sort";
 import { AdminComponent } from "./layouts/admin/admin.component";
-import { GerenteComponent } from './layouts/admin/gerente/gerente/gerente.component';
+import { GerenteComponent } from "./layouts/admin/gerente/gerente/gerente.component";
+import { LoginComponent } from "./auth/login/login.component";
+import { RegisterComponent } from "./cliente/register/register.component";
 
 @NgModule({
   declarations: [
@@ -49,6 +52,9 @@ import { GerenteComponent } from './layouts/admin/gerente/gerente/gerente.compon
     HttpClientModule,
     MatTableModule,
     MatSortModule,
+    GerenteModule,
+    ClienteModule,
+    AuthModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

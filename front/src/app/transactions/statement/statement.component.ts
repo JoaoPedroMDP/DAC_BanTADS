@@ -3,98 +3,117 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 const transactionTypes: Record<string, any> = {
-  'out': "rgb(255, 62, 70, 0.5)",
-  'in': 'rgb(51, 51, 255   , 0.5)'
+  'out': {
+    'red': 255,
+    'green': 80,
+    'blue': 80,
+    'opacity': 0.3
+  },
+  'in':{
+    'red': 80,
+    'green': 80,
+    'blue': 255,
+    'opacity': 0.3
+  }
 };
 
 class Transaction{
   public datetime!: Date;
   public description!: string;
-  public typeColor!: string;
-  public value!: number;
-  public transferDetails!: Record<string, any>;
-}
-
-class TransactionResponse{
-  public datetime!: string;
-  public description!: string;
   public type!: string;
+  public typeColor!: Record<string,any>;
   public value!: number;
   public transferDetails!: Record<string, any>;
-}
 
-class TransactionAssembler{
-  public static assemble(transaction: Array<TransactionResponse>): Array<Transaction>{
-    let assembledTransactions = new Array<Transaction>();
-
-    transaction.forEach(transaction => {
-      let assembledTransaction = new Transaction();
-      assembledTransaction.datetime = new Date(+transaction.datetime);
-      assembledTransaction.description = transaction.description;
-      assembledTransaction.typeColor = TransactionAssembler.determineTransactionColor(transaction);
-      assembledTransaction.value = transaction.value;
-      assembledTransaction.transferDetails = transaction.transferDetails;
-      assembledTransactions.push(assembledTransaction);
-    });
-
-    return assembledTransactions;
+  constructor(datetime: Date, description: string, type: string, value: number, transferDetails: Record<string, any> | null = null){
+    this.datetime = datetime;
+    this.description = description;
+    this.type = type;
+    this.value = value;
+    if(transferDetails != null){
+      this.typeColor = this.determineTransactionColor(type, transferDetails);
+      this.transferDetails = this.processTransferDetails(transferDetails);
+    }else{
+      this.typeColor = this.determineTransactionColor(type);
+    }
   }
 
-  public static determineTransactionColor(transaction: TransactionResponse): string{
-    if(transaction.type === 'deposit' || transaction.type === 'transfer' && transaction.transferDetails['origin'] !== undefined){
+  public getTypeColor(solid: boolean){
+    return "rgb(" + this.typeColor['red'] + ", " + this.typeColor['green'] + ", " + this.typeColor['blue'] + ", " + (solid ? 1 : this.typeColor['opacity']) + ")";
+  }
+
+  private determineTransactionColor(type: string, transferDetails: Record<string, any> | null = null): Record<string, any>{
+    if(
+      type === 'deposit' || (
+        type === 'transfer' && (
+          transferDetails !== null &&
+          transferDetails['origin'] !== undefined
+          )
+        )
+      ){
       return transactionTypes['in'];
     }else{
       return transactionTypes['out'];
     }
   }
+
+  private processTransferDetails(transferDetails: Record<string, any>): Record<string, any>{
+    const moneyWasSent = transferDetails['destiny'] !== undefined;
+
+    return {
+      'type': moneyWasSent ? 'outcome': 'income',
+      'agent': moneyWasSent ? transferDetails['destiny'] : transferDetails['origin'],
+    }
+  }
 }
 
-class StatementDay{
+class Day{
   public consolidatedValue!: number;
   public date!: Date;
   public transactions!: Array<Transaction>;
-}
 
-class StatementDayResponse{
-  public consolidatedValue!: number;
-  public date!: string;
-  public transactions!: Array<TransactionResponse>;
-}
+  public constructor(consolidatedValue: number, date: Date, transactions: Array<Record<string, any>>){
+    this.consolidatedValue = consolidatedValue;
+    this.date = date;
+    this.transactions = this.assembleTransactions(transactions);
+  }
 
-class DayAssembler{
-  public static assemble(days: Array<StatementDayResponse>): Array<StatementDay>{
-    let assembledDays: Array<StatementDay> = [];
-
-    days.forEach(day => {
-      let newDay = new StatementDay();
-      newDay.consolidatedValue = day.consolidatedValue;
-      newDay.date = new Date(+day.date);
-      newDay.transactions = TransactionAssembler.assemble(day.transactions);
-      assembledDays.push(newDay);
+  public assembleTransactions(transactions: Array<Record<string, any>>): Array<Transaction>{
+    let assembledTransactions = new Array<Transaction>();
+    transactions.forEach(transaction => {
+      let assembledTransaction = new Transaction(new Date(+transaction['datetime']), transaction['description'], transaction['type'], transaction['value'], transaction['transferDetails']);
+      assembledTransactions.push(assembledTransaction);
     });
 
-    return assembledDays;
+    return assembledTransactions;
   }
 }
 
 class Statement{
   public startDate!: Date;
   public endDate!: Date;
-  public days!: Array<StatementDay>;
+  public days!: Array<Day>;
 
-  constructor(startDate: Date, endDate: Date, days: Array<StatementDayResponse>){
+  constructor(startDate: Date, endDate: Date, days: Array<Record<string, any>>){
     this.startDate = startDate;
     this.endDate = endDate;
-    console.log(days);
-    this.days = DayAssembler.assemble(days);
+    this.days = this.assembleDays(days);
   }
 
-}
+  public assembleDays(days: Array<Record<string, any>>): Array<Day>{
+    let assembledDays: Array<Day> = [];
 
-class StatementResponse {
-  public startDate!: number;
-  public endDate!: number;
-  public days!: Array<StatementDayResponse>;
+    days.forEach(day => {
+      const consolidatedValue = day['consolidatedValue'];
+      const date = new Date(+day['date']);
+      const transactions = day['transactions'];
+
+      let newDay = new Day(consolidatedValue, date, transactions);
+      assembledDays.push(newDay);
+    });
+
+    return assembledDays;
+  }
 }
 
 @Component({
@@ -119,13 +138,14 @@ export class StatementComponent implements OnInit {
   }
 
   async chamaApi(inicio: string, fim: string){
-    console.log(inicio, fim)
-    this.http.get<StatementResponse>("https://run.mocky.io/v3/5337645b-55bb-4221-92cc-ac052f3bd689")
+    this.http.get<Record<string, any>>("https://run.mocky.io/v3/fbbbcdb2-fb60-490c-9d5a-af2167cd73b1")
       .subscribe(response => {
         // O '+' é pra converter para numerico
-        let startDate = new Date(+response.startDate);
-        let endDate = new Date(+response.endDate);
-        this.statement = new Statement(startDate, endDate, response.days);
+        const startDate = new Date(+response['startDate']);
+        const endDate = new Date(+response['endDate']);
+        const days = response['days'];
+
+        this.statement = new Statement(startDate, endDate, days);
       }
     )
   }
