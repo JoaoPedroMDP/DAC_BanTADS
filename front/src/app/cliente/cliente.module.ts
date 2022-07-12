@@ -7,9 +7,10 @@ import { ClientComponent } from "./client/client.component";
 import { DemoFlexyModule } from "../demo-flexy-module";
 import { IMaskModule } from "angular-imask";
 import { AppRoutingModule } from "../app-routing.module";
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
-  declarations: [ClientComponent, RegisterComponent],
+  declarations: [ClientComponent, RegisterComponent, HomeComponent],
   imports: [
     CommonModule,
     AppRoutingModule,

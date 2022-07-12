@@ -32,6 +32,7 @@ import { TransferComponent } from "./transactions/transfer/transfer.component";
 import { WithdrawalComponent } from "./transactions/withdrawal/withdrawal.component";
 import { MatTableModule } from "@angular/material/table";
 import { GerenteComponent } from "./layouts/admin/gerente/gerente/gerente.component";
+import { HomeComponent } from "./cliente/home/home.component";
 
 const routes: Routes = [
   {
@@ -59,16 +60,6 @@ const routes: Routes = [
     ],
   },
   {
-    path: "transacoes",
-    component: FullComponent,
-    children: [
-      { path: "depositar", component: DepositComponent },
-      { path: "sacar", component: WithdrawalComponent },
-      { path: "transferir", component: TransferComponent },
-      { path: "extrato", component: StatementComponent },
-    ],
-  },
-  {
     path: "gerente",
     component: FullComponent,
     children: [
@@ -83,16 +74,24 @@ const routes: Routes = [
   { path: "login", component: LoginComponent },
   {
     path: "cliente",
+    component: ClientComponent,
     children: [
-      { path: "", component: ClientComponent },
+      { path: "", component: HomeComponent },
       { path: "register", component: RegisterComponent },
+      {
+        path: "transacoes",
+        component: ClientComponent,
+        children: [
+          { path: "depositar", component: DepositComponent },
+          { path: "sacar", component: WithdrawalComponent },
+          { path: "transferir", component: TransferComponent },
+          { path: "extrato", component: StatementComponent },
+        ],
+      },
       { path: "**", redirectTo: "", pathMatch: "full" },
     ],
   },
 
-  // transacoes/depositar
-  // transacoes/sacar
-  // transacoes/transferir
   { path: "", redirectTo: "/login", pathMatch: "full" },
   { path: "**", redirectTo: "/login", pathMatch: "full" },
 ];
