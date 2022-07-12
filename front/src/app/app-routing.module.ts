@@ -81,6 +81,7 @@ const routes: Routes = [
       {
         path: "transacoes",
         children: [
+          { path: "", redirectTo: "cliente", pathMatch: "full" },
           { path: "depositar", component: DepositComponent },
           { path: "sacar", component: WithdrawalComponent },
           { path: "transferir", component: TransferComponent },
