@@ -30,7 +30,6 @@ import { DepositComponent } from "./transactions/deposit/deposit.component";
 import { StatementComponent } from "./transactions/statement/statement.component";
 import { TransferComponent } from "./transactions/transfer/transfer.component";
 import { WithdrawalComponent } from "./transactions/withdrawal/withdrawal.component";
-import { MatTableModule } from "@angular/material/table";
 import { GerenteComponent } from "./layouts/admin/gerente/gerente/gerente.component";
 import { HomeComponent } from "./cliente/home/home.component";
 
