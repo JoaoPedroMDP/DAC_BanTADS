@@ -38,7 +38,7 @@ const routes: Routes = [
     path: "",
     component: FullComponent,
     children: [
-      { path: "", redirectTo: "/home", pathMatch: "full" },
+      { path: "", redirectTo: "/cliente", pathMatch: "full" },
       { path: "home", component: DashboardComponent },
       { path: "alerts", component: AlertsComponent },
       { path: "forms", component: FormsComponent },
