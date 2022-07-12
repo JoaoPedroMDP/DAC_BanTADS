@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+
+  > div {
+    position: relative;
+    border-radius: 10px;
+    max-width: 1000px;
+    padding: 40px;
+
+    > h1,
+    > p {
+      text-align: center;
+    }
+  }
+}

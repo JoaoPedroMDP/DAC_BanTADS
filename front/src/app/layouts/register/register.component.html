@@ -5,59 +5,81 @@
     <strong>Informações do cliente</strong>
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Nome completo</mat-label>
-      <input matInput type="text" placeholder="Insira seu nome completo">
+      <input matInput type="text" placeholder="Insira seu nome completo" />
     </mat-form-field>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Email</mat-label>
-      <input matInput type="email" placeholder="Insira seu email">
+      <input matInput type="email" placeholder="Insira seu email" />
     </mat-form-field>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>CPF</mat-label>
-      <input [imask]="cpfMask" [unmask]="true" matInput type="text" placeholder="Insira seu cpf">
+      <input
+        [imask]="cpfMask"
+        [unmask]="true"
+        matInput
+        type="text"
+        placeholder="Insira seu cpf"
+      />
     </mat-form-field>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Salário mensal</mat-label>
-      <input [imask]="numberMask" [unmask]="true" matInput type="text" placeholder="Insira seu salário">
+      <input
+        [imask]="numberMask"
+        [unmask]="true"
+        matInput
+        type="text"
+        placeholder="Insira seu salário"
+      />
     </mat-form-field>
 
     <strong>Endereço</strong>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Rua/Avenida</mat-label>
-      <input matInput type="street" placeholder="Insira sua rua">
+      <input matInput type="street" placeholder="Insira sua rua" />
     </mat-form-field>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Número</mat-label>
-      <input [imask]="numberMask" matInput type="text" placeholder="Insira seu número">
+      <input
+        [imask]="numberMask"
+        matInput
+        type="text"
+        placeholder="Insira seu número"
+      />
     </mat-form-field>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Complemento (opcional)</mat-label>
-      <input matInput type="text" placeholder="Insira seu complemento">
+      <input matInput type="text" placeholder="Insira seu complemento" />
     </mat-form-field>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>CEP</mat-label>
-      <input [imask]="cpfMask" [unmask]="true" matInput type="text" placeholder="Insira seu CEP">
+      <input
+        [imask]="cpfMask"
+        [unmask]="true"
+        matInput
+        type="text"
+        placeholder="Insira seu CEP"
+      />
     </mat-form-field>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Cidade</mat-label>
-      <input matInput type="text" placeholder="Insira sua Cidade">
+      <input matInput type="text" placeholder="Insira sua Cidade" />
     </mat-form-field>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Estado</mat-label>
-      <input matInput type="text" placeholder="Insira seu Estado">
+      <input matInput type="text" placeholder="Insira seu Estado" />
     </mat-form-field>
 
-
-    <button mat-button class="btn btn-info fw-normal" routerLink="home">Cadastrar</button>
-
+    <button mat-button class="btn btn-info fw-normal" routerLink="home">
+      Cadastrar
+    </button>
   </div>
-
 </div>

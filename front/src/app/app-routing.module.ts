@@ -17,6 +17,8 @@ import { ToolbarComponent } from "./components/toolbar/toolbar.component";
 import { TooltipsComponent } from "./components/tooltips/tooltips.component";
 import { ProductComponent } from "./dashboard/dashboard-components/product/product.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
+import { AdminComponent } from "./layouts/admin/admin.component";
+import { CriarGerenteComponent } from "./layouts/admin/gerente/criar-gerente/criar-gerente.component";
 import { FullComponent } from "./layouts/full/full.component";
 import { LoginComponent } from "./layouts/login/login.component";
 import { RegisterComponent } from "./layouts/register/register.component";
@@ -24,6 +26,8 @@ import { DepositComponent } from "./transactions/deposit/deposit.component";
 import { StatementComponent } from "./transactions/statement/statement.component";
 import { TransferComponent } from "./transactions/transfer/transfer.component";
 import { WithdrawalComponent } from "./transactions/withdrawal/withdrawal.component";
+import { MatTableModule } from "@angular/material/table";
+import { GerenteComponent } from "./layouts/admin/gerente/gerente/gerente.component";
 
 const routes: Routes = [
   {
@@ -58,8 +62,11 @@ const routes: Routes = [
       { path: "sacar", component: WithdrawalComponent },
       { path: "transferir", component: TransferComponent },
       { path: "extrato", component: StatementComponent },
-    ]
+    ],
   },
+  { path: "admin", component: AdminComponent },
+  { path: "admin/gerente", component: CriarGerenteComponent },
+  { path: "admin/gerenteperfil", component: GerenteComponent },
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
   { path: "", redirectTo: "/home", pathMatch: "full" },
