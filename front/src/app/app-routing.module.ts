@@ -80,7 +80,6 @@ const routes: Routes = [
       { path: "register", component: RegisterComponent },
       {
         path: "transacoes",
-        component: ClientComponent,
         children: [
           { path: "depositar", component: DepositComponent },
           { path: "sacar", component: WithdrawalComponent },
