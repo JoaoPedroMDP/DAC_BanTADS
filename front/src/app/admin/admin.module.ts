@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { AppRoutingModule } from "../app-routing.module";
 import { FeatherModule } from "angular-feather";
 import { allIcons } from "angular-feather/icons";
-import { DemoFlexyModule } from "../demo-flexy-module";
+import { MaterialModule } from "../material";
 import { IMaskModule } from "angular-imask";
 import { GerenteComponent } from "./perfilGerente/gerente.component";
 import { AdminComponent } from "./listaDeGerentes/admin.component";
@@ -21,7 +21,7 @@ import { AdminSideBarComponent } from "./adminSideBar/admin.component";
     CommonModule,
     AppRoutingModule,
     FeatherModule.pick(allIcons),
-    DemoFlexyModule,
+    MaterialModule,
     IMaskModule,
   ],
 })
