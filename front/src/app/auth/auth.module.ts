@@ -1,11 +1,12 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { DemoFlexyModule } from "../demo-flexy-module";
+import { MaterialModule } from "../material";
 import { LoginComponent } from "./login/login.component";
 import { AppRoutingModule } from "../app-routing.module";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [LoginComponent],
-  imports: [CommonModule, DemoFlexyModule, AppRoutingModule],
+  imports: [CommonModule, MaterialModule, AppRoutingModule, FormsModule],
 })
 export class AuthModule {}

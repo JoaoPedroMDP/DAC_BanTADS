@@ -4,7 +4,7 @@
     <p>Bem vindo! Faça seu login</p>
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Email</mat-label>
-      <input matInput type="email" placeholder="Insira seu email">
+      <input matInput type="email" placeholder="Insira seu email" [(ngModel)]="email" />
     </mat-form-field>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
@@ -14,7 +14,7 @@
 
     <button mat-flat-button routerLink="/cliente/register" class="register-button">Cadastrar</button>
 
-    <button mat-raised-button color="accent" routerLink="/cliente">Entrar</button>
+    <button mat-raised-button color="accent" (click)="handleLogin()">Entrar</button>
   </div>
 
 </div>

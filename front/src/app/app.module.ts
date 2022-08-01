@@ -8,12 +8,10 @@ import { MatTableModule } from "@angular/material/table";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { DemoFlexyModule } from "./demo-flexy-module";
+import { MaterialModule } from "./material";
 import { HttpClientModule } from "@angular/common/http";
 
 // Modules
-import { DashboardModule } from "./dashboard/dashboard.module";
-import { ComponentsModule } from "./components/components.module";
 import { IMaskModule } from "angular-imask";
 import { GerenteModule } from "./gerente";
 import { ClienteModule } from "./cliente/cliente.module";
@@ -36,9 +34,7 @@ import { GerenteComponent } from "./layouts/admin/gerente/gerente/gerente.compon
     AppRoutingModule,
     BrowserAnimationsModule,
     FeatherModule.pick(allIcons),
-    DemoFlexyModule,
-    DashboardModule,
-    ComponentsModule,
+    MaterialModule,
     FormsModule,
     IMaskModule,
     HttpClientModule,

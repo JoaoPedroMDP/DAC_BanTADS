@@ -82,4 +82,4 @@ import { MatBottomSheetModule } from "@angular/material/bottom-sheet";
     MatNativeDateModule,
   ],
 })
-export class DemoFlexyModule {}
+export class MaterialModule {}
