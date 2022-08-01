@@ -19,18 +19,13 @@ import { GerenteModule } from "./gerente";
 import { ClienteModule } from "./cliente/cliente.module";
 import { AuthModule } from "./auth/auth.module";
 
-import { CriarGerenteComponent } from "./layouts/admin/gerente/criar-gerente/criar-gerente.component";
+import { CriarGerenteComponent } from "./admin/criar-gerente/criar-gerente.component";
 import { MatSortModule } from "@angular/material/sort";
-import { AdminComponent } from "./layouts/admin/admin.component";
-import { GerenteComponent } from "./layouts/admin/gerente/gerente/gerente.component";
+import { GerenteComponent } from "./admin/perfilGerente/gerente.component";
+import { AdminModule } from "./admin/admin.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    CriarGerenteComponent,
-    AdminComponent,
-    GerenteComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -47,6 +42,7 @@ import { GerenteComponent } from "./layouts/admin/gerente/gerente/gerente.compon
     GerenteModule,
     ClienteModule,
     AuthModule,
+    AdminModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

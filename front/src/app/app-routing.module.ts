@@ -3,17 +3,18 @@ import { RouterModule, Routes } from "@angular/router";
 import { LoginComponent } from "./auth/login/login.component";
 import { ClientComponent } from "./cliente/client/client.component";
 import { RegisterComponent } from "./cliente/register/register.component";
-import { AdminComponent } from "./layouts/admin/admin.component";
-import { CriarGerenteComponent } from "./layouts/admin/gerente/criar-gerente/criar-gerente.component";
+import { AdminComponent } from "./admin/listaDeGerentes/admin.component";
+import { CriarGerenteComponent } from "./admin/criar-gerente/criar-gerente.component";
 import { ConsultaClienteComponent } from "./gerente/consulta-cliente/consulta-cliente.component";
 import { ConsultaClientesComponent } from "./gerente/consulta-clientes/consulta-clientes.component";
 import { SolicitacoesComponent } from "./gerente/solicitacoes/solicitacoes.component";
-import { GerenteComponent } from "./layouts/admin/gerente/gerente/gerente.component";
+import { GerenteComponent } from "./admin/perfilGerente/gerente.component";
 import { HomeComponent } from "./cliente/home/home.component";
 import { DepositComponent } from "./cliente/transactions/deposit/deposit.component";
 import { WithdrawalComponent } from "./cliente/transactions/withdrawal/withdrawal.component";
 import { TransferComponent } from "./cliente/transactions/transfer/transfer.component";
 import { StatementComponent } from "./cliente/transactions/statement/statement.component";
+import { AdminSideBarComponent } from "./admin/adminSideBar/admin.component";
 
 const routes: Routes = [
   {
@@ -25,9 +26,20 @@ const routes: Routes = [
       { path: "consulta-cliente/:id", component: ConsultaClienteComponent },
     ],
   },
-  { path: "admin", component: AdminComponent },
-  { path: "admin/gerente", component: CriarGerenteComponent },
-  { path: "admin/gerenteperfil", component: GerenteComponent },
+  {
+    path: "admin",
+    component: AdminSideBarComponent,
+    children: [
+      { path: "", component: AdminComponent },
+      { path: "gerente", component: CriarGerenteComponent },
+      { path: "gerenteperfil", component: GerenteComponent },
+    ],
+  },
+
+  // { path: "admin", component: AdminComponent },
+  // { path: "admin/gerente", component: CriarGerenteComponent },
+  // { path: "admin/gerenteperfil", component: GerenteComponent },
+
   { path: "login", component: LoginComponent },
   {
     path: "cliente",
