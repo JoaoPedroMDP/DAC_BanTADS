@@ -32,6 +32,7 @@ import { TransferComponent } from "./transactions/transfer/transfer.component";
 import { WithdrawalComponent } from "./transactions/withdrawal/withdrawal.component";
 import { GerenteComponent } from "./layouts/admin/gerente/gerente/gerente.component";
 import { HomeComponent } from "./cliente/home/home.component";
+import { AdminComponent as SideBarAdmin } from "./admin/admin.component";
 
 const routes: Routes = [
   {
@@ -67,9 +68,20 @@ const routes: Routes = [
       { path: "consulta-cliente", component: ConsultaClienteComponent },
     ],
   },
-  { path: "admin", component: AdminComponent },
-  { path: "admin/gerente", component: CriarGerenteComponent },
-  { path: "admin/gerenteperfil", component: GerenteComponent },
+  {
+    path: "admin",
+    component: SideBarAdmin,
+    children: [
+      { path: "", component: AdminComponent },
+      { path: "gerente", component: CriarGerenteComponent },
+      { path: "gerenteperfil", component: GerenteComponent },
+    ],
+  },
+
+  // { path: "admin", component: AdminComponent },
+  // { path: "admin/gerente", component: CriarGerenteComponent },
+  // { path: "admin/gerenteperfil", component: GerenteComponent },
+
   { path: "login", component: LoginComponent },
   {
     path: "cliente",
