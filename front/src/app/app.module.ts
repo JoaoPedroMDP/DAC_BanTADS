@@ -3,6 +3,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { FeatherModule } from "angular-feather";
 import { allIcons } from "angular-feather/icons";
 import { FormsModule } from "@angular/forms";
+import { MatTableModule } from "@angular/material/table";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -14,19 +15,28 @@ import { HttpClientModule } from "@angular/common/http";
 // Modules
 import { DashboardModule } from "./dashboard/dashboard.module";
 import { ComponentsModule } from "./components/components.module";
-import { LoginComponent } from "./layouts/login/login.component";
-import { RegisterComponent } from "./layouts/register/register.component";
 import { IMaskModule } from "angular-imask";
 import { TransactionsModule } from "./transactions/transactions.module";
 import { GerenteModule } from "./gerente";
+import { ClienteModule } from "./cliente/cliente.module";
+import { AuthModule } from "./auth/auth.module";
 
+import { CriarGerenteComponent } from "./layouts/admin/gerente/criar-gerente/criar-gerente.component";
+import { MatSortModule } from "@angular/material/sort";
+import { AdminComponent } from "./layouts/admin/admin.component";
+import { GerenteComponent } from "./layouts/admin/gerente/gerente/gerente.component";
+import { LoginComponent } from "./auth/login/login.component";
+import { RegisterComponent } from "./cliente/register/register.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     FullComponent,
-    LoginComponent,
-    RegisterComponent
+    // LoginComponent,
+    // RegisterComponent,
+    CriarGerenteComponent,
+    AdminComponent,
+    GerenteComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,9 +50,14 @@ import { GerenteModule } from "./gerente";
     IMaskModule,
     TransactionsModule,
     HttpClientModule,
-    GerenteModule
+    MatTableModule,
+    MatSortModule,
+    GerenteModule,
+    // ClienteModule,
+    // AuthModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
+  exports: [MatTableModule],
 })
 export class AppModule {}

@@ -1,0 +1,29 @@
+<div class="container">
+  <div>
+    <h1>Cadastrar Gerente</h1>
+    <mat-form-field class="w-100 fs-16" appearance="outline">
+      <mat-label>Nome completo</mat-label>
+      <input matInput type="text" placeholder="Insira seu nome completo" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100 fs-16" appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" placeholder="Insira seu email" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100 fs-16" appearance="outline">
+      <mat-label>CPF</mat-label>
+      <input
+        [imask]="cpfMask"
+        [unmask]="true"
+        matInput
+        type="text"
+        placeholder="Insira seu cpf"
+      />
+    </mat-form-field>
+
+    <button mat-button class="btn btn-info fw-normal" routerLink="admin">
+      Cadastrar
+    </button>
+  </div>
+</div>
