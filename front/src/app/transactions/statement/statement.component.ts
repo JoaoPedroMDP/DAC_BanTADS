@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 const transactionTypes: Record<string, any> = {
   'out': {
@@ -122,9 +122,9 @@ class Statement{
   styleUrls: ['./statement.component.css']
 })
 export class StatementComponent implements OnInit {
-  range = new FormGroup({
-    start: new FormControl(null),
-    end: new FormControl(null),
+  range = new UntypedFormGroup({
+    start: new UntypedFormControl(null),
+    end: new UntypedFormControl(null),
   });
   
   statement!: Statement;
