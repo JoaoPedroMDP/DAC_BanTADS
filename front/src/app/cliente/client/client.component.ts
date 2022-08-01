@@ -11,6 +11,11 @@ export class ClientComponent implements OnInit {
   routerActive = "";
   sidebarMenu = [
     {
+      link: "/cliente",
+      icon: "home",
+      label: "Home",
+    },
+    {
       link: "/cliente/transacoes/sacar",
       icon: "log-out",
       label: "Sacar",
