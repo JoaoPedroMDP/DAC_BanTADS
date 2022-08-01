@@ -15,11 +15,12 @@ import { WithdrawalComponent } from "./cliente/transactions/withdrawal/withdrawa
 import { TransferComponent } from "./cliente/transactions/transfer/transfer.component";
 import { StatementComponent } from "./cliente/transactions/statement/statement.component";
 import { AdminSideBarComponent } from "./admin/adminSideBar/admin.component";
+import { FullComponent } from "./gerente/full/full.component";
 
 const routes: Routes = [
   {
     path: "gerente",
-    // component: FullComponent,
+    component: FullComponent,
     children: [
       { path: "solicitacoes", component: SolicitacoesComponent },
       { path: "consulta-clientes", component: ConsultaClientesComponent },
@@ -35,10 +36,6 @@ const routes: Routes = [
       { path: "gerenteperfil", component: GerenteComponent },
     ],
   },
-
-  // { path: "admin", component: AdminComponent },
-  // { path: "admin/gerente", component: CriarGerenteComponent },
-  // { path: "admin/gerenteperfil", component: GerenteComponent },
 
   { path: "login", component: LoginComponent },
   {

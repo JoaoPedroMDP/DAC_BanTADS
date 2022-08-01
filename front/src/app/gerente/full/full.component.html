@@ -1,0 +1,72 @@
+<mat-sidenav-container class="sidenav-container">
+
+  <!-- Sidebar -->
+  <mat-sidenav #drawer class="sidenav" fixedInViewport mode="side" opened>
+
+    <div class="p-16">
+      <div class="mb-16" routerLink="/cliente">
+        <a href="javascript:void(0)" class="d-flex align-items-center">
+          <img src="assets/images/favicon.png" alt=""> <span class="ms-16 fw-medium fs-26">BanTADS</span>
+        </a>
+
+      </div>
+
+      <div class="pt-8">
+        <h4>Menu do Gerente</h4>
+        <ul>
+          <li class="list-group mb-8" *ngFor="let sidenav of sidebarMenu">
+            <a matRipple [matRippleColor]="'#f7f8f443'" routerLink="{{ sidenav.link }}"
+              class="sidebar-menu fs-16 w-100 d-flex align-items-center" [routerLinkActive]="routerActive">
+              <i-feather name="{{ sidenav.icon }}" class="feather-base me-16"></i-feather> <span class="ps-4">{{
+                sidenav.label }}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+
+    </div>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+
+    <!-- Header -->
+    <mat-toolbar class="header ps-24 pe-24">
+
+      <div class="ms-auto">
+        <button mat-button class="fs-16 pt-4 pb-4 ps-8 pe-8 text-light-muted" [matMenuTriggerFor]="menu">
+          <img src="assets/images/user2.webp" class="rounded-circle" alt="">
+          <span class="fw-light ms-8 text-secondary">Hi,</span>
+          <span class="fw-bold ms-8">Julia</span>
+          <i-feather name="chevron-down" class="feather-base mt-n2"></i-feather>
+        </button>
+        <mat-menu #menu="matMenu" class="profile-dropdown">
+          <div class="p-16 mb-4">
+            <!-- <button mat-menu-item class="fs-16">Edit Profile</button>
+            <button mat-menu-item class="fs-16">Account</button>
+            <button mat-menu-item class="fs-16">Change Password</button>
+            <button mat-menu-item class="fs-16">My Settings</button> -->
+          </div>
+
+          <hr>
+
+          <div class="p-16">
+            <button mat-button class="btn btn-info w-100" routerLink="/login">Logout</button>
+          </div>
+
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+
+    <!-- Content -->
+    <div class="body-wrapper">
+      <div class="page-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
