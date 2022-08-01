@@ -69,7 +69,7 @@ const routes: Routes = [
     children: [
       { path: "solicitacoes", component: SolicitacoesComponent },
       { path: "consulta-clientes", component: ConsultaClientesComponent },
-      { path: "consulta-cliente", component: ConsultaClienteComponent },
+      { path: "consulta-cliente/:id", component: ConsultaClienteComponent },
     ]
   },  
   { path: "login", component: LoginComponent },

@@ -1,23 +1,29 @@
 <html>
   <head>
-    <title>Lista de Clientes para Aprovary</title>
+    <title>Lista de Clientes</title>
   </head>
   <body>
     <!-- Daily Activity -->
     <mat-card class="w-100">
       <mat-card-content>
-        <h4 class="mb-56">Lista de Clientes para Aprovar</h4>
-
+        <h4 class="mb-56">Lista de Clientes</h4>
+        <div class="card-body">
+          <form>
+            <h4 class="mb-32">Pesquisar</h4>    
+            <mat-form-field class="me-24 fs-16" appearance="outline">
+                  <mat-label>Nome:</mat-label>
+                  <input matInput type="text" placeholder=" Cliente 1">
+              </mat-form-field>
+              <mat-form-field class="me-24 fs-16" appearance="outline">
+                <mat-label>CPF:</mat-label>
+                <input matInput type="text" placeholder="242.839.355-30">
+            </mat-form-field>
+          <button mat-button [routerLink]="['/gerente/consulta-clientes']" class="btn me-8 btn-info fw-normal">Pesquisar</button>
+          <button mat-button [routerLink]="['/gerente/consulta-clientes']" class="btn btn-info fw-normal">Top 5 usuários</button>
+          </form>   
+        </div>     
         <div class="table-responsive">
           <table mat-table [dataSource]="dataSource" class="text-nowrap w-100">
-            <!-- Nome Column -->
-            <ng-container matColumnDef="nome">
-              <th mat-header-cell *matHeaderCellDef>Nome</th>
-              <td mat-cell *matCellDef="let element">
-                <!--<a class="mb-0 fw-medium" href="#" [routerLink]="['/gerente/consultar-cliente', element.id]">{{ element.nome }}</a>-->
-                <p class="mb-0 fw-medium op-1">{{ element.nome }}</p>
-              </td>
-            </ng-container>
             <!-- CPF Column -->
             <ng-container matColumnDef="cpf">
               <th mat-header-cell *matHeaderCellDef>CPF</th>
@@ -25,19 +31,32 @@
                 <p class="mb-0 fw-medium op-1">{{ element.cpf }}</p>
               </td>
             </ng-container>
-            <!-- Salario Column -->
-            <ng-container matColumnDef="salario">
-              <th mat-header-cell *matHeaderCellDef>Salário</th>
+            <!-- Nome Column -->
+            <ng-container matColumnDef="nome">
+              <th mat-header-cell *matHeaderCellDef>Nome</th>
               <td mat-cell *matCellDef="let element">
-                <p class="mb-0 fw-medium op-1">{{ element.salario }}</p>
+                <a class="mb-0 fw-medium" href="#" [routerLink]="['/gerente/consulta-cliente',element.id]">{{ element.nome }}</a>
               </td>
             </ng-container>
-            <!-- Ação Column -->
-            <ng-container matColumnDef="acao">
-              <th mat-header-cell *matHeaderCellDef>Ação</th>
+            <!-- Cidade Column -->
+            <ng-container matColumnDef="cidade">
+              <th mat-header-cell *matHeaderCellDef>Cidade</th>
               <td mat-cell *matCellDef="let element">
-                <button mat-mini-fab class="mb-8 me-8" color="primary">&#10004;</button>
-                <button mat-mini-fab class="mb-8 me-8" color="warn">&#65368;</button>
+                <p class="mb-0 fw-medium op-1">{{ element.cidade }}</p>
+              </td>
+            </ng-container>
+            <!-- Estado Column -->
+            <ng-container matColumnDef="estado">
+              <th mat-header-cell *matHeaderCellDef>Estado</th>
+              <td mat-cell *matCellDef="let element">
+                <p class="mb-0 fw-medium op-1">{{ element.estado }}</p>
+              </td>
+            </ng-container>            
+            <!-- Salario Column -->
+            <ng-container matColumnDef="saldo">
+              <th mat-header-cell *matHeaderCellDef>Saldo</th>
+              <td mat-cell *matCellDef="let element">
+                <p class="mb-0 fw-medium op-1">1.000,00</p>
               </td>
             </ng-container>
 

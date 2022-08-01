@@ -1,1 +1,73 @@
-<p>consulta-cliente works!</p>
+<div class="card">
+    <div class="card-body">
+      <h4 class="mb-32">Cliente</h4>
+      <form>    
+      <mat-form-field class="w-100 fs-16" appearance="fill">
+            <mat-label>Nome:</mat-label>
+            <input matInput type="text" value=" Cliente 1" readonly>
+        </mat-form-field>
+        <mat-form-field class="w-100 fs-16" appearance="fill">
+            <mat-label>Email:</mat-label>
+            <input matInput type="email" value="cliente1@emai.com" readonly>
+        </mat-form-field>
+        <mat-form-field class="w-100 fs-16" appearance="fill">
+            <mat-label>CPF:</mat-label>
+            <input matInput type="text" value="242.839.355-30" readonly>
+        </mat-form-field>
+        <mat-form-field class="w-100 fs-16" appearance="fill">
+            <mat-label>Salario:</mat-label>
+            <input matInput type="text" value="2.000,00" readonly>
+        </mat-form-field>
+        <div class="card-body">
+            <h4 class="mb-32">Endereço</h4>
+            <mat-form-field class="me-24 fs-16" appearance="fill">
+                <mat-label>Tipo:</mat-label>
+                <input matInput type="text" value="Rua"  readonly>
+            </mat-form-field>
+            <mat-form-field class="me-24 fs-16" appearance="fill">
+                <mat-label>Logradouro:</mat-label>
+                <input  matInput type="text" value="Rua Iris" readonly>
+            </mat-form-field>
+            <mat-form-field class="me-24 fs-16" appearance="fill">
+                <mat-label>Numero:</mat-label>
+                <input matInput type="text" value="100" readonly>
+            </mat-form-field>
+            <mat-form-field class="me-24 fs-16" appearance="fill">
+                <mat-label>complemento</mat-label>
+                <input matInput type="text" value="Fundos" readonly>
+            </mat-form-field>
+            <mat-form-field class="me-24 fs-16" appearance="fill">
+                <mat-label>CEP:</mat-label>
+                <input matInput type="text" value="76811-354" readonly>
+            </mat-form-field>
+            <mat-form-field class="me-24 fs-16" appearance="fill">
+                <mat-label>Cidade:</mat-label>
+                <input matInput type="text" value="Porto Velho" readonly>
+            </mat-form-field>
+            <mat-form-field class="mb-32 fs-16" appearance="fill">
+                <mat-label>Estado:</mat-label>
+                <input matInput type="text" value="RO" readonly>
+            </mat-form-field>
+        </div>
+        <div class="card-body">
+            <h4 class="mb-32">Dados da Conta</h4>
+            <mat-form-field class="me-24 fs-16" appearance="fill">
+                <mat-label>Cliente:</mat-label>
+                <input matInput type="text" value="Cliente Numero 1" readonly>
+            </mat-form-field>
+            <mat-form-field class="me-24 fs-16" appearance="fill">
+                <mat-label>Número da Conta:</mat-label>
+                <input matInput type="text" value="25680242-9" readonly>
+            </mat-form-field>
+            <mat-form-field class="me-24 fs-16" appearance="fill">
+                <mat-label>Data de Criação:</mat-label>
+                <input matInput type="text" value="03/10/2021" readonly>
+            </mat-form-field>
+            <mat-form-field class="mb-32 fs-16" appearance="fill">
+                <mat-label>Limite:</mat-label>
+                <input matInput type="text" value="1.000,00" readonly>
+            </mat-form-field>
+        </div>
+        <button mat-button [routerLink]="['/gerente/consulta-clientes']" class="btn btn-info fw-normal">Voltar</button>
+    </form>
+</div>
