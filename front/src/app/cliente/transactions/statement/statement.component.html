@@ -3,40 +3,38 @@
         <mat-form-field appearance="fill">
             <mat-label>Selecione o período</mat-label>
             <mat-date-range-input [rangePicker]="picker">
-              <input matStartDate formControlName="start" placeholder="Início">
-              <input matEndDate formControlName="end" placeholder="Fim">
+                <input matStartDate formControlName="start" placeholder="Início">
+                <input matEndDate formControlName="end" placeholder="Fim">
             </mat-date-range-input>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-date-range-picker #picker></mat-date-range-picker>
-          
+
             <mat-error *ngIf="range.controls['start'].hasError('matStartDateInvalid')">Início inválido</mat-error>
             <mat-error *ngIf="range.controls['end'].hasError('matEndDateInvalid')">Fim inválido</mat-error>
-          </mat-form-field>
+        </mat-form-field>
     </div>
 
     <h1>Extrato</h1>
-    <div *ngIf="statement!=null"> <!-- Mesmo que no início seja false, assim que assumir true, renderiza. É reativo.-->
+    <div *ngIf="statement!=null">
+        <!-- Mesmo que no início seja false, assim que assumir true, renderiza. É reativo.-->
         <mat-card class="d-flex card" *ngFor="let day of statement.days">
             <mat-card-content class="d-flex card-content">
                 <h3>{{day.date.toLocaleDateString('pt-BR')}}</h3>
                 <h4 class="mb-30">Consolidado: R$ {{day.consolidatedValue}}</h4>
-                <div 
-                    class="d-flex align-items-center content-line"
+                <div class="d-flex align-items-center content-line"
                     [style.background-color]="transaction.getTypeColor(false)"
-                    [style.border-color]="transaction.getTypeColor(true)"
-                    *ngFor="let transaction of day.transactions"
-                >
+                    [style.border-color]="transaction.getTypeColor(true)" *ngFor="let transaction of day.transactions">
                     <div>
                         <span class="fs-20 me-20">{{ transaction.datetime.toLocaleTimeString('pt-BR') }}</span>
                         <span class="fw-bold fs-20">R$ {{ transaction.value }}</span>
                     </div>
                     <div *ngIf="transaction.type == 'transfer'">
-                        <span [textContent]="transaction.transferDetails['type'] == 'income' ? 'Recebido de ' : 'Enviado para '"></span>
+                        <span
+                            [textContent]="transaction.transferDetails['type'] == 'income' ? 'Recebido de ' : 'Enviado para '"></span>
                         <span class="fw-bold">{{ transaction.transferDetails['agent'] }}</span>
                     </div>
                 </div>
             </mat-card-content>
-        </mat-card> 
+        </mat-card>
     </div>
 </div>
-    
