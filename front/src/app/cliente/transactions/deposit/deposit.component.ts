@@ -6,13 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./deposit.component.css']
 })
 export class DepositComponent implements OnInit {
+  depositValue!: number;
   constructor() { }
 
   ngOnInit(): void {
+    this.depositValue = 0;
   }
 
-  depositar(value: string): void {
-    let parsed = Number(value);
-    console.log(`Depositando ${parsed}`);
+  deposit(): void {
+    alert(`Depositando ${this.depositValue}`)
   }
 }

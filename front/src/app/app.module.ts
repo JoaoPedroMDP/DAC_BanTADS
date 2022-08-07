@@ -1,25 +1,23 @@
+import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { MatSortModule } from "@angular/material/sort";
+import { MatTableModule } from "@angular/material/table";
 import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+
 import { FeatherModule } from "angular-feather";
 import { allIcons } from "angular-feather/icons";
-import { FormsModule } from "@angular/forms";
-import { MatTableModule } from "@angular/material/table";
+import { IMaskModule } from "angular-imask";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "./material";
-import { HttpClientModule } from "@angular/common/http";
 
-// Modules
-import { IMaskModule } from "angular-imask";
-import { GerenteModule } from "./gerente";
-import { ClienteModule } from "./cliente/cliente.module";
 import { AuthModule } from "./auth/auth.module";
+import { ClienteModule } from "./cliente/cliente.module";
+import { GerenteModule } from "./gerente";
 
-import { CriarGerenteComponent } from "./admin/criar-gerente/criar-gerente.component";
-import { MatSortModule } from "@angular/material/sort";
-import { GerenteComponent } from "./admin/perfilGerente/gerente.component";
 import { AdminModule } from "./admin/admin.module";
 
 @NgModule({
@@ -38,7 +36,7 @@ import { AdminModule } from "./admin/admin.module";
     GerenteModule,
     ClienteModule,
     AuthModule,
-    AdminModule,
+    AdminModule
   ],
   providers: [],
   bootstrap: [AppComponent],

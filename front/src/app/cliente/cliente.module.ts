@@ -12,6 +12,8 @@ import { DepositComponent } from "./transactions/deposit/deposit.component";
 import { WithdrawalComponent } from "./transactions/withdrawal/withdrawal.component";
 import { TransferComponent } from "./transactions/transfer/transfer.component";
 import { StatementComponent } from "./transactions/statement/statement.component";
+import { FormsModule } from "@angular/forms";
+import { NgxCurrencyModule } from "ngx-currency";
 
 @NgModule({
   declarations: [
@@ -21,7 +23,7 @@ import { StatementComponent } from "./transactions/statement/statement.component
     DepositComponent,
     WithdrawalComponent,
     TransferComponent,
-    StatementComponent,
+    StatementComponent
   ],
   imports: [
     CommonModule,
@@ -29,6 +31,8 @@ import { StatementComponent } from "./transactions/statement/statement.component
     FeatherModule.pick(allIcons),
     MaterialModule,
     IMaskModule,
+    FormsModule,
+    NgxCurrencyModule
   ],
 })
 export class ClienteModule {}
