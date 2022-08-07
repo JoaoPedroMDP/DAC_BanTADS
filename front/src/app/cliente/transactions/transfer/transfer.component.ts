@@ -6,15 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./transfer.component.css']
 })
 export class TransferComponent implements OnInit {
+  transferValue!: number;
+  transferDestiny!: string;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.transferValue = 0;
+    this.transferDestiny = '';
   }
 
-  transferir(value: string, destiny: string): void {
-    let parsed = Number(value);
-    console.log(`Transferindo ${parsed} para ${destiny}`);
+  transfer(): void {
+    alert(`Transferindo ${this.transferValue} para ${this.transferDestiny}`);
   }
 
 }

@@ -1,13 +1,16 @@
 <form>
-    <mat-form-field class="w-100 fs-16" appearance="outline">
-      <mat-label>Quantia</mat-label>
-      <input matInput #quantia type="text" placeholder="Digite a quantia a ser depositada">
-    </mat-form-field>
-  
-    <mat-form-field class="w-100 fs-16" appearance="outline">
-        <mat-label>Destino</mat-label>
-        <input matInput #destino type="text" placeholder="Digite o número da conta destino">
-    </mat-form-field>
+  <mat-form-field class="w-100 fs-16" appearance="outline">
+    <mat-label>Quantia</mat-label>
+    <input matInput currencyMask [(ngModel)]="transferValue" name="transferValue" type="text"
+      [options]="{ align: 'left', prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false, min: 0 }"
+      placeholder="Digite a quantia a ser depositada">
+  </mat-form-field>
 
-    <button mat-button class="btn btn-info fw-normal" (click)="transferir(quantia.value, destino.value)">Transferir</button>
-  </form>
+  <mat-form-field class="w-100 fs-16" appearance="outline">
+    <mat-label>Destino</mat-label>
+    <input matInput [(ngModel)]="transferDestiny" name="transferDestiny" type="text"
+      placeholder="Digite o número da conta destino">
+  </mat-form-field>
+
+  <button mat-button class="btn btn-info fw-normal" (click)="transfer()">Transferir</button>
+</form>

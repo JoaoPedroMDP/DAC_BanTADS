@@ -1,8 +1,10 @@
 <form>
-    <mat-form-field class="w-100 fs-16" appearance="outline">
-      <mat-label>Quantia</mat-label>
-      <input matInput #quantia type="text" placeholder="Digite a quantia a ser depositada">
-    </mat-form-field>
-  
-    <button mat-button class="btn btn-info fw-normal" (click)="sacar(quantia.value)">Sacar</button>
-  </form>
+  <mat-form-field class="w-100 fs-16" appearance="outline">
+    <mat-label>Quantia</mat-label>
+    <input matInput currencyMask [(ngModel)]="withdrawalValue"
+      [options]="{align: 'left', prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false, min: 0}"
+      name="withdrawalValue" type="text" placeholder="Digite a quantia a ser depositada">
+  </mat-form-field>
+
+  <button mat-button class="btn btn-info fw-normal" (click)="withdraw()">Sacar</button>
+</form>
