@@ -1,8 +1,9 @@
 <form>
   <mat-form-field class="w-100 fs-16" appearance="outline">
-    <mat-label>Quantia</mat-label>
-    <input matInput #quantia type="text" placeholder="Digite a quantia a ser depositada">
+    <input matInput currencyMask name="depositValue" type="text" placeholder="Digite a quantia a ser depositada"
+      [(ngModel)]="depositValue"
+      [options]="{ align: 'left', prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false, min: 0 }">
   </mat-form-field>
 
-  <button mat-button class="btn btn-info fw-normal" (click)="depositar(quantia.value)">Depositar</button>
+  <button mat-button class="btn btn-info fw-normal" (click)="deposit()">Depositar</button>
 </form>
