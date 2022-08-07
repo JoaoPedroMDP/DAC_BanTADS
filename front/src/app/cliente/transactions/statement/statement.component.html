@@ -25,8 +25,9 @@
                     [style.background-color]="transaction.getTypeColor(false)"
                     [style.border-color]="transaction.getTypeColor(true)" *ngFor="let transaction of day.transactions">
                     <div>
+                        <span class="fs-25 me-20">{{transaction.typeName}}</span>
                         <span class="fs-20 me-20">{{ transaction.datetime.toLocaleTimeString('pt-BR') }}</span>
-                        <span class="fw-bold fs-20">R$ {{ transaction.value }}</span>
+                        <span class="fw-bold fs-20">{{ transaction.value | currency: 'BRL': 'symbol': '1.2-2'}}</span>
                     </div>
                     <div *ngIf="transaction.type == 'transfer'">
                         <span
