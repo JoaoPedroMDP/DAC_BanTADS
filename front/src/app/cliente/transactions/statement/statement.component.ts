@@ -24,6 +24,7 @@ class Transaction {
   public typeColor!: Record<string, any>;
   public value!: number;
   public transferDetails!: Record<string, any>;
+  public typeName!: string;
 
   constructor(
     datetime: Date,
@@ -43,6 +44,7 @@ class Transaction {
     } else {
       this.typeColor = this.determineTransactionColor(type);
     }
+    this.typeName = this.determineTransactionTypeName();
   }
 
   public getTypeColor(solid: boolean) {
@@ -72,6 +74,16 @@ class Transaction {
       return transactionTypes["in"];
     } else {
       return transactionTypes["out"];
+    }
+  }
+
+  private determineTransactionTypeName(): string {
+    if (this.type === "deposit") {
+      return "Depósito";
+    } else if (this.type === "transfer") {
+      return "Transferência";
+    } else {
+      return "Saque";
     }
   }
 

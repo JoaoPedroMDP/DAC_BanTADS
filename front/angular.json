@@ -7,6 +7,9 @@
   "newProjectRoot": "projects",
   "projects": {
     "flexy-angular": {
+      "i18n": {
+        "sourceLocale": "pt-BR"
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
