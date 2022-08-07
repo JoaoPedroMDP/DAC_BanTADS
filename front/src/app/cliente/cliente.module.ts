@@ -12,8 +12,7 @@ import { DepositComponent } from "./transactions/deposit/deposit.component";
 import { WithdrawalComponent } from "./transactions/withdrawal/withdrawal.component";
 import { TransferComponent } from "./transactions/transfer/transfer.component";
 import { StatementComponent } from "./transactions/statement/statement.component";
-import { ReactiveFormsModule } from "@angular/forms";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgxCurrencyModule } from "ngx-currency";
 
 @NgModule({
@@ -34,7 +33,8 @@ import { NgxCurrencyModule } from "ngx-currency";
     IMaskModule,
     ReactiveFormsModule,
     FormsModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    ReactiveFormsModule
   ],
 })
 export class ClienteModule {}
