@@ -40,4 +40,15 @@ public class Login implements Serializable {
     this.role = role;
   }
 
+  public Login() {
+
+  }
+
+  public Login(String email, String password, String user, Role role) {
+    this.email = email;
+    this.password = password;
+    this.user = user;
+    this.role = role;
+  }
+
 }
