@@ -1,29 +1,17 @@
 package com.bantads.account.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
-@Entity
-@Table(name = "accounts")
-public class Account implements Serializable {
-    private static final Long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+public class AccountDTO implements Serializable {
     private Long id;
-
-    @Column(name = "user_id")
     private Long userId;
-
-    @Column(name = "balance")
     private Double balance;
 
-    public Account() {
+    public AccountDTO() {
         super();
     }
 
-    public Account(Long id, Long userId, Double balance) {
+    public AccountDTO(Long id, Long userId, Double balance) {
         super();
         this.id = id;
         this.userId = userId;
