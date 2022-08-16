@@ -47,11 +47,9 @@ public class LoginREST {
         && PasswordEnc.verifyUserPassword(password, baseLogin.getPassword(), salt)) {
       try {
         Algorithm alg = Algorithm.HMAC256("secret");
-
         String token = JWT.create().withIssuer("auth0").sign(alg);
 
         baseLogin.setToken(token);
-        System.out.println(token);
         baseLogin.setPassword("");
 
         return new ResponseEntity<>(baseLogin, HttpStatus.OK);
@@ -71,15 +69,12 @@ public class LoginREST {
       }
 
       String password = login.getPassword();
-
       String saltValue = PasswordEnc.getSaltvalue(10);
-
       String passwordEnc = PasswordEnc.generateSecurePassword(password, saltValue);
 
-      System.out.println(passwordEnc);
+      // System.out.println(passwordEnc);
 
       login.setPassword(passwordEnc);
-
       logins.add(login);
 
       return new ResponseEntity<>("User registered", HttpStatus.OK);
