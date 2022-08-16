@@ -7,6 +7,7 @@ public class Login implements Serializable {
   private String password;
   private String user;
   private Role role;
+  private String token;
 
   public String getEmail() {
     return email;
@@ -38,6 +39,14 @@ public class Login implements Serializable {
 
   public void setRole(Role role) {
     this.role = role;
+  }
+
+  public String getToken() {
+    return token;
+  }
+
+  public void setToken(String token) {
+    this.token = token;
   }
 
   public Login() {
