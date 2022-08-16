@@ -8,4 +8,10 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=accounts
     ports:
-      - "5433:5432" 
+      - "5433:5432"
+  broker:
+    image: rabbitmq:3.10-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      - "15692:15692"
