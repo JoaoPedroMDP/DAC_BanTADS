@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS login (
+    id BIGINT PRIMARY KEY,
+    password TEXT NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    user_id INT NOT NULL
+);

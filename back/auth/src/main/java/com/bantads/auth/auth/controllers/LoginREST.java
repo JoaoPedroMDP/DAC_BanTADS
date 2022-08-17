@@ -1,7 +1,9 @@
-package com.bantads.auth.auth.rest;
+package com.bantads.auth.auth.controllers;
 
 import java.util.ArrayList;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,21 +14,24 @@ import org.springframework.web.bind.annotation.RestController;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
-import com.bantads.auth.auth.model.Login;
-import com.bantads.auth.auth.model.Role;
+import com.bantads.auth.auth.models.Login;
+import com.bantads.auth.auth.repository.LoginRepository;
+import com.bantads.auth.auth.serializers.LoginDTO;
 import com.bantads.auth.auth.utils.PasswordEnc;
 
 @CrossOrigin
 @RestController
 public class LoginREST {
 
-  // Login baseLogin = new Login("admin@admin.com", "admin", "12345678",
-  // Role.ADMIN);
+  @Autowired
+  private LoginRepository repo;
 
-  ArrayList<Login> logins = new ArrayList<Login>();
+  @Autowired
+  private ModelMapper mapper;
 
   @PostMapping("/auth/login")
-  ResponseEntity<Object> login(@RequestBody Login login) {
+  ResponseEntity<Object> login(@RequestBody LoginDTO login) {
+
     String email = login.getEmail();
     String password = login.getPassword();
 
@@ -34,25 +39,25 @@ public class LoginREST {
       return new ResponseEntity<>("Missing email or password", HttpStatus.BAD_REQUEST);
     }
 
-    // TODO: REMOVE
-    if (logins.size() == 0) {
-      return new ResponseEntity<>("No logins", HttpStatus.BAD_REQUEST);
-    }
-
-    Login baseLogin = logins.get(0);
-
+    Login loginEntity = repo.findByEmail(email);
     String salt = PasswordEnc.getSaltvalue(10);
 
-    if (login.getEmail().equals(baseLogin.getEmail())
-        && PasswordEnc.verifyUserPassword(password, baseLogin.getPassword(), salt)) {
+    if (loginEntity == null) {
+      return new ResponseEntity<>("Email not registered", HttpStatus.NOT_FOUND);
+    }
+
+    Boolean isPasswordCorrect = PasswordEnc.verifyUserPassword(password, loginEntity.getPassword(), salt);
+
+    if (login.getEmail().equals(loginEntity.getEmail())
+        && isPasswordCorrect) {
       try {
         Algorithm alg = Algorithm.HMAC256("secret");
         String token = JWT.create().withIssuer("auth0").sign(alg);
 
-        baseLogin.setToken(token);
-        baseLogin.setPassword("");
+        loginEntity.setToken(token);
+        loginEntity.setPassword("");
 
-        return new ResponseEntity<>(baseLogin, HttpStatus.OK);
+        return new ResponseEntity<>(mapper.map(loginEntity, LoginDTO.class), HttpStatus.OK);
       } catch (JWTCreationException e) {
         return new ResponseEntity<>("Internal server error while creating JWT", HttpStatus.INTERNAL_SERVER_ERROR);
       }
@@ -62,10 +67,13 @@ public class LoginREST {
   }
 
   @PostMapping("/auth/register")
-  ResponseEntity<Object> register(@RequestBody Login login) {
+  ResponseEntity<Object> register(@RequestBody LoginDTO login) {
     if (login.getEmail() != null && login.getPassword() != null && login.getUser() != null) {
-      if (login.getRole() == null) {
-        login.setRole(Role.CLIENTE);
+
+      Login loginEntity = repo.findByEmail(login.getEmail());
+
+      if (loginEntity != null) {
+        return new ResponseEntity<>("Email already registered", HttpStatus.BAD_REQUEST);
       }
 
       String password = login.getPassword();
@@ -75,7 +83,7 @@ public class LoginREST {
       // System.out.println(passwordEnc);
 
       login.setPassword(passwordEnc);
-      logins.add(login);
+      repo.save(mapper.map(login, Login.class));
 
       return new ResponseEntity<>("User registered", HttpStatus.OK);
 
