@@ -2,12 +2,10 @@ package com.bantads.cliente.cliente.serializers;
 
 import java.io.Serializable;
 
-public class Cliente implements Serializable {
+public class ClienteDTO implements Serializable {
   private String nome;
   private String cpf;
-  private Number limite;
-  private Boolean limiteAtivo;
-  private Endereco endereco;
+  private EnderecoDTO endereco;
 
   public String getNome() {
     return nome;
@@ -41,11 +39,11 @@ public class Cliente implements Serializable {
     this.limiteAtivo = limiteAtivo;
   }
 
-  public Endereco getEndereco() {
+  public EnderecoDTO getEndereco() {
     return endereco;
   }
 
-  public void setEndereco(Endereco endereco) {
+  public void setEndereco(EnderecoDTO endereco) {
     this.endereco = endereco;
   }
 
