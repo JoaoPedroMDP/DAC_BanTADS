@@ -17,6 +17,7 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.bantads.auth.auth.models.Login;
 import com.bantads.auth.auth.repository.LoginRepository;
 import com.bantads.auth.auth.serializers.LoginDTO;
+import com.bantads.auth.auth.serializers.Role;
 import com.bantads.auth.auth.utils.PasswordEnc;
 
 @CrossOrigin
@@ -74,6 +75,10 @@ public class LoginREST {
 
       if (loginEntity != null) {
         return new ResponseEntity<>("Email already registered", HttpStatus.BAD_REQUEST);
+      }
+
+      if (login.getRole() == null) {
+        login.setRole(Role.CLIENTE);
       }
 
       String password = login.getPassword();

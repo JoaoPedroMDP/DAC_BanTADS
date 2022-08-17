@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.bantads.auth.auth.serializers.Role;
+
 @Entity
 @Table(name = "login")
 public class Login implements Serializable {
@@ -26,6 +28,8 @@ public class Login implements Serializable {
   private String password;
   @Column(name = "user_id", unique = true)
   private Long user_id;
+  @Column(name = "role")
+  private String role;
   @Transient
   private String token;
 
@@ -47,6 +51,14 @@ public class Login implements Serializable {
 
   public Long getUser() {
     return user_id;
+  }
+
+  public String getRole() {
+    return role;
+  }
+
+  public void setRole(String role) {
+    this.role = role;
   }
 
   public void setUser(Long user) {

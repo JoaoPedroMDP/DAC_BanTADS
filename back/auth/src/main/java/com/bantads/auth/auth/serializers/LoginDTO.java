@@ -8,6 +8,7 @@ public class LoginDTO implements Serializable {
   private String password;
   private Long user_id;
   private String token;
+  private Role role;
 
   public String getEmail() {
     return email;
@@ -37,6 +38,14 @@ public class LoginDTO implements Serializable {
     return password;
   }
 
+  public Role getRole() {
+    return role;
+  }
+
+  public void setRole(Role role) {
+    this.role = role;
+  }
+
   public void setPassword(String password) {
     this.password = password;
   }
@@ -53,10 +62,11 @@ public class LoginDTO implements Serializable {
 
   }
 
-  public LoginDTO(String email, String password, Long user) {
+  public LoginDTO(String email, String password, Long user, Role role) {
     this.email = email;
     this.password = password;
     this.user_id = user;
+    this.role = role;
   }
 
 }

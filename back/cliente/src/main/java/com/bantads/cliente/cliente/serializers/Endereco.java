@@ -1,4 +1,4 @@
-package com.bantads.cliente.cliente.model;
+package com.bantads.cliente.cliente.serializers;
 
 import java.io.Serializable;
 
