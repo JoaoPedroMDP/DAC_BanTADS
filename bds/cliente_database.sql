@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS endereco (
-    id BIGINT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     rua VARCHAR(255) NOT NULL,
     numero VARCHAR(255) NOT NULL,
     complemento varchar(255),
@@ -10,9 +10,8 @@ CREATE TABLE IF NOT EXISTS endereco (
 
 
 CREATE TABLE IF NOT EXISTS cliente (
-    id BIGINT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
     cpf varchar(11) NOT NULL,
     endereco BIGINT,
     CONSTRAINT fk_endereco FOREIGN KEY(endereco) REFERENCES endereco(id)

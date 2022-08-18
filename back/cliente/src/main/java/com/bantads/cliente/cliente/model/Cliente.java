@@ -16,7 +16,8 @@ public class Cliente implements Serializable {
   private String nome;
   @Column(name = "cpf")
   private String cpf;
-
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "endereco", referencedColumnName = "id")
   private Endereco endereco;
 
   public String getNome() {
@@ -33,22 +34,6 @@ public class Cliente implements Serializable {
 
   public void setCpf(String cpf) {
     this.cpf = cpf;
-  }
-
-  public Number getLimite() {
-    return limite;
-  }
-
-  public void setLimite(Number limite) {
-    this.limite = limite;
-  }
-
-  public Boolean getLimiteAtivo() {
-    return limiteAtivo;
-  }
-
-  public void setLimiteAtivo(Boolean limiteAtivo) {
-    this.limiteAtivo = limiteAtivo;
   }
 
   public Endereco getEndereco() {

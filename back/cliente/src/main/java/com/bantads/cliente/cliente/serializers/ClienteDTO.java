@@ -3,6 +3,7 @@ package com.bantads.cliente.cliente.serializers;
 import java.io.Serializable;
 
 public class ClienteDTO implements Serializable {
+  private Long id;
   private String nome;
   private String cpf;
   private EnderecoDTO endereco;
@@ -23,28 +24,20 @@ public class ClienteDTO implements Serializable {
     this.cpf = cpf;
   }
 
-  public Number getLimite() {
-    return limite;
-  }
-
-  public void setLimite(Number limite) {
-    this.limite = limite;
-  }
-
-  public Boolean getLimiteAtivo() {
-    return limiteAtivo;
-  }
-
-  public void setLimiteAtivo(Boolean limiteAtivo) {
-    this.limiteAtivo = limiteAtivo;
-  }
-
   public EnderecoDTO getEndereco() {
     return endereco;
   }
 
   public void setEndereco(EnderecoDTO endereco) {
     this.endereco = endereco;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
 }

@@ -3,6 +3,7 @@ package com.bantads.cliente.cliente.serializers;
 import java.io.Serializable;
 
 public class EnderecoDTO implements Serializable {
+  private Long id;
   private String rua;
   private String numero;
   private String complemento;
@@ -56,6 +57,14 @@ public class EnderecoDTO implements Serializable {
 
   public void setEstado(String estado) {
     this.estado = estado;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
 }
