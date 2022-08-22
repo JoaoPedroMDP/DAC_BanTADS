@@ -47,7 +47,7 @@ public class Account implements Serializable {
     }
 
     public boolean allowTransaction(Double amount) {
-        if (amount > limit) {
+        if (limit + balance < amount) {
             return false;
         }
 
@@ -56,10 +56,6 @@ public class Account implements Serializable {
 
     public void updateBalance(Double amount) {
         this.balance += amount;
-        if ((amount < 0 && this.balance < 0)) {
-            this.limit += this.balance;
-            this.balance = 0D;
-        }
     }
 
     public Long getId() {
