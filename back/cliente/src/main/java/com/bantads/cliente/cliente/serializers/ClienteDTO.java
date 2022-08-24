@@ -6,6 +6,9 @@ public class ClienteDTO implements Serializable {
   private Long id;
   private String nome;
   private String cpf;
+  private AccountStatus aprovado;
+  private Long gerente;
+  private Long conta;
   private EnderecoDTO endereco;
 
   public String getNome() {
@@ -38,6 +41,30 @@ public class ClienteDTO implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public AccountStatus getAprovado() {
+    return aprovado;
+  }
+
+  public void setAprovado(AccountStatus aprovado) {
+    this.aprovado = aprovado;
+  }
+
+  public Long getGerente() {
+    return gerente;
+  }
+
+  public void setGerente(Long gerente) {
+    this.gerente = gerente;
+  }
+
+  public Long getConta() {
+    return conta;
+  }
+
+  public void setConta(Long conta) {
+    this.conta = conta;
   }
 
 }

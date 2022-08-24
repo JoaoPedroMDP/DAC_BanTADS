@@ -15,6 +15,7 @@ import com.bantads.cliente.cliente.model.Cliente;
 import com.bantads.cliente.cliente.model.Endereco;
 import com.bantads.cliente.cliente.repositories.ClienteRepository;
 import com.bantads.cliente.cliente.repositories.EnderecoRepository;
+import com.bantads.cliente.cliente.serializers.AccountStatus;
 import com.bantads.cliente.cliente.serializers.ClienteDTO;
 import com.bantads.cliente.cliente.serializers.EnderecoDTO;
 
@@ -55,6 +56,8 @@ public class ClienteREST {
       Endereco end = repoEnd.save(mapper.map(cliente.getEndereco(), Endereco.class));
 
       cliente.setEndereco(mapper.map(end, EnderecoDTO.class));
+      cliente.setGerente(1L);
+      cliente.setAprovado(AccountStatus.ANALISE);
 
       repo.save(mapper.map(cliente, Cliente.class));
     } catch (Exception e) {

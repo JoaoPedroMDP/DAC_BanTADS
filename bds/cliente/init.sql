@@ -14,5 +14,8 @@ CREATE TABLE IF NOT EXISTS cliente (
     nome VARCHAR(255) NOT NULL,
     cpf varchar(11) NOT NULL,
     endereco BIGINT,
+    gerente BIGINT NOT NULL,
+    conta BIGINT,
+    aprovado VARCHAR(255) NOT NULL,
     CONSTRAINT fk_endereco FOREIGN KEY(endereco) REFERENCES endereco(id)
 );
