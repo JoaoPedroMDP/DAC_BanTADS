@@ -9,3 +9,56 @@ services:
       - "4200:4200"
     volumes:
       - ./front:/app:rw
+  auth:
+    networks:
+      - auth
+    image: 'auth:latest'
+    build:
+      context: ./back/auth
+    depends_on:
+       - auth-db
+    container_name: bantads-auth
+    ports:
+      - "5000:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://auth-db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  auth-db:
+    networks:
+      - auth
+    image: 'postgres:13.1-alpine'
+    container_name: bantads-auth-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  cliente:
+    networks:
+      - cliente
+    image: 'cliente:latest'
+    build:
+      context: ./back/cliente
+    depends_on:
+       - cliente-db
+    container_name: bantads-cliente
+    ports:
+      - "5001:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://cliente-db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  cliente-db:
+    networks:
+      - cliente
+    image: 'postgres:13.1-alpine'
+    container_name: bantads-cliente-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+networks:
+  auth:
+    driver: bridge
+  cliente:
+    driver: bridge
