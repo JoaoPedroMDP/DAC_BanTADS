@@ -2,6 +2,7 @@ version: '2'
 
 services:
   front:
+    container_name: bantads-front
     build:
       context: .
       dockerfile: Dockerfile
@@ -61,8 +62,51 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - ./bds/cliente/init.sql:/docker-entrypoint-initdb.d/init.sql
+  broker:
+    networks:
+      - auth
+      - cliente
+      - account
+    container_name: bantads-broker
+    image: rabbitmq:3.10-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      - "15692:15692"
+  account:
+    container_name: bantads-account
+    networks:
+      - account
+    volumes:
+      - ./back/account/:/app
+    build:
+      context: ./back/account
+    depends_on:
+       - account-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://bantads-account-db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - "5002:5000"
+  account-db:
+    networks:
+      - account
+    container_name: bantads-account-db
+    image: 'postgres:13.1-alpine'
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=accounts
+    ports:
+      - "5433:5432"
+
 networks:
   auth:
     driver: bridge
   cliente:
+    driver: bridge
+  account:
+    name: account
     driver: bridge
