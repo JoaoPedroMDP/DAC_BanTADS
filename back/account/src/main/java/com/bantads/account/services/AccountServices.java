@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.bantads.account.exceptions.AccountNotFound;
@@ -75,8 +76,12 @@ public class AccountServices {
         return toDTO;
     }
 
-    public void deleteAccount(Long id) {
-        repo.deleteById(id);
+    public void deleteAccount(Long id) throws AccountNotFound {
+        try {
+            repo.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new AccountNotFound();
+        }
     }
 
     public void transferFunds(Account origin, Account destination, Double amount)

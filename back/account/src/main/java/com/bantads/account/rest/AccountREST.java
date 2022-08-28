@@ -92,6 +92,8 @@ public class AccountREST {
             return new JsonResponse(200, "Conta removida!", null);
         } catch (IllegalArgumentException e) {
             return new JsonResponse(400, "O id enviado é nulo!", null);
+        } catch (AccountNotFound e) {
+            return new JsonResponse(404, "Conta não encontrada!", null);
         }
     }
 
