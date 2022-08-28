@@ -1,7 +1,6 @@
 package com.bantads.account.model;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 import javax.persistence.*;
 
@@ -18,8 +17,6 @@ public class Transaction implements Serializable {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    // @Column(name = "account_id")
-    // private Long accountId;
     private Account account;
 
     @Column(name = "type")
@@ -29,24 +26,26 @@ public class Transaction implements Serializable {
     private Double amount;
 
     @Column(name = "timestamp")
-    private Timestamp timestamp;
+    private Long timestamp;
 
     @Column(name = "extra_data")
     private String extraData;
+
+    @Column(name = "balance_before")
+    private Double balanceBefore;
 
     public Transaction() {
     }
 
     public Transaction(Long id, Account account, String type, Double amount,
-            // public Transaction(Long id, Long accountId, String type, Double amount,
-            Timestamp timestamp, String extraData) {
+            Long timestamp, String extraData, Double balanceBefore) {
         this.id = id;
         this.account = account;
-        // this.accountId = accountId;
         this.type = type;
         this.amount = amount;
         this.timestamp = timestamp;
         this.extraData = extraData;
+        this.balanceBefore = balanceBefore;
     }
 
     public TransactionDTO toDto() {
@@ -78,11 +77,11 @@ public class Transaction implements Serializable {
         this.amount = amount;
     }
 
-    public Timestamp getTimestamp() {
+    public Long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -106,12 +105,11 @@ public class Transaction implements Serializable {
         this.account = account;
     }
 
-    // public Long getAccountId() {
-    // return accountId;
-    // }
+    public Double getBalanceBefore() {
+        return balanceBefore;
+    }
 
-    // public void setAccountId(Long accountId) {
-    // this.accountId = accountId;
-    // }
-
+    public void setBalanceBefore(Double balanceBefore) {
+        this.balanceBefore = balanceBefore;
+    }
 }

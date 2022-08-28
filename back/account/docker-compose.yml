@@ -2,6 +2,7 @@ version: '2'
 
 services:
   db:
+    container_name: db_bantads_acc
     image: postgres
     environment:
       - POSTGRES_PASSWORD=postgres
@@ -9,9 +10,3 @@ services:
       - POSTGRES_DB=accounts
     ports:
       - "5433:5432"
-  broker:
-    image: rabbitmq:3.10-management
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-      - "15692:15692"

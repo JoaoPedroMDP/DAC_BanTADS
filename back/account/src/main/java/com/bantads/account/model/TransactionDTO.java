@@ -4,22 +4,29 @@ import java.io.Serializable;
 
 import org.modelmapper.ModelMapper;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonRawValue;
+
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class TransactionDTO implements Serializable {
     private Long id;
     private String type;
     private Double amount;
     private Long timestamp;
+    @JsonRawValue
     private String extraData;
+    private Double balanceBefore;
 
     public TransactionDTO() {
     }
 
-    public TransactionDTO(Long id, String type, Double amount, Long timestamp, String extraData) {
+    public TransactionDTO(Long id, String type, Double amount, Long timestamp, String extraData, Double balanceBefore) {
         this.id = id;
         this.type = type;
         this.amount = amount;
         this.timestamp = timestamp;
         this.extraData = extraData;
+        this.balanceBefore = balanceBefore;
     }
 
     public Transaction toEntity() {
@@ -67,4 +74,11 @@ public class TransactionDTO implements Serializable {
         this.extraData = extraData;
     }
 
+    public Double getBalanceBefore() {
+        return balanceBefore;
+    }
+
+    public void setBalanceBefore(Double balanceBefore) {
+        this.balanceBefore = balanceBefore;
+    }
 }

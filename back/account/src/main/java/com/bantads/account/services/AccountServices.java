@@ -1,6 +1,7 @@
 package com.bantads.account.services;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -28,13 +29,26 @@ public class AccountServices {
         return dtos;
     }
 
-    public AccountDTO getAccount(Long accountId) throws AccountNotFound {
-        AccountDTO acc = repo.findById(accountId).get().toDto();
-        if (acc == null) {
+    public Account getAccount(Long accountId) throws AccountNotFound {
+        Account acc = null;
+        try {
+            acc = repo.findById(accountId).get();
+            return acc;
+        } catch (NoSuchElementException e) {
+            throw new AccountNotFound();
+        }
+    }
+
+    public AccountDTO getAccountDTO(Long accountId) throws AccountNotFound {
+        Account acc = null;
+        try {
+            acc = repo.findById(accountId).get();
+        } catch (NoSuchElementException e) {
             throw new AccountNotFound();
         }
 
-        return acc;
+        AccountDTO dto = acc.toDto();
+        return dto;
     }
 
     public AccountDTO updateAccount(Long accountId, AccountDTO newData) throws AccountNotFound {

@@ -13,11 +13,9 @@ public class AccountDTO implements Serializable {
     private List<TransactionDTO> transactions;
 
     public AccountDTO() {
-        super();
     }
 
     public AccountDTO(Long id, Long userId, Double balance, List<TransactionDTO> transactions, Double limit) {
-        super();
         this.id = id;
         this.userId = userId;
         this.balance = balance;

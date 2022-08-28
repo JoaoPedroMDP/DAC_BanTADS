@@ -4,9 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "accounts")
@@ -25,6 +24,7 @@ public class Account implements Serializable {
     private Double balance;
 
     @Column(name = "acc_limit")
+    @NotNull(message = "Limite da conta é obrigatório!")
     private Double limit;
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
