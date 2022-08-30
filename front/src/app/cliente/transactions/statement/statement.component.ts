@@ -30,13 +30,14 @@ class Transaction {
     description: string,
     type: string,
     value: number,
-    transferDetails: Record<string, any> | null = null
+    transferDetails: Record<string, any> | undefined = undefined
   ) {
     this.datetime = datetime;
     this.description = description;
     this.type = type;
     this.value = value;
-    if (transferDetails != null) {
+
+    if (transferDetails !== undefined) {
       this.typeColor = this.determineTransactionColor(type, transferDetails);
       this.transferDetails = this.processTransferDetails(transferDetails);
     } else {
@@ -78,7 +79,7 @@ class Transaction {
     transferDetails: Record<string, any>
   ): Record<string, any> {
     const moneyWasSent = transferDetails["destiny"] !== undefined;
-
+    console.log(moneyWasSent);
     return {
       type: moneyWasSent ? "outcome" : "income",
       agent: moneyWasSent
@@ -108,12 +109,14 @@ class Day {
   ): Array<Transaction> {
     let assembledTransactions = new Array<Transaction>();
     transactions.forEach((transaction) => {
+      const extraData = transaction["extraData"] == "" ? undefined : transaction["extraData"];
+
       let assembledTransaction = new Transaction(
-        new Date(+transaction["datetime"]),
+        new Date(+transaction["timestamp"]),
         transaction["description"],
         transaction["type"],
-        transaction["value"],
-        transaction["transferDetails"]
+        transaction["amount"],
+        extraData
       );
       assembledTransactions.push(assembledTransaction);
     });
@@ -177,13 +180,14 @@ export class StatementComponent implements OnInit {
   async chamaApi(inicio: string, fim: string) {
     this.http
       .get<Record<string, any>>(
-        "https://run.mocky.io/v3/fbbbcdb2-fb60-490c-9d5a-af2167cd73b1"
+        "http://localhost:5003/accounts/13/statement?from=1661556686000&to=1661660000000"
       )
       .subscribe((response) => {
         // O '+' é pra converter para numerico
-        const startDate = new Date(+response["startDate"]);
-        const endDate = new Date(+response["endDate"]);
-        const days = response["days"];
+        const data = response["data"]
+        const startDate = new Date(+data["startDate"]);
+        const endDate = new Date(+data["endDate"]);
+        const days = data["days"];
 
         this.statement = new Statement(startDate, endDate, days);
       });
