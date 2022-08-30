@@ -29,5 +29,10 @@ export class SolicitacoesComponent implements OnInit {
   colunas: string[] = ['nome', 'cpf', 'salario','acao'];
   dataSource = matrizCliente; 
   constructor() { }
-
+  aceitar(nome: any) {
+    confirm(`Deseja Aceitar ${nome}`); 
+  }
+  rejeitar(nome: any) {
+    confirm(`Deseja rejeitar ${nome}`); 
+  }
 }

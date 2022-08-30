@@ -28,6 +28,11 @@ export class FullComponent implements OnInit {
       icon: "repeat",
       label: "Novos Clientes",
     },
+    {
+      link: "/gerente/consultar-cliente",
+      icon: "search",
+      label: "Pesquisar Cliente por CPF",
+    }
   ];
 
   constructor() {}
