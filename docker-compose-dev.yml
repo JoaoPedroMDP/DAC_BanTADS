@@ -90,7 +90,20 @@ services:
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     ports:
       - "5002:5000"
-  account-db:
+  account-db-commands:
+    networks:
+      - account
+    container_name: bantads-account-db
+    image: 'postgres:13.1-alpine'
+    volumes:
+      - ./bds/account/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=accounts
+    ports:
+      - "5433:5432"
+  account-db-queries:
     networks:
       - account
     container_name: bantads-account-db

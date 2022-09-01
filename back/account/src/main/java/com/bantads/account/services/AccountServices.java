@@ -19,8 +19,6 @@ import com.bantads.account.repository.AccountRepository;
 public class AccountServices {
     @Autowired
     private AccountRepository repo;
-    @Autowired
-    private ModelMapper mapper;
 
     public List<AccountDTO> getAllAccounts() {
         List<Account> accounts = repo.findAll();
@@ -69,9 +67,9 @@ public class AccountServices {
     }
 
     public AccountDTO createAccount(AccountDTO newAccount) {
-        Account toAccount = mapper.map(newAccount, Account.class);
+        Account toAccount = newAccount.toEntity();
         Account created = repo.save(toAccount);
-        AccountDTO toDTO = mapper.map(created, AccountDTO.class);
+        AccountDTO toDTO = created.toDto();
 
         return toDTO;
     }
