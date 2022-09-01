@@ -7,7 +7,7 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-import com.bantads.account.model.TransactionDTO;
+import com.bantads.account.transaction.models.TransactionDTO;
 
 public class Statement {
     public String startDate;

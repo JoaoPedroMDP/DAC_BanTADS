@@ -1,4 +1,4 @@
-package com.bantads.account.services;
+package com.bantads.account.account.services;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.bantads.account.account.models.Account;
+import com.bantads.account.account.models.AccountDTO;
+import com.bantads.account.account.repository.AccountRepository;
 import com.bantads.account.exceptions.AccountNotFound;
 import com.bantads.account.exceptions.InsufficientFunds;
-import com.bantads.account.model.Account;
-import com.bantads.account.model.AccountDTO;
-import com.bantads.account.repository.AccountRepository;
 
 @Service
 public class AccountServices {

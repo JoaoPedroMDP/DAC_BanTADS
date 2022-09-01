@@ -1,4 +1,4 @@
-package com.bantads.account.rest.transaction;
+package com.bantads.account.transaction.rest;
 
 import java.util.Map;
 
@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bantads.account.account.models.Account;
+import com.bantads.account.account.services.AccountServices;
 import com.bantads.account.exceptions.AccountNotFound;
 import com.bantads.account.exceptions.InsufficientFunds;
 import com.bantads.account.lib.JsonResponse;
-import com.bantads.account.model.Account;
-import com.bantads.account.model.TransactionDTO;
-import com.bantads.account.services.AccountServices;
-import com.bantads.account.services.TransactionServices;
+import com.bantads.account.transaction.models.TransactionDTO;
+import com.bantads.account.transaction.services.TransactionServices;
 
 @RestController
 @CrossOrigin

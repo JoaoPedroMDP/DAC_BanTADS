@@ -1,8 +1,10 @@
-package com.bantads.account.model;
+package com.bantads.account.account.models;
 
 import java.io.Serializable;
 import java.util.List;
 import org.modelmapper.ModelMapper;
+
+import com.bantads.account.transaction.models.Transaction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

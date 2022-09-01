@@ -1,46 +1,27 @@
-package com.bantads.account.model;
+package com.bantads.account.transaction.models;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
-
 import org.modelmapper.ModelMapper;
 
-@Entity
-@Table(name = "transactions")
-public class Transaction implements Serializable {
-    private static final Long serialVersionUID = 1L;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonRawValue;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+public class TransactionDTO implements Serializable {
     private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Account account;
-
-    @Column(name = "type")
     private String type;
-
-    @Column(name = "amount")
     private Double amount;
-
-    @Column(name = "timestamp")
     private Long timestamp;
-
-    @Column(name = "extra_data")
+    @JsonRawValue
     private String extraData;
-
-    @Column(name = "balance_before")
     private Double balanceBefore;
 
-    public Transaction() {
+    public TransactionDTO() {
     }
 
-    public Transaction(Long id, Account account, String type, Double amount,
-            Long timestamp, String extraData, Double balanceBefore) {
+    public TransactionDTO(Long id, String type, Double amount, Long timestamp, String extraData, Double balanceBefore) {
         this.id = id;
-        this.account = account;
         this.type = type;
         this.amount = amount;
         this.timestamp = timestamp;
@@ -48,9 +29,9 @@ public class Transaction implements Serializable {
         this.balanceBefore = balanceBefore;
     }
 
-    public TransactionDTO toDto() {
+    public Transaction toEntity() {
         ModelMapper mapper = new ModelMapper();
-        return mapper.map(this, TransactionDTO.class);
+        return mapper.map(this, Transaction.class);
     }
 
     public Long getId() {
@@ -91,18 +72,6 @@ public class Transaction implements Serializable {
 
     public void setExtraData(String extraData) {
         this.extraData = extraData;
-    }
-
-    public static Long getSerialversionuid() {
-        return serialVersionUID;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     public Double getBalanceBefore() {

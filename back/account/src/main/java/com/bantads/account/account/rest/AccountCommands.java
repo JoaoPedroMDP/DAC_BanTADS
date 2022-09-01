@@ -1,16 +1,16 @@
-package com.bantads.account.rest.account;
+package com.bantads.account.account.rest;
 
 import javax.validation.ConstraintViolationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.bantads.account.account.amqp.AccountSender;
+import com.bantads.account.account.models.AccountDTO;
+import com.bantads.account.account.services.AccountServices;
 import com.bantads.account.exceptions.AccountNotFound;
 import com.bantads.account.lib.JsonResponse;
 import com.bantads.account.lib.ValidationViolations;
-import com.bantads.account.model.AccountDTO;
-import com.bantads.account.queues.AccountSender;
-import com.bantads.account.services.AccountServices;
 
 @CrossOrigin
 @RestController

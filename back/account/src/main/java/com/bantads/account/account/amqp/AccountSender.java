@@ -1,8 +1,10 @@
-package com.bantads.account.queues;
+package com.bantads.account.account.amqp;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.bantads.account.model.AccountDTO;
+
+import com.bantads.account.account.models.AccountDTO;
+
 import org.springframework.amqp.core.Queue;
 
 public class AccountSender {

@@ -1,7 +1,7 @@
-package com.bantads.account.repository;
+package com.bantads.account.transaction.repository;
 
-import com.bantads.account.model.Account;
-import com.bantads.account.model.Transaction;
+import com.bantads.account.account.models.Account;
+import com.bantads.account.transaction.models.Transaction;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.*;

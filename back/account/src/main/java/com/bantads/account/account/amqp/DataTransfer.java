@@ -1,8 +1,8 @@
-package com.bantads.account.queues;
+package com.bantads.account.account.amqp;
 
 import java.io.Serializable;
 
-import com.bantads.account.model.AccountDTO;
+import com.bantads.account.account.models.AccountDTO;
 import com.google.gson.Gson;
 
 public class DataTransfer implements Serializable {

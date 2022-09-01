@@ -2,7 +2,7 @@ package com.bantads.account.lib;
 
 import java.util.ArrayList;
 
-import com.bantads.account.model.TransactionDTO;
+import com.bantads.account.transaction.models.TransactionDTO;
 
 public class StatementDay {
     public Double consolidatedValue;

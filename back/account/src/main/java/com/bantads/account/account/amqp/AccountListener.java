@@ -1,4 +1,4 @@
-package com.bantads.account.queues;
+package com.bantads.account.account.amqp;
 
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

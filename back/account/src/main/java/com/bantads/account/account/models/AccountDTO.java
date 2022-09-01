@@ -1,9 +1,11 @@
-package com.bantads.account.model;
+package com.bantads.account.account.models;
 
 import java.io.Serializable;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+
+import com.bantads.account.transaction.models.TransactionDTO;
 
 public class AccountDTO implements Serializable {
     private Long id;

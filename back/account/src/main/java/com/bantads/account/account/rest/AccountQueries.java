@@ -1,4 +1,4 @@
-package com.bantads.account.rest.account;
+package com.bantads.account.account.rest;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bantads.account.account.models.Account;
+import com.bantads.account.account.models.AccountDTO;
+import com.bantads.account.account.services.AccountServices;
 import com.bantads.account.exceptions.AccountNotFound;
 import com.bantads.account.lib.JsonResponse;
-import com.bantads.account.model.Account;
-import com.bantads.account.model.AccountDTO;
-import com.bantads.account.services.AccountServices;
 
 @CrossOrigin
 @RestController

@@ -1,4 +1,4 @@
-package com.bantads.account.services;
+package com.bantads.account.transaction.services;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -8,10 +8,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bantads.account.model.Account;
-import com.bantads.account.model.Transaction;
-import com.bantads.account.model.TransactionDTO;
-import com.bantads.account.repository.TransactionRepository;
+import com.bantads.account.account.models.Account;
+import com.bantads.account.transaction.models.Transaction;
+import com.bantads.account.transaction.models.TransactionDTO;
+import com.bantads.account.transaction.repository.TransactionRepository;
 import com.google.gson.Gson;
 
 @Service
