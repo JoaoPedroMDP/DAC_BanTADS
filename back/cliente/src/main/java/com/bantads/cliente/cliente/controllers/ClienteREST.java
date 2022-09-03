@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bantads.cliente.cliente.amqp.ClientRegistrationProducer;
 import com.bantads.cliente.cliente.model.Cliente;
 import com.bantads.cliente.cliente.model.Endereco;
 import com.bantads.cliente.cliente.repositories.ClienteRepository;
@@ -36,6 +37,9 @@ public class ClienteREST {
   @Autowired
   private ModelMapper mapper;
 
+  @Autowired
+  private ClientRegistrationProducer sender;
+
   @PostMapping(value = "/clientes")
   public ResponseEntity<Object> postMethodName(@RequestBody ClienteDTO cliente) {
     // TODO: validação do usuário
@@ -59,7 +63,10 @@ public class ClienteREST {
       cliente.setGerente(1L);
       cliente.setAprovado(AccountStatus.ANALISE);
 
-      repo.save(mapper.map(cliente, Cliente.class));
+      Cliente clienteObj = repo.save(mapper.map(cliente, Cliente.class));
+
+      cliente.setId(clienteObj.getId());
+      sender.send(cliente);
     } catch (Exception e) {
       return new ResponseEntity<>("Erro interno ao criar seu usuário", HttpStatus.INTERNAL_SERVER_ERROR);
     }
