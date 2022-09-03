@@ -50,6 +50,7 @@ const matrizCliente: Cliente[] = [
 export class ConsultaClientesComponent implements OnInit {
   colunas: string[] = ['nome', 'cpf','cidade','estado', 'saldo'];
   dataSource = matrizCliente;
+  cpfMask = { mask: "000.000.000-00" };
 
   constructor() { }
 

@@ -16,12 +16,15 @@ import { TransferComponent } from "./cliente/transactions/transfer/transfer.comp
 import { StatementComponent } from "./cliente/transactions/statement/statement.component";
 import { AdminSideBarComponent } from "./admin/adminSideBar/admin.component";
 import { FullComponent } from "./gerente/full/full.component";
+import { ConsultarClienteComponent } from "./gerente/consultar-cliente/consultar-cliente.component";
 
 const routes: Routes = [
   {
     path: "gerente",
     component: FullComponent,
     children: [
+      { path: "", component: ConsultaClientesComponent},
+      { path: "consultar-cliente", component: ConsultarClienteComponent},
       { path: "solicitacoes", component: SolicitacoesComponent },
       { path: "consulta-clientes", component: ConsultaClientesComponent },
       { path: "consulta-cliente/:id", component: ConsultaClienteComponent },

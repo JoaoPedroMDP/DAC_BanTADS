@@ -1,0 +1,10 @@
+<div class="card-body">
+  <form #formCpf="ngForm" (ngSubmit)="onClickSubmit(formCpf.value)">
+    
+    <mat-form-field class="me-24 fs-16" appearance="outline">
+      <mat-label>CPF:</mat-label>
+      <input name="cpf" ngModel type="text" [imask]="cpfMask" [unmask]="true" matInput type="text" required  placeholder="242.839.355-30">
+    </mat-form-field>
+    <button mat-button type="submit"  class="btn me-8 btn-info fw-normal">Pesquisar</button>
+  </form>  
+</div>
