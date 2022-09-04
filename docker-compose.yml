@@ -17,6 +17,7 @@ services:
       context: ./back/auth
     depends_on:
        - auth-db
+       - broker
     container_name: bantads-auth
     ports:
       - "5000:8080"
@@ -25,6 +26,8 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    volumes:
+      - ./back/auth:/app
   auth-db:
     networks:
       - auth
@@ -57,6 +60,16 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+  broker:
+    networks:
+      - auth
+      - cliente
+    container_name: bantads-broker
+    image: rabbitmq:3.10-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      - "15692:15692"
 networks:
   auth:
     driver: bridge

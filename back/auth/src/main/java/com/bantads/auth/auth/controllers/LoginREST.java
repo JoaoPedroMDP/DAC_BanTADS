@@ -18,6 +18,7 @@ import com.bantads.auth.auth.models.Login;
 import com.bantads.auth.auth.repository.LoginRepository;
 import com.bantads.auth.auth.serializers.LoginDTO;
 import com.bantads.auth.auth.serializers.Role;
+import com.bantads.auth.auth.utils.JsonResponse;
 import com.bantads.auth.auth.utils.PasswordEnc;
 
 @CrossOrigin
@@ -44,7 +45,7 @@ public class LoginREST {
     String salt = PasswordEnc.getSaltvalue(10);
 
     if (loginEntity == null) {
-      return new ResponseEntity<>("Email not registered", HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>(new JsonResponse(false, "Email não registrado!", null), HttpStatus.NOT_FOUND);
     }
 
     Boolean isPasswordCorrect = PasswordEnc.verifyUserPassword(password, loginEntity.getPassword(), salt);
@@ -58,13 +59,15 @@ public class LoginREST {
         loginEntity.setToken(token);
         loginEntity.setPassword("");
 
-        return new ResponseEntity<>(mapper.map(loginEntity, LoginDTO.class), HttpStatus.OK);
+        return new ResponseEntity<>(new JsonResponse(true, "", mapper.map(loginEntity, LoginDTO.class)), HttpStatus.OK);
       } catch (JWTCreationException e) {
-        return new ResponseEntity<>("Internal server error while creating JWT", HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new JsonResponse(false, "Internal server error while creating JWT", null),
+            HttpStatus.INTERNAL_SERVER_ERROR);
       }
     }
 
-    return new ResponseEntity<>("Wrong credentials", HttpStatus.UNAUTHORIZED);
+    return new ResponseEntity<>(new JsonResponse(false, "Usuário e/ou senha incorretos", null),
+        HttpStatus.UNAUTHORIZED);
   }
 
   @PostMapping("/auth/register")
@@ -74,7 +77,7 @@ public class LoginREST {
       Login loginEntity = repo.findByEmail(login.getEmail());
 
       if (loginEntity != null) {
-        return new ResponseEntity<>("Email already registered", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new JsonResponse(false, "Email não cadastrado!", null), HttpStatus.BAD_REQUEST);
       }
 
       if (login.getRole() == null) {
@@ -90,7 +93,8 @@ public class LoginREST {
       login.setPassword(passwordEnc);
       repo.save(mapper.map(login, Login.class));
 
-      return new ResponseEntity<>("User registered", HttpStatus.OK);
+      return new ResponseEntity<>(new JsonResponse(true, "Autenticação do usuário criada com sucesso!", null),
+          HttpStatus.OK);
 
     }
 
