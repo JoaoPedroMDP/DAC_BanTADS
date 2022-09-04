@@ -13,23 +13,14 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router, private authService: AuthService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.initAuth();
+    if (this.authService.getAuth()) {
+      this.authService.navigateToUserHome();
+    }
+  }
 
-  handleLogin() {
-    const user = this.authService.login({
-      email: this.email,
-      password: "123456",
-    });
-
-    // if (this.email === "admin") {
-    //   this.router.navigate(["/admin"]);
-    //   return console.log("admin");
-    // }
-    // if (this.email === "gerente") {
-    //   this.router.navigate(["/gerente"]);
-    //   return console.log("gerente");
-    // }
-    // this.router.navigate(["/cliente"]);
-    // return console.log("cliente");
+  async handleLogin() {
+    this.authService.login(this.email, this.password);
   }
 }
