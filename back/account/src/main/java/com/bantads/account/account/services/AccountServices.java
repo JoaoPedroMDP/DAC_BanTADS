@@ -1,37 +1,49 @@
 package com.bantads.account.account.services;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
-
-import org.modelmapper.ModelMapper;
+import com.bantads.account.account.models.AccountDTO;
+import com.bantads.account.account.models.command.AccountC;
+import com.bantads.account.account.models.query.AccountQ;
+import com.bantads.account.account.repository.command.AccountRepositoryC;
+import com.bantads.account.account.repository.query.AccountRepositoryQ;
+import com.bantads.account.exceptions.AccountNotFound;
+import com.bantads.account.exceptions.InsufficientFunds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.bantads.account.account.models.Account;
-import com.bantads.account.account.models.AccountDTO;
-import com.bantads.account.account.repository.AccountRepository;
-import com.bantads.account.exceptions.AccountNotFound;
-import com.bantads.account.exceptions.InsufficientFunds;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountServices {
     @Autowired
-    private AccountRepository repo;
+    private AccountRepositoryC commands;
+
+    @Autowired
+    private AccountRepositoryQ queries;
 
     public List<AccountDTO> getAllAccounts() {
-        List<Account> accounts = repo.findAll();
-        List<AccountDTO> dtos = accounts.stream()
-                .map(e -> e.toDto())
+        List<AccountQ> accounts = queries.findAll();
+        return accounts.stream()
+                .map(AccountQ::toDto)
                 .collect(Collectors.toList());
-        return dtos;
     }
 
-    public Account getAccount(Long accountId) throws AccountNotFound {
-        Account acc = null;
+    public AccountQ getAccount(Long accountId) throws AccountNotFound {
+        AccountQ acc = null;
         try {
-            acc = repo.findById(accountId).get();
+            acc = queries.findById(accountId).get();
+            return acc;
+        } catch (NoSuchElementException e) {
+            throw new AccountNotFound();
+        }
+    }
+
+    public AccountC getAccountC(Long accountId) throws AccountNotFound {
+        AccountC acc = null;
+        try {
+            acc = queries.findById(accountId).get().toCommand();
             return acc;
         } catch (NoSuchElementException e) {
             throw new AccountNotFound();
@@ -39,9 +51,9 @@ public class AccountServices {
     }
 
     public AccountDTO getAccountDTO(Long accountId) throws AccountNotFound {
-        Account acc = null;
+        AccountQ acc = null;
         try {
-            acc = repo.findById(accountId).get();
+            acc = queries.findById(accountId).get();
         } catch (NoSuchElementException e) {
             throw new AccountNotFound();
         }
@@ -51,24 +63,25 @@ public class AccountServices {
     }
 
     public AccountDTO updateAccount(Long accountId, AccountDTO newData) throws AccountNotFound {
-        Account toUpdate = null;
+        AccountC toUpdate = null;
 
-        toUpdate = repo.findById(accountId).get();
-        if (toUpdate == null) {
+        try{
+            toUpdate = queries.findById(accountId).get().toCommand();
+        }catch(NoSuchElementException e){
             throw new AccountNotFound();
         }
 
         toUpdate.setBalance(newData.getBalance());
         toUpdate.setLimit(newData.getLimit());
         toUpdate.setUserId(newData.getUserId());
-        toUpdate = repo.save(toUpdate);
+        toUpdate = commands.save(toUpdate);
 
         return toUpdate.toDto();
     }
 
     public AccountDTO createAccount(AccountDTO newAccount) {
-        Account toAccount = newAccount.toEntity();
-        Account created = repo.save(toAccount);
+        AccountC toAccount = newAccount.toCommand();
+        AccountC created = commands.save(toAccount);
         AccountDTO toDTO = created.toDto();
 
         return toDTO;
@@ -76,13 +89,13 @@ public class AccountServices {
 
     public void deleteAccount(Long id) throws AccountNotFound {
         try {
-            repo.deleteById(id);
+            commands.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             throw new AccountNotFound();
         }
     }
 
-    public void transferFunds(Account origin, Account destination, Double amount)
+    public void transferFunds(AccountC origin, AccountC destination, Double amount)
             throws InsufficientFunds, AccountNotFound {
         if (!origin.allowTransaction(-amount)) {
             throw new InsufficientFunds();
@@ -94,7 +107,7 @@ public class AccountServices {
         updateAccount(destination.getId(), destination.toDto());
     }
 
-    public void withdraw(Account account, Double amount) throws InsufficientFunds, AccountNotFound {
+    public void withdraw(AccountC account, Double amount) throws InsufficientFunds, AccountNotFound {
         if (account.allowTransaction(amount)) {
             account.updateBalance(-amount);
             updateAccount(account.getId(), account.toDto());
@@ -103,7 +116,7 @@ public class AccountServices {
         }
     }
 
-    public void deposit(Account account, Double amount) throws AccountNotFound {
+    public void deposit(AccountC account, Double amount) throws AccountNotFound {
         account.updateBalance(amount);
         updateAccount(account.getId(), account.toDto());
     }

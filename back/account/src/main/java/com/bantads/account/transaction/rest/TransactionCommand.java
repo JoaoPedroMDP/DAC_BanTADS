@@ -1,21 +1,16 @@
 package com.bantads.account.transaction.rest;
 
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.bantads.account.account.models.Account;
+import com.bantads.account.account.models.command.AccountC;
 import com.bantads.account.account.services.AccountServices;
 import com.bantads.account.exceptions.AccountNotFound;
 import com.bantads.account.exceptions.InsufficientFunds;
 import com.bantads.account.lib.JsonResponse;
 import com.bantads.account.transaction.models.TransactionDTO;
 import com.bantads.account.transaction.services.TransactionServices;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -30,7 +25,7 @@ public class TransactionCommand {
     public JsonResponse deposit(@PathVariable Long id, @RequestBody Map<String, String> json) {
         try {
             Double amount = Double.parseDouble(json.get("amount").toString());
-            Account account = accServ.getAccount(id);
+            AccountC account = accServ.getAccountC(id);
             accServ.deposit(account, amount);
 
             TransactionDTO dto = serv.deposit(account, amount).toDto();
@@ -46,7 +41,7 @@ public class TransactionCommand {
     public JsonResponse withdraw(@PathVariable Long id, @RequestBody Map<String, String> json) {
         try {
             Double amount = Double.parseDouble(json.get("amount").toString());
-            Account account = accServ.getAccount(id);
+            AccountC account = accServ.getAccountC(id);
 
             accServ.withdraw(account, amount);
             TransactionDTO dto = serv.withdraw(account, amount).toDto();
@@ -67,8 +62,8 @@ public class TransactionCommand {
             Double amount = Double.parseDouble(json.get("amount").toString());
             Long to = Long.parseLong(json.get("to"));
 
-            Account origin = accServ.getAccount(id);
-            Account destination = accServ.getAccount(to);
+            AccountC origin = accServ.getAccountC(id);
+            AccountC destination = accServ.getAccountC(to);
             accServ.transferFunds(origin, destination, amount);
 
             TransactionDTO dto = serv.transfer(origin, destination, amount).toDto();

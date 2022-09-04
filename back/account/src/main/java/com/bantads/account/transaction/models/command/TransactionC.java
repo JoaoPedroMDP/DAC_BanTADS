@@ -1,6 +1,7 @@
-package com.bantads.account.transaction.models;
+package com.bantads.account.transaction.models.command;
 
-import com.bantads.account.account.models.query.AccountQ;
+import com.bantads.account.account.models.command.AccountC;
+import com.bantads.account.transaction.models.TransactionDTO;
 import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
@@ -8,7 +9,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "transactions")
-public class Transaction implements Serializable {
+public class TransactionC implements Serializable {
     private static final Long serialVersionUID = 1L;
 
     @Id
@@ -17,7 +18,7 @@ public class Transaction implements Serializable {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private AccountQ account;
+    private AccountC account;
 
     @Column(name = "type")
     private String type;
@@ -34,11 +35,11 @@ public class Transaction implements Serializable {
     @Column(name = "balance_before")
     private Double balanceBefore;
 
-    public Transaction() {
+    public TransactionC() {
     }
 
-    public Transaction(Long id, AccountQ account, String type, Double amount,
-                       Long timestamp, String extraData, Double balanceBefore) {
+    public TransactionC(Long id, AccountC account, String type, Double amount,
+                        Long timestamp, String extraData, Double balanceBefore) {
         this.id = id;
         this.account = account;
         this.type = type;
@@ -97,11 +98,11 @@ public class Transaction implements Serializable {
         return serialVersionUID;
     }
 
-    public AccountQ getAccount() {
+    public AccountC getAccount() {
         return account;
     }
 
-    public void setAccount(AccountQ account) {
+    public void setAccount(AccountC account) {
         this.account = account;
     }
 

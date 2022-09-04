@@ -1,6 +1,7 @@
-package com.bantads.account.transaction.models;
+package com.bantads.account.transaction.models.query;
 
 import com.bantads.account.account.models.query.AccountQ;
+import com.bantads.account.transaction.models.TransactionDTO;
 import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
@@ -8,7 +9,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "transactions")
-public class Transaction implements Serializable {
+public class TransactionQ implements Serializable {
     private static final Long serialVersionUID = 1L;
 
     @Id
@@ -34,11 +35,11 @@ public class Transaction implements Serializable {
     @Column(name = "balance_before")
     private Double balanceBefore;
 
-    public Transaction() {
+    public TransactionQ() {
     }
 
-    public Transaction(Long id, AccountQ account, String type, Double amount,
-                       Long timestamp, String extraData, Double balanceBefore) {
+    public TransactionQ(Long id, AccountQ account, String type, Double amount,
+                        Long timestamp, String extraData, Double balanceBefore) {
         this.id = id;
         this.account = account;
         this.type = type;

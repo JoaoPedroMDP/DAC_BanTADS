@@ -1,19 +1,18 @@
 package com.bantads.account.account.rest;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-
+import com.bantads.account.account.models.AccountDTO;
+import com.bantads.account.account.models.query.AccountQ;
+import com.bantads.account.account.services.AccountServices;
+import com.bantads.account.exceptions.AccountNotFound;
+import com.bantads.account.lib.JsonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bantads.account.account.models.Account;
-import com.bantads.account.account.models.AccountDTO;
-import com.bantads.account.account.services.AccountServices;
-import com.bantads.account.exceptions.AccountNotFound;
-import com.bantads.account.lib.JsonResponse;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -46,7 +45,7 @@ public class AccountQueries {
     @GetMapping(value = "/accounts/{id}/balance", produces = "application/json")
     public JsonResponse getBalance(@PathVariable Long id) {
         try {
-            Account account = serv.getAccount(id);
+            AccountQ account = serv.getAccount(id);
 
             LinkedHashMap<String, Double> balance = new LinkedHashMap<>();
             balance.put("balance", account.getBalance());

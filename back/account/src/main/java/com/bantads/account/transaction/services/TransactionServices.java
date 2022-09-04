@@ -1,69 +1,70 @@
 package com.bantads.account.transaction.services;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.bantads.account.account.models.command.AccountC;
+import com.bantads.account.account.models.query.AccountQ;
+import com.bantads.account.transaction.models.TransactionDTO;
+import com.bantads.account.transaction.models.command.TransactionC;
+import com.bantads.account.transaction.models.query.TransactionQ;
+import com.bantads.account.transaction.repository.command.TransactionRepositoryC;
+import com.bantads.account.transaction.repository.query.TransactionRepositoryQ;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bantads.account.account.models.Account;
-import com.bantads.account.transaction.models.Transaction;
-import com.bantads.account.transaction.models.TransactionDTO;
-import com.bantads.account.transaction.repository.TransactionRepository;
-import com.google.gson.Gson;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionServices {
     @Autowired
-    private TransactionRepository repo;
+    private TransactionRepositoryQ queries;
 
-    public ArrayList<TransactionDTO> getAccountTransactions(Account acc, Long from, Long to) {
-        List<Transaction> transactions = repo.findByAccountIdAndTimestampBetween(acc, from, to);
+    @Autowired
+    private TransactionRepositoryC commands;
 
-        List<TransactionDTO> dtos = transactions.stream()
-                .map(e -> e.toDto())
-                .collect(Collectors.toList());
+    public ArrayList<TransactionDTO> getAccountTransactions(AccountQ acc, Long from, Long to) {
+        List<TransactionQ> transactions = queries.findByAccountIdAndTimestampBetween(acc, from, to);
 
-        return new ArrayList<TransactionDTO>(dtos);
+        return transactions.stream()
+                .map(TransactionQ::toDto).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public List<TransactionDTO> getAccountTransactions(Long accountId) {
-        List<Transaction> transactions = repo.findByAccountId(accountId);
+        List<TransactionQ> transactions = queries.findByAccountId(accountId);
 
-        List<TransactionDTO> dtos = transactions.stream()
-                .map(e -> e.toDto())
+        return transactions.stream()
+                .map(TransactionQ::toDto)
                 .collect(Collectors.toList());
-
-        return dtos;
     }
 
-    private Transaction createTransaction(Account account, String type, Double amount, Long timestamp,
-            String extra_data) {
-        Transaction newTransaction = new Transaction();
+    private TransactionC createTransaction(AccountC account, String type, Double amount, Long timestamp,
+                                          String extra_data) {
+        TransactionC newTransaction = new TransactionC();
         newTransaction.setAccount(account);
         newTransaction.setType(type);
         newTransaction.setAmount(amount);
         newTransaction.setTimestamp(timestamp);
-        newTransaction.setExtraData(extra_data == "" ? null : extra_data);
+        newTransaction.setExtraData(Objects.equals(extra_data, "") ? null : extra_data);
         newTransaction.setBalanceBefore(account.getBalance() - amount);
-        return repo.save(newTransaction);
+        return commands.save(newTransaction);
     }
 
-    private Transaction createTransaction(Account account, String type, Double amount, Long timestamp) {
+    private TransactionC createTransaction(AccountC account, String type, Double amount, Long timestamp) {
         return createTransaction(account, type, amount, timestamp, "");
     }
 
-    public Transaction deposit(Account account, Double amount) {
+    public TransactionC deposit(AccountC account, Double amount) {
         return createTransaction(account, "deposit", amount, System.currentTimeMillis());
     }
 
-    public Transaction withdraw(Account account, Double amount) {
+    public TransactionC withdraw(AccountC account, Double amount) {
         return createTransaction(account, "withdraw", -1 * amount, System.currentTimeMillis());
     }
 
-    public Transaction transfer(Account from, Account to, Double amount) {
+    public TransactionC transfer(AccountC from, AccountC to, Double amount) {
         // TODO: Pegar o nome da api de usuários
         LinkedHashMap<String, String> origin = new LinkedHashMap<String, String>();
         origin.put("origin", from.getUserId().toString());
