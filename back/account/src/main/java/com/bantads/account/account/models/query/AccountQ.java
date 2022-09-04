@@ -30,7 +30,7 @@ public class AccountQ implements Serializable {
     @NotNull(message = "Limite da conta é obrigatório!")
     private Double limit;
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<TransactionQ> transactions;
 
     public AccountQ() {

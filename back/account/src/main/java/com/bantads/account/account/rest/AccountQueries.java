@@ -26,6 +26,7 @@ public class AccountQueries {
             List<AccountDTO> dtos = serv.getAllAccounts();
             return new JsonResponse(200, "Listando " + dtos.size() + " contas.", dtos);
         } catch (Exception e) {
+            e.printStackTrace();
             return new JsonResponse(500, "Erro ao listar contas.", null);
         }
     }
@@ -36,8 +37,10 @@ public class AccountQueries {
             AccountDTO acc = serv.getAccountDTO(id);
             return new JsonResponse(200, "Retornando conta " + acc.getId(), acc);
         } catch (IllegalArgumentException e) {
+            e.printStackTrace();
             return new JsonResponse(400, "Id passado é nulo!", null);
         } catch (AccountNotFound e) {
+            e.printStackTrace();
             return new JsonResponse(404, "Conta não encontrada!", null);
         }
     }
@@ -52,8 +55,10 @@ public class AccountQueries {
 
             return new JsonResponse(200, "Saldo!", balance);
         } catch (IllegalArgumentException e) {
+            e.printStackTrace();
             return new JsonResponse(400, "Revise os dados passados!", null);
         } catch (AccountNotFound e) {
+            e.printStackTrace();
             return new JsonResponse(404, "Conta não encontrada!", null);
         }
     }

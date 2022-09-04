@@ -2,6 +2,7 @@ package com.bantads.account.transaction.services;
 
 import com.bantads.account.account.models.command.AccountC;
 import com.bantads.account.account.models.query.AccountQ;
+import com.bantads.account.transaction.amqp.TransactionSender;
 import com.bantads.account.transaction.models.TransactionDTO;
 import com.bantads.account.transaction.models.command.TransactionC;
 import com.bantads.account.transaction.models.query.TransactionQ;
@@ -24,6 +25,9 @@ public class TransactionServices {
 
     @Autowired
     private TransactionRepositoryC commands;
+
+    @Autowired
+    private TransactionSender sender;
 
     public ArrayList<TransactionDTO> getAccountTransactions(AccountQ acc, Long from, Long to) {
         List<TransactionQ> transactions = queries.findByAccountIdAndTimestampBetween(acc, from, to);
@@ -49,7 +53,10 @@ public class TransactionServices {
         newTransaction.setTimestamp(timestamp);
         newTransaction.setExtraData(Objects.equals(extra_data, "") ? null : extra_data);
         newTransaction.setBalanceBefore(account.getBalance() - amount);
-        return commands.save(newTransaction);
+
+        TransactionC created = commands.save(newTransaction);
+        sender.send(created.toDto(), "create");
+        return created;
     }
 
     private TransactionC createTransaction(AccountC account, String type, Double amount, Long timestamp) {
@@ -74,11 +81,11 @@ public class TransactionServices {
         Gson gson = new Gson();
 
         createTransaction(
-                to, "transfer", amount,
-                System.currentTimeMillis(), gson.toJson(origin));
-
-        return createTransaction(
                 from, "transfer", -1 * amount,
                 System.currentTimeMillis(), gson.toJson(destiny));
+
+        return createTransaction(
+                to, "transfer", amount,
+                System.currentTimeMillis(), gson.toJson(origin));
     }
 }

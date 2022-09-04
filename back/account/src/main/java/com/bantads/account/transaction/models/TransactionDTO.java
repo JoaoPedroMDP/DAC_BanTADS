@@ -1,11 +1,12 @@
 package com.bantads.account.transaction.models;
 
-import java.io.Serializable;
-
-import org.modelmapper.ModelMapper;
-
+import com.bantads.account.transaction.models.command.TransactionC;
+import com.bantads.account.transaction.models.query.TransactionQ;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRawValue;
+import org.modelmapper.ModelMapper;
+
+import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class TransactionDTO implements Serializable {
@@ -17,21 +18,29 @@ public class TransactionDTO implements Serializable {
     private String extraData;
     private Double balanceBefore;
 
+    private Long accountId;
+
     public TransactionDTO() {
     }
 
-    public TransactionDTO(Long id, String type, Double amount, Long timestamp, String extraData, Double balanceBefore) {
+    public TransactionDTO(Long id, String type, Double amount, Long timestamp, String extraData, Double balanceBefore, Long accountId) {
         this.id = id;
         this.type = type;
         this.amount = amount;
         this.timestamp = timestamp;
         this.extraData = extraData;
         this.balanceBefore = balanceBefore;
+        this.accountId = accountId;
     }
 
-    public Transaction toEntity() {
+    public TransactionC toCommand(){
         ModelMapper mapper = new ModelMapper();
-        return mapper.map(this, Transaction.class);
+        return mapper.map(this, TransactionC.class);
+    }
+
+    public TransactionQ toQuery(){
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(this, TransactionQ.class);
     }
 
     public Long getId() {
@@ -80,5 +89,13 @@ public class TransactionDTO implements Serializable {
 
     public void setBalanceBefore(Double balanceBefore) {
         this.balanceBefore = balanceBefore;
+    }
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 }

@@ -1,5 +1,6 @@
 package com.bantads.account.account.services;
 
+import com.bantads.account.account.amqp.AccountSender;
 import com.bantads.account.account.models.AccountDTO;
 import com.bantads.account.account.models.command.AccountC;
 import com.bantads.account.account.models.query.AccountQ;
@@ -22,6 +23,9 @@ public class AccountServices {
 
     @Autowired
     private AccountRepositoryQ queries;
+
+    @Autowired
+    private AccountSender sender;
 
     public List<AccountDTO> getAllAccounts() {
         List<AccountQ> accounts = queries.findAll();
@@ -62,6 +66,14 @@ public class AccountServices {
         return dto;
     }
 
+    public AccountDTO createAccount(AccountDTO newAccount) {
+        AccountC toAccount = newAccount.toCommand();
+        AccountC created = commands.save(toAccount);
+        AccountDTO toDTO = created.toDto();
+        sender.send(toDTO, "create");
+        return toDTO;
+    }
+
     public AccountDTO updateAccount(Long accountId, AccountDTO newData) throws AccountNotFound {
         AccountC toUpdate = null;
 
@@ -75,21 +87,15 @@ public class AccountServices {
         toUpdate.setLimit(newData.getLimit());
         toUpdate.setUserId(newData.getUserId());
         toUpdate = commands.save(toUpdate);
-
+        sender.send(toUpdate.toDto(), "update");
         return toUpdate.toDto();
-    }
-
-    public AccountDTO createAccount(AccountDTO newAccount) {
-        AccountC toAccount = newAccount.toCommand();
-        AccountC created = commands.save(toAccount);
-        AccountDTO toDTO = created.toDto();
-
-        return toDTO;
     }
 
     public void deleteAccount(Long id) throws AccountNotFound {
         try {
+            AccountDTO deleted = getAccountDTO(id);
             commands.deleteById(id);
+            sender.send(deleted, "delete");
         } catch (EmptyResultDataAccessException e) {
             throw new AccountNotFound();
         }

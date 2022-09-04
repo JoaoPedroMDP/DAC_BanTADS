@@ -1,19 +1,19 @@
 package com.bantads.account.account.amqp;
 
-import java.io.Serializable;
-
 import com.bantads.account.account.models.AccountDTO;
 import com.google.gson.Gson;
 
-public class DataTransfer implements Serializable {
+import java.io.Serializable;
+
+public class ADataTransfer implements Serializable {
     private AccountDTO account;
     private String action;
 
-    public DataTransfer() {
+    public ADataTransfer() {
         System.out.println("Inicializando um DT vazio");
     }
 
-    public DataTransfer(AccountDTO account, String action) {
+    public ADataTransfer(AccountDTO account, String action) {
         this.account = account;
         this.action = action;
         System.out.println("Inicializando um DT com dados");
@@ -23,8 +23,8 @@ public class DataTransfer implements Serializable {
         return new Gson().toJson(this);
     }
 
-    public static DataTransfer fromJson(String json) {
-        return new Gson().fromJson(json, DataTransfer.class);
+    public static ADataTransfer fromJson(String json) {
+        return new Gson().fromJson(json, ADataTransfer.class);
     }
 
     public AccountDTO getAccount() {

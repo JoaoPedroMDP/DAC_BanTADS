@@ -26,11 +26,6 @@ public class AccountDTO implements Serializable {
         this.limit = limit;
     }
 
-    public Account toEntity() {
-        ModelMapper mapper = new ModelMapper();
-        return mapper.map(this, Account.class);
-    }
-
     public AccountC toCommand(){
         ModelMapper mapper = new ModelMapper();
         return mapper.map(this, AccountC.class);

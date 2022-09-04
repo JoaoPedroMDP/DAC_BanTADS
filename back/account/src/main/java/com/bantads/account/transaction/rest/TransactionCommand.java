@@ -24,7 +24,7 @@ public class TransactionCommand {
     @PostMapping(value = "/accounts/{id}/deposit", produces = "application/json")
     public JsonResponse deposit(@PathVariable Long id, @RequestBody Map<String, String> json) {
         try {
-            Double amount = Double.parseDouble(json.get("amount").toString());
+            Double amount = Double.parseDouble(json.get("amount"));
             AccountC account = accServ.getAccountC(id);
             accServ.deposit(account, amount);
 
