@@ -18,6 +18,7 @@ import com.bantads.auth.auth.models.Login;
 import com.bantads.auth.auth.repository.LoginRepository;
 import com.bantads.auth.auth.serializers.LoginDTO;
 import com.bantads.auth.auth.serializers.Role;
+import com.bantads.auth.auth.utils.JsonResponse;
 import com.bantads.auth.auth.utils.PasswordEnc;
 
 @CrossOrigin
@@ -74,7 +75,7 @@ public class LoginREST {
       Login loginEntity = repo.findByEmail(login.getEmail());
 
       if (loginEntity != null) {
-        return new ResponseEntity<>("Email already registered", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new JsonResponse(false, "Email não cadastrado!", null), HttpStatus.BAD_REQUEST);
       }
 
       if (login.getRole() == null) {
@@ -90,7 +91,8 @@ public class LoginREST {
       login.setPassword(passwordEnc);
       repo.save(mapper.map(login, Login.class));
 
-      return new ResponseEntity<>("User registered", HttpStatus.OK);
+      return new ResponseEntity<>(new JsonResponse(true, "Autenticação do usuário criada com sucesso!", null),
+          HttpStatus.OK);
 
     }
 
