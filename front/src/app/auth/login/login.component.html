@@ -9,7 +9,7 @@
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Senha</mat-label>
-      <input matInput type="password" placeholder="Insira sua senha">
+      <input matInput type="password" placeholder="Insira sua senha" [(ngModel)]="password">
     </mat-form-field>
 
     <button mat-flat-button routerLink="/cliente/register" class="register-button">Cadastrar</button>
