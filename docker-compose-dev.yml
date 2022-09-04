@@ -13,19 +13,22 @@ services:
   auth:
     networks:
       - auth
-    image: 'docker-spring-boot-postgres:latest'
+    image: 'auth:latest'
     build:
       context: ./back/auth
     depends_on:
        - auth-db
+       - broker
     container_name: bantads-auth
     ports:
-      - "5001:8080"
+      - "5000:8080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://auth-db:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    volumes:
+      - ./back/auth:/app
   auth-db:
     networks:
       - auth
@@ -34,19 +37,17 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    volumes:
-      - ./bds/auth/init.sql:/docker-entrypoint-initdb.d/init.sql
   cliente:
     networks:
       - cliente
-    image: 'docker-spring-boot-postgres:latest'
+    image: 'cliente:latest'
     build:
       context: ./back/cliente
     depends_on:
        - cliente-db
     container_name: bantads-cliente
     ports:
-      - "5000:8080"
+      - "5001:8080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://cliente-db:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
@@ -60,13 +61,36 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    volumes:
-      - ./bds/cliente/init.sql:/docker-entrypoint-initdb.d/init.sql
+  gerente:
+    networks:
+      - gerente
+    image: 'gerente:latest'
+    build:
+      context: ./back/gerente
+    depends_on:
+       - gerente-db
+    container_name: bantads-gerente
+    ports:
+      - "5002:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://gerente-db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  gerente-db:
+    networks:
+      - gerente
+    image: 'postgres:13.1-alpine'
+    container_name: bantads-gerente-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
   broker:
     networks:
       - auth
       - cliente
       - account
+      - gerente
     container_name: bantads-broker
     image: rabbitmq:3.10-management
     ports:
@@ -74,6 +98,7 @@ services:
       - "15672:15672"
       - "15692:15692"
   account:
+    image: 'account:latest'
     container_name: bantads-account
     networks:
       - account
@@ -100,13 +125,13 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
-    ports:
-      - "5433:5432"
 
 networks:
   auth:
     driver: bridge
   cliente:
+    driver: bridge
+  gerente:
     driver: bridge
   account:
     name: account
