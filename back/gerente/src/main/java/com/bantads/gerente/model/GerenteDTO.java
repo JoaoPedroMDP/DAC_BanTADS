@@ -11,6 +11,7 @@ public class GerenteDTO implements Serializable {
 	public GerenteDTO() {
 		super();
 	}
+
 	public GerenteDTO(int id, String nome, String email, String cpf) {
 		super();
 		this.id = id;
@@ -23,6 +24,15 @@ public class GerenteDTO implements Serializable {
 	private String nome;
 	private String email;
 	private String cpf;
+	private Integer numClientes;
+
+	public Integer getNumClientes() {
+		return numClientes;
+	}
+
+	public void setNumClientes(Integer numClientes) {
+		this.numClientes = numClientes;
+	}
 
 	public int getId() {
 		return id;

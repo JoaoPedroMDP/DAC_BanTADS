@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bantads.cliente.cliente.amqp.ClientRegistrationProducer;
+import com.bantads.cliente.cliente.amqp.GerenteProducer;
+import com.bantads.cliente.cliente.amqp.GerenteTransfer;
 import com.bantads.cliente.cliente.model.Cliente;
 import com.bantads.cliente.cliente.model.Endereco;
 import com.bantads.cliente.cliente.repositories.ClienteRepository;
@@ -40,6 +42,9 @@ public class ClienteREST {
 
   @Autowired
   private ClientRegistrationProducer sender;
+
+  @Autowired
+  private GerenteProducer gerenteSender;
 
   @PostMapping(value = "/clientes")
   public ResponseEntity<Object> postMethodName(@RequestBody ClienteDTO cliente) {
@@ -75,7 +80,7 @@ public class ClienteREST {
       cliente.setAprovado(AccountStatus.ANALISE);
 
       // TODO: assinalar ao gerente com menos clientes
-      cliente.setGerente(1L);
+      // cliente.setGerente(1L);
 
       Cliente clienteObj = repo.save(mapper.map(cliente, Cliente.class));
 
@@ -84,6 +89,12 @@ public class ClienteREST {
       // Rabbit para criar a autenticação do usuário
       // sender.send(cliente);
 
+      GerenteTransfer gt = new GerenteTransfer();
+
+      gt.setAction("create-cliente");
+      gt.setCliente(cliente.getId());
+
+      gerenteSender.send(gt);
       cliente.setPassword("");
 
     } catch (Exception e) {

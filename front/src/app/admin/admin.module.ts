@@ -9,6 +9,7 @@ import { GerenteComponent } from "./perfilGerente/gerente.component";
 import { AdminComponent } from "./listaDeGerentes/admin.component";
 import { CriarGerenteComponent } from "./criar-gerente/criar-gerente.component";
 import { AdminSideBarComponent } from "./adminSideBar/admin.component";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { AdminSideBarComponent } from "./adminSideBar/admin.component";
     FeatherModule.pick(allIcons),
     MaterialModule,
     IMaskModule,
+    FormsModule,
   ],
 })
 export class AdminModule {}
