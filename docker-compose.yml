@@ -60,10 +60,35 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+  gerente:
+    networks:
+      - gerente
+    image: 'gerente:latest'
+    build:
+      context: ./back/gerente
+    depends_on:
+       - gerente-db
+    container_name: bantads-gerente
+    ports:
+      - "5002:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://gerente-db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  gerente-db:
+    networks:
+      - gerente
+    image: 'postgres:13.1-alpine'
+    container_name: bantads-gerente-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
   broker:
     networks:
       - auth
       - cliente
+      - gerente
     container_name: bantads-broker
     image: rabbitmq:3.10-management
     ports:
@@ -74,4 +99,6 @@ networks:
   auth:
     driver: bridge
   cliente:
+    driver: bridge
+  gerente:
     driver: bridge

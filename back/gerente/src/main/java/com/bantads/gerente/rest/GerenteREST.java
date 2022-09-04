@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bantads.gerente.model.Gerente;
 import com.bantads.gerente.model.GerenteDTO;
 import com.bantads.gerente.repository.GerenteRepository;
+
 @CrossOrigin
 @RestController
 public class GerenteREST {
@@ -45,7 +46,7 @@ public class GerenteREST {
 		// salva a Entidade convertida do DTO
 		repo.save(mapper.map(gerente, Gerente.class));
 		// busca o usuário inserido
-		Gerente ger = repo.findByCPF(gerente.getCpf());
+		Gerente ger = repo.findByCpf(gerente.getCpf());
 		// retorna o DTO equivalente à entidade
 		return mapper.map(ger, GerenteDTO.class);
 	}
