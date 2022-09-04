@@ -5,7 +5,7 @@ public class JsonResponse {
   private String message;
   private Object data;
 
-  public JsonResponse(Boolean sucess, String message, Object data) {
+  public JsonResponse(Boolean success, String message, Object data) {
     this.success = success;
     this.message = message;
     this.data = data;

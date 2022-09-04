@@ -45,7 +45,7 @@ public class LoginREST {
     String salt = PasswordEnc.getSaltvalue(10);
 
     if (loginEntity == null) {
-      return new ResponseEntity<>("Email not registered", HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>(new JsonResponse(false, "Email não registrado!", null), HttpStatus.NOT_FOUND);
     }
 
     Boolean isPasswordCorrect = PasswordEnc.verifyUserPassword(password, loginEntity.getPassword(), salt);
@@ -59,13 +59,15 @@ public class LoginREST {
         loginEntity.setToken(token);
         loginEntity.setPassword("");
 
-        return new ResponseEntity<>(mapper.map(loginEntity, LoginDTO.class), HttpStatus.OK);
+        return new ResponseEntity<>(new JsonResponse(true, "", mapper.map(loginEntity, LoginDTO.class)), HttpStatus.OK);
       } catch (JWTCreationException e) {
-        return new ResponseEntity<>("Internal server error while creating JWT", HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new JsonResponse(false, "Internal server error while creating JWT", null),
+            HttpStatus.INTERNAL_SERVER_ERROR);
       }
     }
 
-    return new ResponseEntity<>("Wrong credentials", HttpStatus.UNAUTHORIZED);
+    return new ResponseEntity<>(new JsonResponse(false, "Usuário e/ou senha incorretos", null),
+        HttpStatus.UNAUTHORIZED);
   }
 
   @PostMapping("/auth/register")
