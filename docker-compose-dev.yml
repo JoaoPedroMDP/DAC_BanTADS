@@ -36,6 +36,8 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./bds/auth/init.sql:/docker-entrypoint-initdb.d/init.sql
   cliente:
     networks:
       - cliente
@@ -101,12 +103,10 @@ services:
     container_name: bantads-account
     networks:
       - gerente
-    image: 'gerente:latest'
     build:
       context: ./back/gerente
     depends_on:
        - gerente-db
-    container_name: bantads-gerente
     ports:
       - "5002:8080"
     environment:
@@ -114,14 +114,33 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-  gerente-db:
+  account-db:
     networks:
-      - gerente
+      - account
+    container_name: bantads-account-db
     image: 'postgres:13.1-alpine'
     volumes:
       - ./bds/account/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
+      - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
+    ports:
+      - "5433:5432"
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    networks:
+      - auth
+      - cliente
+      - gerente
+    restart: unless-stopped
+
 networks:
   auth:
     driver: bridge
