@@ -1,56 +1,46 @@
-package com.bantads.account.model;
+package com.bantads.account.transaction.models;
+
+import com.bantads.account.transaction.models.command.TransactionC;
+import com.bantads.account.transaction.models.query.TransactionQ;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonRawValue;
+import org.modelmapper.ModelMapper;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
-
-import org.modelmapper.ModelMapper;
-
-@Entity
-@Table(name = "transactions")
-public class Transaction implements Serializable {
-    private static final Long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+public class TransactionDTO implements Serializable {
     private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Account account;
-
-    @Column(name = "type")
     private String type;
-
-    @Column(name = "amount")
     private Double amount;
-
-    @Column(name = "timestamp")
     private Long timestamp;
-
-    @Column(name = "extra_data")
+    @JsonRawValue
     private String extraData;
-
-    @Column(name = "balance_before")
     private Double balanceBefore;
 
-    public Transaction() {
+    private Long accountId;
+
+    public TransactionDTO() {
     }
 
-    public Transaction(Long id, Account account, String type, Double amount,
-            Long timestamp, String extraData, Double balanceBefore) {
+    public TransactionDTO(Long id, String type, Double amount, Long timestamp, String extraData, Double balanceBefore, Long accountId) {
         this.id = id;
-        this.account = account;
         this.type = type;
         this.amount = amount;
         this.timestamp = timestamp;
         this.extraData = extraData;
         this.balanceBefore = balanceBefore;
+        this.accountId = accountId;
     }
 
-    public TransactionDTO toDto() {
+    public TransactionC toCommand(){
         ModelMapper mapper = new ModelMapper();
-        return mapper.map(this, TransactionDTO.class);
+        return mapper.map(this, TransactionC.class);
+    }
+
+    public TransactionQ toQuery(){
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(this, TransactionQ.class);
     }
 
     public Long getId() {
@@ -93,23 +83,19 @@ public class Transaction implements Serializable {
         this.extraData = extraData;
     }
 
-    public static Long getSerialversionuid() {
-        return serialVersionUID;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
     public Double getBalanceBefore() {
         return balanceBefore;
     }
 
     public void setBalanceBefore(Double balanceBefore) {
         this.balanceBefore = balanceBefore;
+    }
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 }

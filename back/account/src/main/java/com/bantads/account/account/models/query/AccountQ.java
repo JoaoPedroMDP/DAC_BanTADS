@@ -1,15 +1,18 @@
-package com.bantads.account.model;
+package com.bantads.account.account.models.query;
 
-import java.io.Serializable;
-import java.util.List;
+import com.bantads.account.account.models.AccountDTO;
+import com.bantads.account.account.models.command.AccountC;
+import com.bantads.account.transaction.models.query.TransactionQ;
 import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "accounts")
-public class Account implements Serializable {
+public class AccountQ implements Serializable {
     private static final Long serialVersionUID = 1L;
 
     @Id
@@ -27,13 +30,13 @@ public class Account implements Serializable {
     @NotNull(message = "Limite da conta é obrigatório!")
     private Double limit;
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Transaction> transactions;
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<TransactionQ> transactions;
 
-    public Account() {
+    public AccountQ() {
     }
 
-    public Account(Long id, Long userId, Double balance, List<Transaction> transactions, Double limit) {
+    public AccountQ(Long id, Long userId, Double balance, List<TransactionQ> transactions, Double limit) {
         this.id = id;
         this.userId = userId;
         this.balance = balance;
@@ -44,6 +47,11 @@ public class Account implements Serializable {
     public AccountDTO toDto() {
         ModelMapper mapper = new ModelMapper();
         return mapper.map(this, AccountDTO.class);
+    }
+
+    public AccountC toCommand(){
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(this, AccountC.class);
     }
 
     public boolean allowTransaction(Double amount) {
@@ -86,11 +94,11 @@ public class Account implements Serializable {
         return serialVersionUID;
     }
 
-    public List<Transaction> getTransactions() {
+    public List<TransactionQ> getTransactions() {
         return transactions;
     }
 
-    public void setTransactions(List<Transaction> transactions) {
+    public void setTransactions(List<TransactionQ> transactions) {
         this.transactions = transactions;
     }
 

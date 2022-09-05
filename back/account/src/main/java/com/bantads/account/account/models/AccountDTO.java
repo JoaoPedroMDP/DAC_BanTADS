@@ -1,9 +1,12 @@
-package com.bantads.account.model;
+package com.bantads.account.account.models;
+
+import com.bantads.account.account.models.command.AccountC;
+import com.bantads.account.account.models.query.AccountQ;
+import com.bantads.account.transaction.models.TransactionDTO;
+import org.modelmapper.ModelMapper;
 
 import java.io.Serializable;
 import java.util.List;
-
-import org.modelmapper.ModelMapper;
 
 public class AccountDTO implements Serializable {
     private Long id;
@@ -23,9 +26,14 @@ public class AccountDTO implements Serializable {
         this.limit = limit;
     }
 
-    public Account toEntity() {
+    public AccountC toCommand(){
         ModelMapper mapper = new ModelMapper();
-        return mapper.map(this, Account.class);
+        return mapper.map(this, AccountC.class);
+    }
+
+    public AccountQ toQuery(){
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(this, AccountQ.class);
     }
 
     public Long getId() {

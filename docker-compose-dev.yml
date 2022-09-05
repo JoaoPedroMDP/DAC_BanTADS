@@ -90,6 +90,7 @@ services:
     networks:
       - auth
       - cliente
+      - account
       - gerente
     container_name: bantads-broker
     image: rabbitmq:3.10-management
@@ -97,6 +98,34 @@ services:
       - "5672:5672"
       - "15672:15672"
       - "15692:15692"
+  account:
+    image: 'account:latest'
+    container_name: bantads-account
+    networks:
+      - gerente
+    build:
+      context: ./back/gerente
+    depends_on:
+       - gerente-db
+    ports:
+      - "5002:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://gerente-db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  account-db:
+    networks:
+      - account
+    container_name: bantads-account-db
+    image: 'postgres:13.1-alpine'
+    volumes:
+      - ./bds/account/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+    ports:
+      - "5433:5432"
   pgadmin:
     container_name: pgadmin_container
     image: dpage/pgadmin4
@@ -117,4 +146,7 @@ networks:
   cliente:
     driver: bridge
   gerente:
+    driver: bridge
+  account:
+    name: account
     driver: bridge
