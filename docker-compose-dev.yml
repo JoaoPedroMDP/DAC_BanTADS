@@ -140,7 +140,6 @@ services:
       - cliente
       - gerente
     restart: unless-stopped
-
 networks:
   auth:
     driver: bridge

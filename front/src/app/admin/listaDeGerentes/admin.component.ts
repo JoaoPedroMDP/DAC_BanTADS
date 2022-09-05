@@ -1,11 +1,12 @@
 import { Component, OnInit } from "@angular/core";
+import { AdminService } from "../services/admin.service";
 
 export interface PeriodicElement {
   id: number;
   name: string;
   nClientes: string;
-  saldoPositivo: string;
-  saldoNegativo: string;
+  saldoPositivo?: string;
+  saldoNegativo?: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
@@ -52,9 +53,14 @@ export class AdminComponent implements OnInit {
     "budget",
     "acao",
   ];
-  dataSource = ELEMENT_DATA;
+  dataSource: any[] = [];
 
-  constructor() {}
+  constructor(private adminService: AdminService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.adminService.loadGerentes().subscribe((response: any) => {
+      this.dataSource = response;
+      this.adminService.setGerentes(response);
+    });
+  }
 }

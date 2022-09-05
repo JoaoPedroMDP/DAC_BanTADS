@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -70,14 +72,14 @@ public class LoginREST {
         HttpStatus.UNAUTHORIZED);
   }
 
-  @PostMapping("/auth/register")
+  @PostMapping("/auth")
   ResponseEntity<Object> register(@RequestBody LoginDTO login) {
     if (login.getEmail() != null && login.getPassword() != null && login.getUser() != null) {
 
       Login loginEntity = repo.findByEmail(login.getEmail());
 
       if (loginEntity != null) {
-        return new ResponseEntity<>(new JsonResponse(false, "Email não cadastrado!", null), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new JsonResponse(false, "Email já cadastrado!", null), HttpStatus.BAD_REQUEST);
       }
 
       if (login.getRole() == null) {
@@ -99,6 +101,23 @@ public class LoginREST {
     }
 
     return new ResponseEntity<>("We had a problem creating your authentication.", HttpStatus.BAD_REQUEST);
+  }
+
+  @DeleteMapping("/auth/{id}")
+  ResponseEntity<Object> delete(@PathVariable String id) {
+    if (id != null) {
+      try {
+        repo.deleteById(Long.parseLong(id));
+      } catch (Exception e) {
+        return new ResponseEntity<>(new JsonResponse(false, "Erro ao deletar autenticação do usuário!", null),
+            HttpStatus.BAD_REQUEST);
+      }
+      return new ResponseEntity<>(new JsonResponse(true, "Autenticação do usuário deletada com sucesso!", null),
+          HttpStatus.OK);
+    }
+
+    return new ResponseEntity<>(new JsonResponse(false, "Id não fornecido para deletar autenticação", null),
+        HttpStatus.BAD_REQUEST);
   }
 
 }

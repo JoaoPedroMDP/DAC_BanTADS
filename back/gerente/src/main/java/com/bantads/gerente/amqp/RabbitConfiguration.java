@@ -1,4 +1,4 @@
-package com.bantads.cliente.cliente.amqp;
+package com.bantads.gerente.amqp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,52 +7,39 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.support.converter.DefaultClassMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.bantads.gerente.amqp.GerenteTransfer;
 
 @Configuration
 public class RabbitConfiguration {
 
   @Bean
-  @Qualifier("cliente-registration")
   public Queue clientQueue() {
-    System.out.println("Criando fila cliente-registration");
-    return new Queue("cliente-registration");
-  }
-
-  @Bean
-  @Qualifier("gerente")
-  public Queue gerenteQueue() {
     System.out.println("Criando fila gerente");
     return new Queue("gerente");
   }
 
   @Bean
-  public ClientRegistrationProducer sender() {
-    return new ClientRegistrationProducer();
-  }
-
-  @Bean
-  public GerenteProducer gerenteSender() {
+  public GerenteProducer sender() {
     return new GerenteProducer();
   }
 
   @Bean
-  public GerenteReceiver gerenteReceiver() {
+  public GerenteReceiver receiver() {
     return new GerenteReceiver();
   }
 
   @Bean
   public DefaultClassMapper classMapper() {
     DefaultClassMapper classMapper = new DefaultClassMapper();
-    Map<String, Class<?>> idClassMapping = new HashMap();
+    Map<String, Class<?>> idClassMapping = new HashMap<>();
     classMapper.setTrustedPackages("*");
-    idClassMapping.put("com.bantads.gerente.amqp.GerenteTransfer", GerenteTransfer.class);
+    idClassMapping.put("com.bantads.cliente.cliente.amqp.GerenteTransfer", GerenteTransfer.class);
     classMapper.setIdClassMapping(idClassMapping);
 
     return classMapper;
-
   }
 
   @Bean

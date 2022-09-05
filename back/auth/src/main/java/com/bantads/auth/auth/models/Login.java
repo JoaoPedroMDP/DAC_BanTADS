@@ -26,7 +26,7 @@ public class Login implements Serializable {
   private String email;
   @Column(name = "password")
   private String password;
-  @Column(name = "user_id", unique = true)
+  @Column(name = "user_id", unique = false)
   private Long user_id;
   @Column(name = "role")
   private String role;

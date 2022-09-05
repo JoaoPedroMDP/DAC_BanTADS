@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import IMask from "imask";
+import { ClienteService } from "../services/cliente.service";
 
 @Component({
   selector: "app-register",
@@ -11,7 +12,12 @@ export class RegisterComponent implements OnInit {
   cepMask = { mask: "00000-000" };
   numberMask = { mask: IMask.MaskedNumber };
 
-  constructor() {}
+  constructor(private clienteService: ClienteService) {}
 
   ngOnInit(): void {}
+
+  public handleRegister(data) {
+    console.log(data);
+    // this.clienteService.registerCliente(data);
+  }
 }
