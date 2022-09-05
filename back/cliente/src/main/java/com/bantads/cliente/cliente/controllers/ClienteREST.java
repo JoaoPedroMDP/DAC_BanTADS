@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,7 @@ import com.bantads.cliente.cliente.utils.JsonResponse;
 import com.bantads.cliente.cliente.utils.ValidarCpf;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @CrossOrigin
@@ -121,6 +123,45 @@ public class ClienteREST {
     ClienteDTO clienteObject = mapper.map(cliente.get(), ClienteDTO.class);
 
     return new ResponseEntity<>(new JsonResponse(true, "", clienteObject), HttpStatus.OK);
+  }
+
+  @DeleteMapping("/clientes/{id}")
+  ResponseEntity<Object> delete(@PathVariable String id) {
+    if (id != null) {
+      try {
+        repo.deleteById(Long.parseLong(id));
+      } catch (Exception e) {
+        return new ResponseEntity<>(new JsonResponse(false, "Erro ao deletar usuário!", null),
+            HttpStatus.BAD_REQUEST);
+      }
+      return new ResponseEntity<>(new JsonResponse(true, "Usuário deletado com sucesso!", null),
+          HttpStatus.OK);
+    }
+
+    return new ResponseEntity<>(new JsonResponse(false, "Id não fornecido para deletar usuário", null),
+        HttpStatus.BAD_REQUEST);
+  }
+
+  @PutMapping("/clientes/{id}")
+  ResponseEntity<Object> update(@PathVariable String id, @RequestBody ClienteDTO cliente) {
+    if (id != null) {
+      try {
+        Cliente clienteObj = repo.findById(Long.parseLong(id)).get();
+
+        if (clienteObj == null) {
+          return new ResponseEntity<>(new JsonResponse(false, "Cliente não encontrado", null), HttpStatus.NOT_FOUND);
+        }
+        repo.save(mapper.map(cliente, Cliente.class));
+      } catch (Exception e) {
+        return new ResponseEntity<>(new JsonResponse(false, "Erro ao atualizar o usuário!", null),
+            HttpStatus.BAD_REQUEST);
+      }
+      return new ResponseEntity<>(new JsonResponse(true, "Usuário atualizado com sucesso!", null),
+          HttpStatus.OK);
+    }
+
+    return new ResponseEntity<>(new JsonResponse(false, "Id não fornecido para atualizar usuário", null),
+        HttpStatus.BAD_REQUEST);
   }
 
 }

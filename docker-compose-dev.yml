@@ -36,6 +36,8 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./bds/auth/init.sql:/docker-entrypoint-initdb.d/init.sql
   cliente:
     networks:
       - cliente
@@ -95,6 +97,20 @@ services:
       - "5672:5672"
       - "15672:15672"
       - "15692:15692"
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    networks:
+      - auth
+      - cliente
+      - gerente
+    restart: unless-stopped
 networks:
   auth:
     driver: bridge
