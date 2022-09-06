@@ -23,8 +23,8 @@ const routes: Routes = [
     path: "gerente",
     component: FullComponent,
     children: [
-      { path: "", component: ConsultaClientesComponent},
-      { path: "consultar-cliente", component: ConsultarClienteComponent},
+      { path: "", component: ConsultaClientesComponent },
+      { path: "consultar-cliente", component: ConsultarClienteComponent },
       { path: "solicitacoes", component: SolicitacoesComponent },
       { path: "consulta-clientes", component: ConsultaClientesComponent },
       { path: "consulta-cliente/:id", component: ConsultaClienteComponent },
@@ -41,12 +41,12 @@ const routes: Routes = [
   },
 
   { path: "login", component: LoginComponent },
+  { path: "cliente/register", component: RegisterComponent },
   {
     path: "cliente",
     component: ClientComponent,
     children: [
       { path: "", component: HomeComponent },
-      { path: "register", component: RegisterComponent },
       {
         path: "transacoes",
         children: [

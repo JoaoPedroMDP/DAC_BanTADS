@@ -1,5 +1,5 @@
-<div class="container">
-  <form (submit)="handleRegister">
+<div class="container mat-form-field-flex">
+  <form (submit)="handleRegister" style="max-width: 1000px;">
     <h1>BanTADS</h1>
     <p>Faça seu cadastro no BanTADS</p>
     <strong>Informações do cliente</strong>
@@ -53,6 +53,23 @@
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Estado</mat-label>
       <input matInput type="text" placeholder="Insira seu Estado" required />
+    </mat-form-field>
+
+    <strong>Conta</strong>
+
+    <mat-form-field class="w-100 fs-16" appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput type="street" placeholder="Insira seu email" required type="email" name="email" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100 fs-16" appearance="outline">
+      <mat-label>Senha</mat-label>
+      <input matInput type="password" placeholder="Insira sua senha" required name="password" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100 fs-16" appearance="outline">
+      <mat-label>Confirmar senha</mat-label>
+      <input matInput type="password" placeholder="Insira seu complemento" name="confirmPassword" required />
     </mat-form-field>
 
     <button mat-button class="btn btn-info fw-normal" type="submit">
