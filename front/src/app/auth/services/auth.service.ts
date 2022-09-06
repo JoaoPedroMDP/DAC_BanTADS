@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Auth } from "./types";
 
+import { ToastrService } from "ngx-toastr";
 @Injectable({
   providedIn: "root",
 })
@@ -10,7 +11,11 @@ export class AuthService {
   private url = "http://localhost:5000/auth";
   private auth: Auth | null = null;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private toast: ToastrService
+  ) {}
 
   public navigateToUserHome() {
     const userRole = this.auth?.role;
@@ -39,14 +44,23 @@ export class AuthService {
   public async login(email: string, password: string) {
     return await this.http
       .post(this.url + "/login", { email, password })
-      .subscribe((response: any) => {
-        //TODO: error handling
-        if (response.success) {
-          this.setAuth(response.data);
-          this.navigateToUserHome();
-          return response;
+      .subscribe(
+        (response: any) => {
+          //TODO: error handling
+          if (response.success) {
+            this.setAuth(response.data);
+            this.navigateToUserHome();
+            this.toast.success(
+              "Login realizado com sucesso!",
+              "Bem vindo ao BanTADS!"
+            );
+            return response;
+          }
+        },
+        ({ error }) => {
+          this.toast.error(error.message, "Erro ao realizar login");
         }
-      });
+      );
   }
 
   public getAuth(): Auth | null {
@@ -64,5 +78,12 @@ export class AuthService {
   public logOut() {
     this.setAuth(null);
     this.router.navigate(["/login"]);
+  }
+
+  public isAuthenticated(): boolean {
+    const token = localStorage.getItem("token"); // Check whether the token is expired and return
+    // true or false
+    return !!token;
+    // return !this.jwtHelper.isTokenExpired(token || "");
   }
 }

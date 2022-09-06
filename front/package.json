@@ -21,9 +21,11 @@
     "@angular/platform-browser": "~13.1.0",
     "@angular/platform-browser-dynamic": "~13.1.0",
     "@angular/router": "~13.1.0",
+    "@auth0/angular-jwt": "^5.0.2",
     "angular-feather": "^6.3.0",
     "angular-imask": "^6.4.2",
     "ng-apexcharts": "^1.5.6",
+    "ngx-toastr": "^14.3.0",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

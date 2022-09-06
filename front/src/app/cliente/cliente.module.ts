@@ -12,6 +12,7 @@ import { DepositComponent } from "./transactions/deposit/deposit.component";
 import { WithdrawalComponent } from "./transactions/withdrawal/withdrawal.component";
 import { TransferComponent } from "./transactions/transfer/transfer.component";
 import { StatementComponent } from "./transactions/statement/statement.component";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { StatementComponent } from "./transactions/statement/statement.component
     FeatherModule.pick(allIcons),
     MaterialModule,
     IMaskModule,
+    ReactiveFormsModule,
   ],
 })
 export class ClienteModule {}

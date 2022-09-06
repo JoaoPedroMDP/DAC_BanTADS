@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { FeatherModule } from "angular-feather";
 import { allIcons } from "angular-feather/icons";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatTableModule } from "@angular/material/table";
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -21,6 +21,8 @@ import { CriarGerenteComponent } from "./admin/criar-gerente/criar-gerente.compo
 import { MatSortModule } from "@angular/material/sort";
 import { GerenteComponent } from "./admin/perfilGerente/gerente.component";
 import { AdminModule } from "./admin/admin.module";
+import { ToastrModule } from "ngx-toastr";
+// import { JwtModule } from "@auth0/angular-jwt";
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,6 +41,9 @@ import { AdminModule } from "./admin/admin.module";
     ClienteModule,
     AuthModule,
     AdminModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

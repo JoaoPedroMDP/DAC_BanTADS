@@ -1,75 +1,74 @@
 <div class="container mat-form-field-flex">
-  <form (submit)="handleRegister" style="max-width: 1000px;">
+  <form (submit)="handleRegister()" style="max-width: 1000px;" [formGroup]="form">
     <h1>BanTADS</h1>
     <p>Faça seu cadastro no BanTADS</p>
     <strong>Informações do cliente</strong>
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Nome completo</mat-label>
-      <input matInput type="text" placeholder="Insira seu nome completo" required />
-    </mat-form-field>
-
-    <mat-form-field class="w-100 fs-16" appearance="outline">
-      <mat-label>Email</mat-label>
-      <input matInput type="email" placeholder="Insira seu email" required />
+      <input matInput type="text" placeholder="Insira seu nome completo" required formControlName="nome" />
     </mat-form-field>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>CPF</mat-label>
-      <input [imask]="cpfMask" [unmask]="true" matInput type="text" placeholder="Insira seu cpf" required />
+      <input [imask]="cpfMask" [unmask]="true" matInput type="text" placeholder="Insira seu cpf" required
+        formControlName="cpf" />
     </mat-form-field>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Salário mensal</mat-label>
-      <input [imask]="numberMask" [unmask]="true" matInput type="text" placeholder="Insira seu salário" required />
+      <input [imask]="numberMask" [unmask]="true" matInput type="text" placeholder="Insira seu salário" required
+        formControlName="salario" />
     </mat-form-field>
 
     <strong>Endereço</strong>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Rua/Avenida</mat-label>
-      <input matInput type="street" placeholder="Insira sua rua" required />
+      <input matInput type="street" placeholder="Insira sua rua" required formControlName="rua" />
     </mat-form-field>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Número</mat-label>
-      <input [imask]="numberMask" matInput type="text" placeholder="Insira seu número" required />
+      <input [imask]="numberMask" matInput type="text" placeholder="Insira seu número" required
+        formControlName="numero" />
     </mat-form-field>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Complemento (opcional)</mat-label>
-      <input matInput type="text" placeholder="Insira seu complemento" />
+      <input matInput type="text" placeholder="Insira seu complemento" formControlName="complemento" />
     </mat-form-field>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>CEP</mat-label>
-      <input [imask]="cpfMask" [unmask]="true" matInput type="text" placeholder="Insira seu CEP" required />
+      <input [imask]="cepMask" [unmask]="true" matInput type="text" placeholder="Insira seu CEP" required
+        formControlName="cep" />
     </mat-form-field>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Cidade</mat-label>
-      <input matInput type="text" placeholder="Insira sua Cidade" required />
+      <input matInput type="text" placeholder="Insira sua Cidade" required formControlName="cidade" />
     </mat-form-field>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Estado</mat-label>
-      <input matInput type="text" placeholder="Insira seu Estado" required />
+      <input matInput type="text" placeholder="Insira seu Estado" required formControlName="estado" />
     </mat-form-field>
 
     <strong>Conta</strong>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Email</mat-label>
-      <input matInput type="street" placeholder="Insira seu email" required type="email" name="email" />
+      <input matInput type="street" placeholder="Insira seu email" type="email" name="email" />
     </mat-form-field>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Senha</mat-label>
-      <input matInput type="password" placeholder="Insira sua senha" required name="password" />
+      <input matInput type="password" placeholder="Insira sua senha" required formControlName="password" />
     </mat-form-field>
 
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Confirmar senha</mat-label>
-      <input matInput type="password" placeholder="Insira seu complemento" name="confirmPassword" required />
+      <input matInput type="password" placeholder="Insira seu complemento" required formControlName="confirmPassword" />
     </mat-form-field>
 
     <button mat-button class="btn btn-info fw-normal" type="submit">
