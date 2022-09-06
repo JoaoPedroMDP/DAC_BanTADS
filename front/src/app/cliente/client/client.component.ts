@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { AuthService } from "src/app/auth/services/auth.service";
+import { ClienteService } from "../services/cliente.service";
 
 @Component({
   selector: "app-client",
@@ -7,6 +9,7 @@ import { AuthService } from "src/app/auth/services/auth.service";
   styleUrls: ["./client.component.scss"],
 })
 export class ClientComponent implements OnInit {
+  public cliente: any = null;
   search = false;
 
   routerActive = "";
@@ -38,9 +41,17 @@ export class ClientComponent implements OnInit {
     },
   ];
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private clienteService: ClienteService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.cliente = this.clienteService.getCliente();
+    }, 500);
+  }
 
   public handleLogout() {
     this.authService.logOut();

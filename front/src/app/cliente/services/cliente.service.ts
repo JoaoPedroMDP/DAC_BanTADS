@@ -7,7 +7,7 @@ import { AuthService } from "src/app/auth/services/auth.service";
   providedIn: "root",
 })
 export class ClienteService {
-  private url = "http://localhost:50001";
+  private url = "http://localhost:5001";
 
   private cliente = {};
 
@@ -18,12 +18,9 @@ export class ClienteService {
   ) {}
 
   public async loadCliente() {
-    // const { user } = this.authService.getAuth();
-    // await this.http
-    //   .get(this.url + "/clientes/" + user)
-    //   .subscribe((response) => {
-    //     this.scliente = response;
-    //   });
+    const auth = await this.authService.getAuth();
+    console.log(auth?.user);
+    return this.http.get(this.url + "/clientes/" + auth?.user);
   }
 
   private validateRegister({
@@ -64,5 +61,9 @@ export class ClienteService {
 
   public getCliente() {
     return this.cliente;
+  }
+
+  public setCliente(cliente: any) {
+    this.cliente = cliente;
   }
 }

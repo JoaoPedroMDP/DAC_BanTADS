@@ -53,11 +53,12 @@ export class AuthService {
     return this.auth;
   }
 
-  public initAuth() {
-    const auth = localStorage.getItem("auth");
+  public async initAuth() {
+    const auth = await localStorage.getItem("auth");
     if (auth) {
       this.auth = JSON.parse(auth);
     }
+    return this.auth;
   }
 
   public logOut() {
