@@ -15,10 +15,10 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitConfiguration {
 
   @Bean
-  @Qualifier("cliente-registration")
+  @Qualifier("cliente")
   public Queue clientQueue() {
-    System.out.println("Criando fila cliente-registration");
-    return new Queue("cliente-registration");
+    System.out.println("Criando fila cliente");
+    return new Queue("cliente");
   }
 
   @Bean
@@ -29,8 +29,13 @@ public class RabbitConfiguration {
   }
 
   @Bean
-  public ClientRegistrationProducer sender() {
-    return new ClientRegistrationProducer();
+  public ClienteProducer sender() {
+    return new ClienteProducer();
+  }
+
+  @Bean
+  public ClienteReceiver receiver() {
+    return new ClienteReceiver();
   }
 
   @Bean
@@ -49,6 +54,7 @@ public class RabbitConfiguration {
     Map<String, Class<?>> idClassMapping = new HashMap();
     classMapper.setTrustedPackages("*");
     idClassMapping.put("com.bantads.gerente.amqp.GerenteTransfer", GerenteTransfer.class);
+    idClassMapping.put("com.bantads.account.account.amqp.ClienteTransfer", ClienteTransfer.class);
     classMapper.setIdClassMapping(idClassMapping);
 
     return classMapper;

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bantads.cliente.cliente.amqp.ClientRegistrationProducer;
+import com.bantads.cliente.cliente.amqp.ClienteProducer;
 import com.bantads.cliente.cliente.amqp.GerenteProducer;
 import com.bantads.cliente.cliente.amqp.GerenteTransfer;
 import com.bantads.cliente.cliente.model.Cliente;
@@ -43,7 +43,7 @@ public class ClienteREST {
   private ModelMapper mapper;
 
   @Autowired
-  private ClientRegistrationProducer sender;
+  private ClienteProducer sender;
 
   @Autowired
   private GerenteProducer gerenteSender;

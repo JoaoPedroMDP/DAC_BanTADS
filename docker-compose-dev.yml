@@ -36,8 +36,6 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    volumes:
-      - ./bds/auth/init.sql:/docker-entrypoint-initdb.d/init.sql
   cliente:
     networks:
       - cliente
@@ -104,13 +102,13 @@ services:
     networks:
       - gerente
     build:
-      context: ./back/gerente
+      context: ./back/account
     depends_on:
-       - gerente-db
+       - account-db
     ports:
-      - "5002:8080"
+      - "5003:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://gerente-db:5432/postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://account-db:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
@@ -139,6 +137,7 @@ services:
       - auth
       - cliente
       - gerente
+      - account
     restart: unless-stopped
 networks:
   auth:

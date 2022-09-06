@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public handleRegister(data) {
+  public handleRegister(data: any) {
     console.log(data);
     // this.clienteService.registerCliente(data);
   }
