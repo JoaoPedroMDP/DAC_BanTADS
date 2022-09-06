@@ -36,7 +36,8 @@ const routes: Routes = [
     children: [
       { path: "", component: AdminComponent },
       { path: "gerente", component: CriarGerenteComponent },
-      { path: "gerenteperfil", component: GerenteComponent },
+      { path: "gerente/:id", component: CriarGerenteComponent },
+      { path: "gerenteperfil/:id", component: GerenteComponent },
     ],
   },
 

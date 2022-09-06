@@ -1,6 +1,6 @@
 <div class="container">
   <div>
-    <h1>Cadastrar Gerente</h1>
+    <h1>{{isEditing ? "Editar" : "Cadastrar"}} Gerente</h1>
     <mat-form-field class="w-100 fs-16" appearance="outline">
       <mat-label>Nome completo</mat-label>
       <input matInput type="text" placeholder="Insira seu nome completo" [(ngModel)]="nome" />
@@ -17,7 +17,7 @@
     </mat-form-field>
 
     <button mat-button class="btn btn-info fw-normal" (click)="salvarGerente()">
-      Cadastrar
+      {{isEditing ? "Editar" : "Cadastrar"}}
     </button>
   </div>
 </div>

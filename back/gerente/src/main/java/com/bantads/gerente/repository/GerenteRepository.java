@@ -1,6 +1,7 @@
 package com.bantads.gerente.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,5 +18,7 @@ public interface GerenteRepository extends JpaRepository<Gerente, Long> {
 			@Param("cpf") String cpf);
 
 	public Gerente findFirstByOrderByNumClientes();
+
+	public Optional<Gerente> findById(Long id);
 
 }

@@ -13,17 +13,9 @@
         <h4>Menu do Admin</h4>
         <ul>
           <li class="list-group mb-8" *ngFor="let sidenav of sidebarMenu">
-            <a
-              matRipple
-              [matRippleColor]="'#f7f8f443'"
-              routerLink="{{ sidenav.link }}"
-              class="sidebar-menu fs-16 w-100 d-flex align-items-center"
-              [routerLinkActive]="routerActive"
-            >
-              <i-feather
-                name="{{ sidenav.icon }}"
-                class="feather-base me-16"
-              ></i-feather>
+            <a matRipple [matRippleColor]="'#f7f8f443'" routerLink="{{ sidenav.link }}"
+              class="sidebar-menu fs-16 w-100 d-flex align-items-center" [routerLinkActive]="routerActive">
+              <i-feather name="{{ sidenav.icon }}" class="feather-base me-16"></i-feather>
               <span class="ps-4">{{ sidenav.label }}</span>
             </a>
           </li>
@@ -36,14 +28,10 @@
     <!-- Header -->
     <mat-toolbar class="header ps-24 pe-24">
       <div class="ms-auto">
-        <button
-          mat-button
-          class="fs-16 pt-4 pb-4 ps-8 pe-8 text-light-muted"
-          [matMenuTriggerFor]="menu"
-        >
-          <img src="assets/images/user2.webp" class="rounded-circle" alt="" />
+        <button mat-button class="fs-16 pt-4 pb-4 ps-8 pe-8 text-light-muted" [matMenuTriggerFor]="menu">
+
           <span class="fw-light ms-8 text-secondary">Hi,</span>
-          <span class="fw-bold ms-8">Julia</span>
+          <span class="fw-bold ms-8">Admin</span>
           <i-feather name="chevron-down" class="feather-base mt-n2"></i-feather>
         </button>
         <mat-menu #menu="matMenu" class="profile-dropdown">

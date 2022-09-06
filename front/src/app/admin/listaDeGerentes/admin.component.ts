@@ -59,8 +59,13 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.adminService.loadGerentes().subscribe((response: any) => {
-      this.dataSource = response;
-      this.adminService.setGerentes(response);
+      this.dataSource = response.data;
+      console.log(response);
+      this.adminService.setGerentes(response.data);
     });
+  }
+
+  deletarGerente(id: string) {
+    this.adminService.deletarGerente(id);
   }
 }

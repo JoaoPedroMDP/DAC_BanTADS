@@ -26,7 +26,8 @@ export class AdminService {
   public salvarGerente(gerente: any) {
     this.http.post(this.gerenteUrl, gerente).subscribe(
       (response: any) => {
-        this.gerentes.push(response);
+        this.gerentes.push(response.data);
+        this.toast.success("Gerente cadastrado com sucesso!", "Sucesso!");
       },
       ({ error }) => {
         this.toast.error(error.message, "Erro ao cadastrar gerente");
@@ -34,7 +35,34 @@ export class AdminService {
     );
   }
 
-  public getGerenteById(id: number) {
+  public editarGerente(gerente: any) {
+    this.http.put(this.gerenteUrl + "/" + gerente.id, gerente).subscribe(
+      (response: any) => {
+        this.gerentes.push(response.data);
+        this.toast.success("Gerente editado com sucesso!", "Sucesso!");
+      },
+      ({ error }) => {
+        console.error(error);
+        this.toast.error(error.message, "Erro ao editar gerente");
+      }
+    );
+  }
+
+  public deletarGerente(id: string) {
+    this.http.delete(this.gerenteUrl + "/" + id).subscribe(
+      (response: any) => {
+        this.gerentes.filter((g) => g.id !== id);
+        this.toast.success("Gerente excluido com sucesso!", "Sucesso!");
+      },
+      ({ error }) => {
+        console.error(error);
+        this.toast.error(error.message, "Erro ao excluir gerente");
+      }
+    );
+  }
+
+  public getGerenteById(id: number | null) {
+    if (!id) return;
     return this.http.get(this.gerenteUrl + "/" + id);
   }
 }
