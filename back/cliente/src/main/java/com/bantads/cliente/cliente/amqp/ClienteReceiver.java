@@ -31,7 +31,7 @@ public class ClienteReceiver {
       ClienteDTO clienteDTO = modelMapper.map(cliente, ClienteDTO.class);
 
       clienteTransfer.setCliente(clienteDTO);
-      clienteTransfer.setAction("return-clientes");
+      clienteTransfer.setAction("return-cliente");
 
       sender.send(clienteTransfer);
     }
