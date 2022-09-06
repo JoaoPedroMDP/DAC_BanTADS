@@ -54,5 +54,6 @@ export class RegisterComponent implements OnInit {
     };
 
     this.clienteService.registerCliente(clienteData);
+    return;
   }
 }
