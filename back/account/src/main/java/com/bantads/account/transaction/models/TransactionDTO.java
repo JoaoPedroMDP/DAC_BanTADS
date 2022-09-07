@@ -1,9 +1,13 @@
 package com.bantads.account.transaction.models;
 
+import com.bantads.account.lib.TransferDetails;
 import com.bantads.account.transaction.models.command.TransactionC;
 import com.bantads.account.transaction.models.query.TransactionQ;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRawValue;
+import com.google.gson.Gson;
+
 import org.modelmapper.ModelMapper;
 
 import java.io.Serializable;
@@ -23,7 +27,8 @@ public class TransactionDTO implements Serializable {
     public TransactionDTO() {
     }
 
-    public TransactionDTO(Long id, String type, Double amount, Long timestamp, String extraData, Double balanceBefore, Long accountId) {
+    public TransactionDTO(Long id, String type, Double amount, Long timestamp, String extraData, Double balanceBefore,
+            Long accountId) {
         this.id = id;
         this.type = type;
         this.amount = amount;
@@ -33,12 +38,12 @@ public class TransactionDTO implements Serializable {
         this.accountId = accountId;
     }
 
-    public TransactionC toCommand(){
+    public TransactionC toCommand() {
         ModelMapper mapper = new ModelMapper();
         return mapper.map(this, TransactionC.class);
     }
 
-    public TransactionQ toQuery(){
+    public TransactionQ toQuery() {
         ModelMapper mapper = new ModelMapper();
         return mapper.map(this, TransactionQ.class);
     }
@@ -97,5 +102,26 @@ public class TransactionDTO implements Serializable {
 
     public void setAccountId(Long accountId) {
         this.accountId = accountId;
+    }
+
+    @JsonIgnore
+    public Boolean isTransfer() {
+        if (this.getExtraData() != null) {
+            return true;
+        }
+        return false;
+    }
+
+    @JsonIgnore
+    public String getTransferParticipant() {
+        TransferDetails details = new Gson().fromJson(this.getExtraData(), TransferDetails.class);
+        return details.getTransferParticipant();
+    }
+
+    @JsonIgnore
+    public void setTransferParticipant(String participant) {
+        TransferDetails details = new Gson().fromJson(this.getExtraData(), TransferDetails.class);
+        details.setTransferParticipant(participant);
+        this.setExtraData(new Gson().toJson(details));
     }
 }

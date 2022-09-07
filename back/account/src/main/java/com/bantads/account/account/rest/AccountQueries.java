@@ -24,10 +24,10 @@ public class AccountQueries {
     public JsonResponse getAllAccounts() {
         try {
             List<AccountDTO> dtos = serv.getAllAccounts();
-            return new JsonResponse(200, "Listando " + dtos.size() + " contas.", dtos);
+            return new JsonResponse(true, "Listando " + dtos.size() + " contas.", dtos);
         } catch (Exception e) {
             e.printStackTrace();
-            return new JsonResponse(500, "Erro ao listar contas.", null);
+            return new JsonResponse(false, "Erro ao listar contas.", null);
         }
     }
 
@@ -35,13 +35,13 @@ public class AccountQueries {
     public JsonResponse getAccount(@PathVariable("id") Long id) {
         try {
             AccountDTO acc = serv.getAccountDTO(id);
-            return new JsonResponse(200, "Retornando conta " + acc.getId(), acc);
+            return new JsonResponse(true, "Retornando conta " + acc.getId(), acc);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            return new JsonResponse(400, "Id passado é nulo!", null);
+            return new JsonResponse(false, "Id passado é nulo!", null);
         } catch (AccountNotFound e) {
             e.printStackTrace();
-            return new JsonResponse(404, "Conta não encontrada!", null);
+            return new JsonResponse(false, "Conta não encontrada!", null);
         }
     }
 
@@ -53,13 +53,13 @@ public class AccountQueries {
             LinkedHashMap<String, Double> balance = new LinkedHashMap<>();
             balance.put("balance", account.getBalance());
 
-            return new JsonResponse(200, "Saldo!", balance);
+            return new JsonResponse(true, "Saldo!", balance);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            return new JsonResponse(400, "Revise os dados passados!", null);
+            return new JsonResponse(false, "Revise os dados passados!", null);
         } catch (AccountNotFound e) {
             e.printStackTrace();
-            return new JsonResponse(404, "Conta não encontrada!", null);
+            return new JsonResponse(false, "Conta não encontrada!", null);
         }
     }
 }

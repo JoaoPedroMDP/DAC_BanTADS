@@ -2,6 +2,8 @@ package com.bantads.account.transaction.services;
 
 import com.bantads.account.account.models.command.AccountC;
 import com.bantads.account.account.models.query.AccountQ;
+import com.bantads.account.lib.RestService;
+import com.bantads.account.lib.Statement;
 import com.bantads.account.transaction.amqp.TransactionSender;
 import com.bantads.account.transaction.models.TransactionDTO;
 import com.bantads.account.transaction.models.command.TransactionC;
@@ -29,6 +31,9 @@ public class TransactionServices {
     @Autowired
     private TransactionSender sender;
 
+    @Autowired
+    private RestService rest;
+
     public ArrayList<TransactionDTO> getAccountTransactions(AccountQ acc, Long from, Long to) {
         List<TransactionQ> transactions = queries.findByAccountIdAndTimestampBetween(acc, from, to);
 
@@ -45,7 +50,7 @@ public class TransactionServices {
     }
 
     private TransactionC createTransaction(AccountC account, String type, Double amount, Long timestamp,
-                                          String extra_data) {
+            String extra_data) {
         TransactionC newTransaction = new TransactionC();
         newTransaction.setAccount(account);
         newTransaction.setType(type);
@@ -72,7 +77,6 @@ public class TransactionServices {
     }
 
     public TransactionC transfer(AccountC from, AccountC to, Double amount) {
-        // TODO: Pegar o nome da api de usuários
         LinkedHashMap<String, String> origin = new LinkedHashMap<String, String>();
         origin.put("origin", from.getUserId().toString());
         LinkedHashMap<String, String> destiny = new LinkedHashMap<String, String>();
@@ -87,5 +91,9 @@ public class TransactionServices {
         return createTransaction(
                 to, "transfer", amount,
                 System.currentTimeMillis(), gson.toJson(origin));
+    }
+
+    public Statement buildStatement(ArrayList<TransactionDTO> dtos, Long fromTS, Long toTS) {
+        return new Statement(dtos, fromTS, toTS, this.rest);
     }
 }

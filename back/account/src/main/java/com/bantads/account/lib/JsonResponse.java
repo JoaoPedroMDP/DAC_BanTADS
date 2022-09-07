@@ -1,22 +1,22 @@
 package com.bantads.account.lib;
 
 public class JsonResponse {
-	private Integer status;
+	private Boolean success;
 	private String message;
 	private Object data;
 
-	public JsonResponse(Integer status, String message, Object data) {
-		this.status = status;
+	public JsonResponse(Boolean success, String message, Object data) {
+		this.success = success;
 		this.message = message;
 		this.data = data;
 	}
 
-	public Integer getStatus() {
-		return status;
+	public Boolean isSuccess() {
+		return success;
 	}
 
-	public void setStatus(Integer status) {
-		this.status = status;
+	public void setSuccess(Boolean success) {
+		this.success = success;
 	}
 
 	public String getMessage() {

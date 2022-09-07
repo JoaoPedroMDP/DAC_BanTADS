@@ -17,4 +17,8 @@ public class TransactionSender {
         System.out.println("Queue name: " + this.transactionQueue.getName());
         this.template.convertAndSend(this.transactionQueue.getName(), dt);
     }
+
+    public void getCustomer(Long id) {
+        this.template.convertAndSend(this.transactionQueue.getName(), id);
+    }
 }

@@ -28,14 +28,14 @@ public class TransactionQueries {
             Long toTS = Long.parseLong(to);
             AccountQ acc = accServ.getAccount(id);
             ArrayList<TransactionDTO> dtos = serv.getAccountTransactions(acc, fromTS, toTS);
-            Statement statement = new Statement(dtos, fromTS, toTS);
+            Statement statement = serv.buildStatement(dtos, fromTS, toTS);
 
-            return new JsonResponse(200, "Extrato", statement);
+            return new JsonResponse(true, "Extrato", statement);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return new JsonResponse(400, "Revise os dados passados!", null);
+            return new JsonResponse(false, "Revise os dados passados!", null);
         } catch (AccountNotFound e) {
-            return new JsonResponse(404, "Conta não encontrada!", null);
+            return new JsonResponse(false, "Conta não encontrada!", null);
         }
 
     }

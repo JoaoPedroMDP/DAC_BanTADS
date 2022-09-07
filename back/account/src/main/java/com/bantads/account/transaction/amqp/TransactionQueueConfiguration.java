@@ -15,6 +15,11 @@ public class TransactionQueueConfiguration {
     }
 
     @Bean
+    public Queue customerQueue(){
+        return new Queue("cliente");
+    }
+
+    @Bean
     public TransactionListener tReceiver() {
         return new TransactionListener();
     }

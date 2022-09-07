@@ -29,11 +29,11 @@ public class TransactionCommand {
             accServ.deposit(account, amount);
 
             TransactionDTO dto = serv.deposit(account, amount).toDto();
-            return new JsonResponse(201, "Deposito confirmado!", dto);
+            return new JsonResponse(true, "Deposito confirmado!", dto);
         } catch (IllegalArgumentException e) {
-            return new JsonResponse(400, "Revise os dados passados!", null);
+            return new JsonResponse(false, "Revise os dados passados!", null);
         } catch (AccountNotFound e) {
-            return new JsonResponse(404, "Conta não encontrada!", null);
+            return new JsonResponse(false, "Conta não encontrada!", null);
         }
     }
 
@@ -46,13 +46,13 @@ public class TransactionCommand {
             accServ.withdraw(account, amount);
             TransactionDTO dto = serv.withdraw(account, amount).toDto();
 
-            return new JsonResponse(201, "Saque confirmado!", dto);
+            return new JsonResponse(true, "Saque confirmado!", dto);
         } catch (IllegalArgumentException e) {
-            return new JsonResponse(400, "Revise os dados passados!", null);
+            return new JsonResponse(false, "Revise os dados passados!", null);
         } catch (AccountNotFound e) {
-            return new JsonResponse(404, "Conta não encontrada!", null);
+            return new JsonResponse(false, "Conta não encontrada!", null);
         } catch (InsufficientFunds e) {
-            return new JsonResponse(400, "Saldo insuficiente!!", null);
+            return new JsonResponse(false, "Saldo insuficiente!!", null);
         }
     }
 
@@ -68,13 +68,13 @@ public class TransactionCommand {
 
             TransactionDTO dto = serv.transfer(origin, destination, amount).toDto();
 
-            return new JsonResponse(201, "Transferência confirmada!", dto);
+            return new JsonResponse(true, "Transferência confirmada!", dto);
         } catch (IllegalArgumentException e) {
-            return new JsonResponse(400, "Revise os dados passados!", null);
+            return new JsonResponse(false, "Revise os dados passados!", null);
         } catch (AccountNotFound e) {
-            return new JsonResponse(404, "Conta não encontrada!", null);
+            return new JsonResponse(false, "Conta não encontrada!", null);
         } catch (InsufficientFunds e) {
-            return new JsonResponse(400, "Saldo insuficiente!!", null);
+            return new JsonResponse(false, "Saldo insuficiente!!", null);
         }
     }
 
