@@ -13,7 +13,7 @@ public class TransactionSender {
     private Queue transactionQueue;
 
     public void send(TransactionDTO transaction, String action) {
-        TDataTransfer dt = new TDataTransfer(transaction, action);
+        TransactionTransfer dt = new TransactionTransfer(transaction, action);
         System.out.println("Queue name: " + this.transactionQueue.getName());
         this.template.convertAndSend(this.transactionQueue.getName(), dt);
     }

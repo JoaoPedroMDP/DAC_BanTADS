@@ -1,6 +1,6 @@
 package com.bantads.account.account.services;
 
-import com.bantads.account.account.amqp.AccountSender;
+import com.bantads.account.account.amqp.account.AccountSender;
 import com.bantads.account.account.models.AccountDTO;
 import com.bantads.account.account.models.command.AccountC;
 import com.bantads.account.account.models.query.AccountQ;
@@ -71,6 +71,7 @@ public class AccountServices {
         AccountC created = commands.save(toAccount);
         AccountDTO toDTO = created.toDto();
         sender.send(toDTO, "create");
+        sender.sendAndReceive(toDTO, "create");
         return toDTO;
     }
 

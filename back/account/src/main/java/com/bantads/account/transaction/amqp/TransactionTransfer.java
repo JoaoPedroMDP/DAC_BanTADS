@@ -5,14 +5,14 @@ import com.google.gson.Gson;
 
 import java.io.Serializable;
 
-public class TDataTransfer implements Serializable {
+public class TransactionTransfer implements Serializable {
     private TransactionDTO transaction;
     private String action;
 
-    public TDataTransfer() {
+    public TransactionTransfer() {
     }
 
-    public TDataTransfer(TransactionDTO transaction, String action) {
+    public TransactionTransfer(TransactionDTO transaction, String action) {
         this.transaction = transaction;
         this.action = action;
     }
@@ -21,8 +21,8 @@ public class TDataTransfer implements Serializable {
         return new Gson().toJson(this);
     }
 
-    public static TDataTransfer fromJson(String json) {
-        return new Gson().fromJson(json, TDataTransfer.class);
+    public static TransactionTransfer fromJson(String json) {
+        return new Gson().fromJson(json, TransactionTransfer.class);
     }
 
     public TransactionDTO getTransaction() {

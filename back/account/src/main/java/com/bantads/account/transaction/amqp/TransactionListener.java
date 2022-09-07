@@ -13,7 +13,7 @@ public class TransactionListener {
     private TransactionRepositoryQ viewDatabase;
 
     @RabbitHandler
-    public void receive(@Payload TDataTransfer dt) {
+    public void receive(@Payload TransactionTransfer dt) {
         System.out.println("[TRANSACTIONS] Ação executada: " + dt.getAction());
         switch(dt.getAction()){
             case "create":
