@@ -1,4 +1,4 @@
-version: '2'
+version: "2"
 
 services:
   front:
@@ -12,12 +12,12 @@ services:
   auth:
     networks:
       - auth
-    image: 'auth:latest'
+    image: "auth:latest"
     build:
       context: ./back/auth
     depends_on:
-       - auth-db
-       - broker
+      - auth-db
+      - broker
     container_name: bantads-auth
     ports:
       - "5000:8080"
@@ -31,7 +31,7 @@ services:
   auth-db:
     networks:
       - auth
-    image: 'postgres:13.1-alpine'
+    image: "postgres:13.1-alpine"
     container_name: bantads-auth-db
     environment:
       - POSTGRES_USER=postgres
@@ -39,11 +39,11 @@ services:
   cliente:
     networks:
       - cliente
-    image: 'cliente:latest'
+    image: "cliente:latest"
     build:
       context: ./back/cliente
     depends_on:
-       - cliente-db
+      - cliente-db
     container_name: bantads-cliente
     ports:
       - "5001:8080"
@@ -55,7 +55,7 @@ services:
   cliente-db:
     networks:
       - cliente
-    image: 'postgres:13.1-alpine'
+    image: "postgres:13.1-alpine"
     container_name: bantads-cliente-db
     environment:
       - POSTGRES_USER=postgres
@@ -63,11 +63,11 @@ services:
   gerente:
     networks:
       - gerente
-    image: 'gerente:latest'
+    image: "gerente:latest"
     build:
       context: ./back/gerente
     depends_on:
-       - gerente-db
+      - gerente-db
     container_name: bantads-gerente
     ports:
       - "5002:8080"
@@ -79,7 +79,7 @@ services:
   gerente-db:
     networks:
       - gerente
-    image: 'postgres:13.1-alpine'
+    image: "postgres:13.1-alpine"
     container_name: bantads-gerente-db
     environment:
       - POSTGRES_USER=postgres
@@ -97,16 +97,19 @@ services:
       - "15672:15672"
       - "15692:15692"
   account:
-    image: 'account:latest'
+    image: "account:latest"
     container_name: bantads-account
     networks:
-      - gerente
+      - account
+      - cliente
     build:
       context: ./back/account
     depends_on:
-       - account-db
+      - account-db
+    volumes:
+      - ./back/account/:/app
     ports:
-      - "5003:8080"
+      - "5003:5000"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://account-db:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
@@ -116,7 +119,7 @@ services:
     networks:
       - account
     container_name: bantads-account-db
-    image: 'postgres:13.1-alpine'
+    image: "postgres:13.1-alpine"
     volumes:
       - ./bds/account/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
@@ -130,7 +133,7 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_SERVER_MODE: "False"
     ports:
       - "${PGADMIN_PORT:-5050}:80"
     networks:
@@ -139,6 +142,7 @@ services:
       - gerente
       - account
     restart: unless-stopped
+
 networks:
   auth:
     driver: bridge
