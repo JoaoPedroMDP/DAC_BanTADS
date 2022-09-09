@@ -127,6 +127,23 @@ services:
       - POSTGRES_USER=postgres
     ports:
       - "5433:5432"
+
+  gateway:
+    networks:
+      - auth
+      - cliente
+      - account
+      - gerente
+    image: "gateway:latest"
+    build:
+      context: ./back/gateway
+      dockerfile: Dockerfile
+    volumes:
+      - ./back/gateway/:/app
+    container_name: bantads-gateway
+    ports:
+      - "3000:3000"
+
   pgadmin:
     container_name: pgadmin_container
     image: dpage/pgadmin4
