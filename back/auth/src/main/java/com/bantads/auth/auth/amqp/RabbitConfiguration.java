@@ -14,26 +14,27 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitConfiguration {
 
   @Bean
-  public Queue clientQueue() {
-    System.out.println("Criando fila cliente");
-    return new Queue("cliente");
-  }
-
-  @Bean
-  public ClientRegistrationConsumer receiver() {
-    return new ClientRegistrationConsumer();
+  public Queue authQueue() {
+    System.out.println("Criando fila auth");
+    return new Queue("auth");
   }
 
   // @Bean
-  // public AccountSender sender() {
-  // return new AccountSender();
+  // public Queue sagaQueue() {
+  // System.out.println("Criando fila saga");
+  // return new Queue("saga");
   // }
+
+  @Bean
+  public AuthConsumer receiver() {
+    return new AuthConsumer();
+  }
 
   @Bean
   public DefaultClassMapper classMapper() {
     DefaultClassMapper classMapper = new DefaultClassMapper();
     Map<String, Class<?>> idClassMapping = new HashMap<>();
-    idClassMapping.put("com.bantads.cliente.cliente.amqp.ClienteTransfer", ClienteTransfer.class);
+    idClassMapping.put("com.bantads.saga.AuthTransfer", AuthTransfer.class);
     classMapper.setIdClassMapping(idClassMapping);
 
     return classMapper;
