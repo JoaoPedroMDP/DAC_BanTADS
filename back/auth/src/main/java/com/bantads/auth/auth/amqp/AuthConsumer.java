@@ -43,9 +43,8 @@ public class AuthConsumer {
       LoginDTO login = authTransfer.getLogin();
 
       if (login == null) {
-        System.out.println("Login is null");
-        System.out.println("Auth registration failed");
-        authTransfer.setAction("auth-failed");
+        System.out.println("Email já cadastrado");
+        authTransfer.setAction("auth-failed/email-registered");
 
         return null;
       }
@@ -55,6 +54,9 @@ public class AuthConsumer {
         Login loginEntity = repo.findByEmail(login.getEmail());
 
         if (loginEntity != null) {
+          System.out.println("Auth registration failed");
+          System.out.println(e);
+          authTransfer.setAction("auth-failed");
           return null;
         }
 
