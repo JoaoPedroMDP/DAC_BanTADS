@@ -21,18 +21,13 @@ public class AuthProducer {
         this.template.convertAndSend(this.queue.getName(), auth);
     }
 
-    public boolean sendAndReceive(LoginDTO auth, String action) {
+    public AuthTransfer sendAndReceive(LoginDTO auth, String action) {
         AuthTransfer dt = new AuthTransfer(auth, action);
-        AuthTransfer resposta = this.template.convertSendAndReceiveAsType(this.queue.getName(), dt,
-                new ParameterizedTypeReference<AuthTransfer>() {
-                });
-        if (resposta != null) {
-            System.out.println(resposta.getAction());
-            return true;
-        } else {
-            System.out.println("Falhou");
-            return false;
-        }
-    }
+        System.out.println("Chegou no send and receive AUTH");
+        System.out.println(dt.getLogin());
+        AuthTransfer resposta = (AuthTransfer) this.template.convertSendAndReceive(this.queue.getName(), dt);
 
+        return resposta;
+
+    }
 }

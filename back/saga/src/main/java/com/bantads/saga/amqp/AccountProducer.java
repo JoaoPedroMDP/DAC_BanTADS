@@ -19,17 +19,11 @@ public class AccountProducer {
         this.template.convertAndSend(this.queue.getName(), account);
     }
 
-    public boolean sendAndReceive(AccountDTO account, String action) {
+    public AccountTransfer sendAndReceive(AccountDTO account, String action) {
         AccountTransfer dt = new AccountTransfer(account, action);
-        AccountTransfer resposta = this.template.convertSendAndReceiveAsType(this.queue.getName(), dt,
-                new ParameterizedTypeReference<AccountTransfer>() {
-                });
-        if (resposta != null) {
-            System.out.println(resposta.getAction());
-            return true;
-        } else {
-            System.out.println("Falhou");
-            return false;
-        }
+        System.out.println("Chegou no sendandreceive");
+        AccountTransfer resposta = (AccountTransfer) this.template.convertSendAndReceive(this.queue.getName(), dt);
+        System.out.println("Resposta: " + resposta);
+        return resposta;
     }
 }

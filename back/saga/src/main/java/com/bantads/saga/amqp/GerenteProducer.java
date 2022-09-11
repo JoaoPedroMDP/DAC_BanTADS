@@ -21,17 +21,10 @@ public class GerenteProducer {
     this.template.convertAndSend(this.queue.getName(), gerente);
   }
 
-  public boolean sendAndReceive(GerenteDTO gerente, String action) {
+  public GerenteTransfer sendAndReceive(GerenteDTO gerente, String action) {
     GerenteTransfer dt = new GerenteTransfer(gerente, action);
-    GerenteTransfer resposta = this.template.convertSendAndReceiveAsType(this.queue.getName(), dt,
-        new ParameterizedTypeReference<GerenteTransfer>() {
-        });
-    if (resposta != null) {
-      System.out.println(resposta.getAction());
-      return true;
-    } else {
-      System.out.println("Falhou");
-      return false;
-    }
+    System.out.println("Chegou no sendandreceive");
+    GerenteTransfer resposta = (GerenteTransfer) this.template.convertSendAndReceive(this.queue.getName(), dt);
+    return resposta;
   }
 }

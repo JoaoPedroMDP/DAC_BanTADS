@@ -16,11 +16,11 @@ public class AuthTransfer implements Serializable {
     this.action = action;
   }
 
-  public LoginDTO getAuth() {
+  public LoginDTO getLogin() {
     return login;
   }
 
-  public void setAuth(LoginDTO login) {
+  public void setLogin(LoginDTO login) {
     this.login = login;
   }
 

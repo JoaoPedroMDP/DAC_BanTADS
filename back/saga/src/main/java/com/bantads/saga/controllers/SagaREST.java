@@ -15,8 +15,11 @@ import com.bantads.saga.models.AccountDTO;
 import com.bantads.saga.amqp.ClienteProducer;
 import com.bantads.saga.amqp.ClienteTransfer;
 import com.bantads.saga.amqp.GerenteProducer;
+import com.bantads.saga.amqp.GerenteTransfer;
 import com.bantads.saga.amqp.AccountProducer;
+import com.bantads.saga.amqp.AccountTransfer;
 import com.bantads.saga.amqp.AuthProducer;
+import com.bantads.saga.amqp.AuthTransfer;
 import com.bantads.saga.utils.JsonResponse;
 import com.bantads.saga.utils.ValidarCpf;
 
@@ -46,7 +49,7 @@ public class SagaREST {
   }
 
   @PostMapping(value = "/clientes", produces = "application/json")
-  public ResponseEntity<Object> postCliente(@RequestBody ClienteDTO cliente, LoginDTO auth) {
+  public ResponseEntity<Object> postCliente(@RequestBody ClienteDTO cliente) {
     if (cliente.getNome() == null || cliente.getCpf() == null || cliente.getEndereco() == null) {
       return new ResponseEntity<>("Dados do cliente inválidos", HttpStatus.BAD_REQUEST);
     }
@@ -70,54 +73,69 @@ public class SagaREST {
           new JsonResponse(false, "Dados do endereço inválidos", null), HttpStatus.BAD_REQUEST);
     }
 
-    try {
-      System.out.println(cliente);
-      System.out.println(auth);
-
-      ClienteTransfer gt = new ClienteTransfer();
-
-      gt.setAction("create-cliente");
-      gt.setCliente(cliente);
-
-      System.out.println(gt.getCliente());
-      boolean resCliente = clienteSender.sendAndReceive(gt, "create-cliente");
-
-      // if (resCliente == true) {
-      // boolean resAuth = authSender.sendAndReceive(auth, "create-auth");
-      // System.out.println(resAuth);
-
-      // if (resAuth == true) {
-      // return new ResponseEntity<>(
-      // new JsonResponse(true, "Cliente criado com sucesso", cliente),
-      // HttpStatus.OK);
-      // } else {
-      // clienteSender.sendAndReceive(cliente, "delete-cliente");
-      // return new ResponseEntity<>(
-      // new JsonResponse(false, "Erro ao criar cliente", null),
-      // HttpStatus.INTERNAL_SERVER_ERROR);
-      // }
-      // }
-    } catch (Exception e) {
+    if (cliente.getEmail() == null && cliente.getPassword() == null) {
       return new ResponseEntity<>(
-          new JsonResponse(false, "Erro interno ao criar usuário", null),
+          new JsonResponse(false, "Email e senha são obrigatórios", null), HttpStatus.BAD_REQUEST);
+    }
+
+    try {
+      ClienteTransfer resCliente = clienteSender.sendAndReceive(cliente, "cliente-register");
+
+      if (resCliente.getAction().equals("cliente-ok")) {
+        Long clienteID = resCliente.getCliente().getId();
+        String senha = cliente.getPassword();
+        String email = cliente.getEmail();
+
+        LoginDTO loginData = new LoginDTO();
+        loginData.setUser(clienteID);
+        loginData.setEmail(email);
+        loginData.setPassword(senha);
+        // System.out.println("loginData " + clienteID + senha + email);
+        AuthTransfer resAuth = authSender.sendAndReceive(loginData, "auth-register");
+        System.out.println("resCliente" + resCliente);
+        System.out.println("resAuth " + resAuth.getAction());
+        if (resAuth.getAction().equals("auth-ok")) {
+          return new ResponseEntity<>(
+              new JsonResponse(true, "Cliente criado com sucesso", cliente),
+              HttpStatus.OK);
+        } else if (resAuth.getAction().equals("auth-failed/email-registered")) {
+          return new ResponseEntity<>(
+              new JsonResponse(false, "Email já cadastrado, informe outro email", null),
+              HttpStatus.BAD_REQUEST);
+        } else {
+          clienteSender.sendAndReceive(cliente, "cliente-delete");
+          System.out.println("Ação n reconhecida" + resAuth.getAction());
+          return new ResponseEntity<>(
+              new JsonResponse(false, "Erro ao criar cliente", null),
+              HttpStatus.BAD_REQUEST);
+        }
+      }
+      System.out.println("Ação n reconhecida " + resCliente.getAction());
+    } catch (Exception e) {
+      System.out.println(e.getLocalizedMessage());
+
+      return new ResponseEntity<>(
+          new JsonResponse(false, "Erro interno ao criar usuário", e),
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
     return new ResponseEntity<>(
-        new JsonResponse(true, "Usuário criado com sucesso", cliente),
-        HttpStatus.OK);
+        new JsonResponse(false, "Erro interno ao criar usuário", null),
+        HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   @PostMapping(value = "/gerente")
-  public ResponseEntity<Object> postGerente(@RequestBody GerenteDTO gerente, LoginDTO auth) {
+  public ResponseEntity<Object> postGerente(@RequestBody GerenteDTO gerente,
+      LoginDTO auth) {
     try {
-      boolean resGerente = gerenteSender.sendAndReceive(gerente, "create-gerente");
+      GerenteTransfer resGerente = gerenteSender.sendAndReceive(gerente, "gerente-register");
       System.out.println(resGerente);
 
-      if (resGerente == true) {
-        boolean resAuth = authSender.sendAndReceive(auth, "create-auth");
+      if (resGerente.getAction() == "gerente-ok") {
+        AuthTransfer resAuth = authSender.sendAndReceive(auth, "auth-register");
         System.out.println(resAuth);
 
-        if (resAuth == true) {
+        if (resAuth.getAction() == "auth-ok") {
           return new ResponseEntity<>(
               new JsonResponse(true, "Gerente criado com sucesso", gerente),
               HttpStatus.OK);
@@ -139,16 +157,16 @@ public class SagaREST {
   }
 
   @PutMapping("/clientes/{id}")
-  public ResponseEntity<Object> updateCliente(@RequestBody ClienteDTO cliente, AccountDTO account) {
+  public ResponseEntity<Object> updateCliente(@RequestBody ClienteDTO cliente,
+      AccountDTO account) {
     try {
-      boolean resCliente = clienteSender.sendAndReceive(cliente, "update-cliente");
+      ClienteTransfer resCliente = clienteSender.sendAndReceive(cliente, "update-cliente");
       System.out.println(resCliente);
 
-      if (resCliente == true) {
-        boolean resAcc = accountSender.sendAndReceive(account, "create-account");
-        System.out.println(resAcc);
+      if (resCliente.getAction() == "cliente-ok") {
+        AccountTransfer resAcc = accountSender.sendAndReceive(account, "create-account");
 
-        if (resAcc == true) {
+        if (resAcc.getAction() == "account-ok") {
           return new ResponseEntity<>(
               new JsonResponse(true, "Conta criada com sucesso", cliente),
               HttpStatus.OK);
