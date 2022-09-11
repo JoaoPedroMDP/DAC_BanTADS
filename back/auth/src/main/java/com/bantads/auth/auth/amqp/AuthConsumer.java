@@ -45,20 +45,30 @@ public class AuthConsumer {
           login.setRole(Role.CLIENTE);
         }
 
-        String password = login.getPassword();
-        String saltValue = PasswordEnc.getSaltvalue(10);
-        String passwordEnc = PasswordEnc.generateSecurePassword(password, saltValue);
+        try {
 
-        // System.out.println(passwordEnc);
+          String password = login.getPassword();
+          String saltValue = PasswordEnc.getSaltvalue(10);
+          String passwordEnc = PasswordEnc.generateSecurePassword(password, saltValue);
 
-        login.setPassword(passwordEnc);
-        repo.save(mapper.map(login, Login.class));
+          // System.out.println(passwordEnc);
 
-        // System.out.println("Cliente registration success");
+          login.setPassword(passwordEnc);
+          repo.save(mapper.map(login, Login.class));
 
-        authTransfer.setAction("auth-ok");
+          // System.out.println("Cliente registration success");
 
-        return authTransfer;
+          authTransfer.setAction("auth-ok");
+
+          return authTransfer;
+
+        } catch (Exception e) {
+          System.out.println("Auth registration failed");
+          System.out.println(e);
+          authTransfer.setAction("auth-failed");
+
+          return null;
+        }
       }
 
       authTransfer.setAction("auth-failed");
