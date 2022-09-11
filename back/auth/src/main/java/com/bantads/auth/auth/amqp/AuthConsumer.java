@@ -64,7 +64,7 @@ public class AuthConsumer {
       authTransfer.setAction("auth-failed");
 
       System.out.println("Auth registration failed");
-      return authTransfer;
+      return null;
 
     } else if (authTransfer.getAction().equals("auth-delete")) {
       LoginDTO login = authTransfer.getLogin();

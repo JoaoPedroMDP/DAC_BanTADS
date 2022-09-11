@@ -10,6 +10,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
   // Cliente findByEmail(String email);
 
-  List<Cliente> findByGerente(Long gerente);
+  List<Cliente> findByGerente(int gerente);
 
 }
