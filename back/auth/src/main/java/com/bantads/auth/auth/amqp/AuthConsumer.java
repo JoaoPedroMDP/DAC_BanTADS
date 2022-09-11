@@ -30,62 +30,68 @@ public class AuthConsumer {
   public AuthTransfer receive(@Payload AuthTransfer authTransfer) {
     System.out.println("Received registration message for auth");
 
-    if (authTransfer.getAction().equals("auth-register")) {
-      LoginDTO login = authTransfer.getLogin();
+    try {
 
-      if (login.getEmail() != null && login.getPassword() != null && login.getId() != null) {
+      if (authTransfer.getAction().equals("auth-register")) {
+        LoginDTO login = authTransfer.getLogin();
 
-        Login loginEntity = repo.findByEmail(login.getEmail());
+        if (login.getEmail() != null && login.getPassword() != null && login.getId() != null) {
 
-        if (loginEntity != null) {
-          return null;
+          Login loginEntity = repo.findByEmail(login.getEmail());
+
+          if (loginEntity != null) {
+            return null;
+          }
+
+          if (login.getRole() == null) {
+            login.setRole(Role.CLIENTE);
+          }
+
+          try {
+
+            String password = login.getPassword();
+            String saltValue = PasswordEnc.getSaltvalue(10);
+            String passwordEnc = PasswordEnc.generateSecurePassword(password, saltValue);
+
+            // System.out.println(passwordEnc);
+
+            login.setPassword(passwordEnc);
+            repo.save(mapper.map(login, Login.class));
+
+            // System.out.println("Cliente registration success");
+
+            authTransfer.setAction("auth-ok");
+
+            return authTransfer;
+
+          } catch (Exception e) {
+            System.out.println("Auth registration failed");
+            System.out.println(e);
+            authTransfer.setAction("auth-failed");
+
+            return null;
+          }
         }
 
-        if (login.getRole() == null) {
-          login.setRole(Role.CLIENTE);
-        }
+        authTransfer.setAction("auth-failed");
 
-        try {
+        System.out.println("Auth registration failed");
+        return null;
 
-          String password = login.getPassword();
-          String saltValue = PasswordEnc.getSaltvalue(10);
-          String passwordEnc = PasswordEnc.generateSecurePassword(password, saltValue);
+      } else if (authTransfer.getAction().equals("auth-delete")) {
+        LoginDTO login = authTransfer.getLogin();
 
-          // System.out.println(passwordEnc);
+        Login loginObj = repo.findById(login.getId()).get();
 
-          login.setPassword(passwordEnc);
-          repo.save(mapper.map(login, Login.class));
+        repo.delete(loginObj);
 
-          // System.out.println("Cliente registration success");
+        authTransfer.setAction("auth-deleted");
 
-          authTransfer.setAction("auth-ok");
-
-          return authTransfer;
-
-        } catch (Exception e) {
-          System.out.println("Auth registration failed");
-          System.out.println(e);
-          authTransfer.setAction("auth-failed");
-
-          return null;
-        }
+        return authTransfer;
       }
 
-      authTransfer.setAction("auth-failed");
-
-      System.out.println("Auth registration failed");
-      return null;
-
-    } else if (authTransfer.getAction().equals("auth-delete")) {
-      LoginDTO login = authTransfer.getLogin();
-
-      Login loginObj = repo.findById(login.getId()).get();
-
-      repo.delete(loginObj);
-
-      authTransfer.setAction("auth-deleted");
-
-      return authTransfer;
+    } catch (Exception e) {
+      System.out.println(e);
     }
 
     System.out.println("Ação não reconhecida");
