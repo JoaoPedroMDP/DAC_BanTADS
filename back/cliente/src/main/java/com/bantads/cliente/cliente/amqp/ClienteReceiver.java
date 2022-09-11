@@ -40,7 +40,7 @@ public class ClienteReceiver {
   private GerenteProducer gerenteSender;
 
   @RabbitHandler
-  public void receive(@Payload ClienteTransfer clienteTransfer) {
+  public ClienteTransfer receive(@Payload ClienteTransfer clienteTransfer) {
     System.out.println("Recebendo cliente " + clienteTransfer.getCliente());
     if (clienteTransfer.getAction().equals("get-cliente")) {
       Cliente cliente = repo.findById(clienteTransfer.getCliente().getId()).get();
@@ -52,6 +52,7 @@ public class ClienteReceiver {
       clienteTransfer.setAction("return-cliente");
 
       sender.send(clienteTransfer);
+      return clienteTransfer;
     } else if (clienteTransfer.getAction().equals("cliente-register")) {
       // luli é o meu amor do coração
 
@@ -71,16 +72,16 @@ public class ClienteReceiver {
         clienteTransfer.setError("Por favor, insira email e senha para completar seu cadastro!");
         clienteTransfer.setAction("cliente-failed");
 
-        this.template.convertAndSend("saga", clienteTransfer);
-        return;
+        // this.template.convertAndSend("saga", clienteTransfer);
+        return clienteTransfer;
       }
 
       if (!ValidarCpf.isCpfValid(cliente.getCpf())) {
         clienteTransfer.setError("CPF Inálido!");
         clienteTransfer.setAction("cliente-failed");
 
-        this.template.convertAndSend("saga", clienteTransfer);
-        return;
+        // this.template.convertAndSend("saga", clienteTransfer);
+        return clienteTransfer;
       }
 
       EnderecoDTO endereco = cliente.getEndereco();
@@ -92,7 +93,7 @@ public class ClienteReceiver {
         clienteTransfer.setAction("cliente-failed");
 
         this.template.convertAndSend("saga", clienteTransfer);
-        return;
+        return clienteTransfer;
       }
 
       try {
@@ -125,12 +126,12 @@ public class ClienteReceiver {
         clienteTransfer.setAction("cliente-failed");
 
         this.template.convertAndSend("saga", clienteTransfer);
-        return;
+        return clienteTransfer;
       }
 
       clienteTransfer.setAction("cliente-ok");
 
-      this.template.convertAndSend("saga", clienteTransfer);
+      return clienteTransfer;
 
     } else if (clienteTransfer.getAction().equals("cliente-delete")) {
       ClienteDTO cliente = clienteTransfer.getCliente();
@@ -141,10 +142,12 @@ public class ClienteReceiver {
         repo.delete(clienteObj);
 
         clienteTransfer.setAction("cliente-deleted");
-        this.template.convertAndSend("saga", clienteTransfer);
-        return;
+        // this.template.convertAndSend("saga", clienteTransfer);
+        return clienteTransfer;
       }
 
     }
+
+    return clienteTransfer;
   }
 }
