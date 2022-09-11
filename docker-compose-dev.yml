@@ -2,6 +2,8 @@ version: "2"
 
 services:
   front:
+    image: "front:latest"
+    container_name: "bantads-front"
     build:
       context: .
       dockerfile: Dockerfile
@@ -187,4 +189,6 @@ networks:
     driver: bridge
   account:
     name: account
+    driver: bridge
+  saga:
     driver: bridge

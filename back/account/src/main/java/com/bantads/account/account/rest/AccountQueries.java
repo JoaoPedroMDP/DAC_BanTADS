@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-@CrossOrigin
 @RestController
 public class AccountQueries {
     @Autowired

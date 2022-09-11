@@ -71,16 +71,15 @@ public class AccountServices {
         AccountC created = commands.save(toAccount);
         AccountDTO toDTO = created.toDto();
         sender.send(toDTO, "create");
-        sender.sendAndReceive(toDTO, "create");
         return toDTO;
     }
 
     public AccountDTO updateAccount(Long accountId, AccountDTO newData) throws AccountNotFound {
         AccountC toUpdate = null;
 
-        try{
+        try {
             toUpdate = queries.findById(accountId).get().toCommand();
-        }catch(NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             throw new AccountNotFound();
         }
 
