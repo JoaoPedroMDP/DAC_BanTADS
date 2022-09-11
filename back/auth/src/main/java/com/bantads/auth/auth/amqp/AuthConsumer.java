@@ -33,6 +33,16 @@ public class AuthConsumer {
     if (authTransfer.getAction().equals("auth-register")) {
       LoginDTO login = authTransfer.getLogin();
 
+      if (login == null) {
+        System.out.println("Login is null");
+        System.out.println("Auth registration failed");
+        System.out.println(e);
+        authTransfer.setAction("auth-failed");
+
+        return null;
+        return null;
+      }
+
       if (login.getEmail() != null && login.getPassword() != null && login.getId() != null) {
 
         Login loginEntity = repo.findByEmail(login.getEmail());
