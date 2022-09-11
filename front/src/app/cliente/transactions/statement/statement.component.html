@@ -1,16 +1,16 @@
 <div class="d-flex w-100 statements">
-    <div class="date-selection">
+    <div [formGroup]="datepicker" class="date-selection">
         <mat-form-field appearance="fill">
             <mat-label>Selecione o período</mat-label>
             <mat-date-range-input [rangePicker]="picker">
                 <input matStartDate formControlName="start" placeholder="Início">
-                <input matEndDate formControlName="end" placeholder="Fim">
+                <input matEndDate (dateChange)="dateChangeHandler()" formControlName="end" placeholder="Fim">
             </mat-date-range-input>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-date-range-picker #picker></mat-date-range-picker>
 
-            <mat-error *ngIf="range.controls['start'].hasError('matStartDateInvalid')">Início inválido</mat-error>
-            <mat-error *ngIf="range.controls['end'].hasError('matEndDateInvalid')">Fim inválido</mat-error>
+            <mat-error *ngIf="datepicker.controls['start'].hasError('matStartDateInvalid')">Início inválido</mat-error>
+            <mat-error *ngIf="datepicker.controls['end'].hasError('matEndDateInvalid')">Fim inválido</mat-error>
         </mat-form-field>
     </div>
 

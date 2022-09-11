@@ -1,6 +1,6 @@
 package com.bantads.account.account.services;
 
-import com.bantads.account.account.amqp.AccountSender;
+import com.bantads.account.account.amqp.account.AccountSender;
 import com.bantads.account.account.models.AccountDTO;
 import com.bantads.account.account.models.command.AccountC;
 import com.bantads.account.account.models.query.AccountQ;
@@ -77,9 +77,9 @@ public class AccountServices {
     public AccountDTO updateAccount(Long accountId, AccountDTO newData) throws AccountNotFound {
         AccountC toUpdate = null;
 
-        try{
+        try {
             toUpdate = queries.findById(accountId).get().toCommand();
-        }catch(NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             throw new AccountNotFound();
         }
 

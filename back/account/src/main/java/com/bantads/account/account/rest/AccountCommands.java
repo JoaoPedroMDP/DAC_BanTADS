@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ConstraintViolationException;
 
-@CrossOrigin
 @RestController
 public class AccountCommands {
     @Autowired
     private AccountServices serv;
 
+    @CrossOrigin
     @PutMapping(value = "/accounts/{id}", produces = "application/json")
     public JsonResponse updateAccount(@PathVariable("id") Long id, @RequestBody AccountDTO account) {
         try {
@@ -30,6 +30,7 @@ public class AccountCommands {
         }
     }
 
+    @CrossOrigin
     @PostMapping(value = "/accounts", produces = "application/json")
     public JsonResponse createAccount(@RequestBody AccountDTO account) {
         try {
@@ -49,6 +50,7 @@ public class AccountCommands {
         }
     }
 
+    @CrossOrigin
     @DeleteMapping(value = "/accounts/{id}", produces = "application/json")
     public JsonResponse deleteAccount(@PathVariable("id") Long id) {
         try {

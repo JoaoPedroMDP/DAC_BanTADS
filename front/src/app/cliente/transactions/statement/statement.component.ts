@@ -174,9 +174,9 @@ class Statement {
   styleUrls: ["./statement.component.css"],
 })
 export class StatementComponent implements OnInit {
-  range = new FormGroup({
-    start: new FormControl(null),
-    end: new FormControl(null),
+  datepicker = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl(),
   });
 
   statement!: Statement;
@@ -184,15 +184,18 @@ export class StatementComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    let startDate: string = new Date().getTime().toString();
-    let endDate: string = new Date().getTime().toString(); // Um dia
+  }
+
+  dateChangeHandler() {
+    let startDate: string = new Date(this.datepicker.value.start).valueOf().toString();
+    let endDate: string = new Date(this.datepicker.value.end).valueOf().toString();
     this.chamaApi(startDate, endDate);
   }
 
   async chamaApi(inicio: string, fim: string) {
     this.http
       .get<Record<string, any>>(
-        "http://localhost:5003/accounts/13/statement?from=1661556686000&to=1661660000000"
+        "https://joaopedromdp-dac-bantads-q99j6vgv9p52x94x-5003.githubpreview.dev/accounts/7/statement?from="+inicio+"&to=" + fim
       )
       .subscribe((response) => {
         // O '+' é pra converter para numerico

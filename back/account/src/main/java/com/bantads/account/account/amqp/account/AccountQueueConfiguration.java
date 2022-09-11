@@ -1,4 +1,4 @@
-package com.bantads.account.account.amqp;
+package com.bantads.account.account.amqp.account;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
-@CrossOrigin
 @RestController
 public class TransactionQueries {
     @Autowired
@@ -21,6 +20,7 @@ public class TransactionQueries {
     @Autowired
     private TransactionServices serv;
 
+    @CrossOrigin
     @GetMapping(value = "/accounts/{id}/statement", produces = "application/json")
     public JsonResponse getStatement(@PathVariable Long id, @RequestParam String from, @RequestParam String to) {
         try {
