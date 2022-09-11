@@ -34,7 +34,7 @@ public class RabbitConfiguration {
   public DefaultClassMapper classMapper() {
     DefaultClassMapper classMapper = new DefaultClassMapper();
     Map<String, Class<?>> idClassMapping = new HashMap<>();
-    idClassMapping.put("com.bantads.saga.AuthTransfer", AuthTransfer.class);
+    idClassMapping.put("com.bantads.saga.amqp.AuthTransfer", AuthTransfer.class);
     classMapper.setIdClassMapping(idClassMapping);
 
     return classMapper;
