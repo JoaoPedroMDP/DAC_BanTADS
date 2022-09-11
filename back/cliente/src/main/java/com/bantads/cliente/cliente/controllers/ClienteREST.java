@@ -1,6 +1,8 @@
 package com.bantads.cliente.cliente.controllers;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ import com.bantads.cliente.cliente.utils.ValidarCpf;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @CrossOrigin
 @RestController
@@ -162,6 +165,28 @@ public class ClienteREST {
 
     return new ResponseEntity<>(new JsonResponse(false, "Id não fornecido para atualizar usuário", null),
         HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = "/clientes")
+  ResponseEntity<Object> show(@RequestParam(required = false) Long gerente) {
+    System.out.println(gerente);
+    if (gerente == null) {
+      List<Cliente> clientes = repo.findAll();
+      List<ClienteDTO> clientesDTO = clientes.stream().map(c -> mapper.map(c, ClienteDTO.class))
+          .collect(Collectors.toList());
+      return new ResponseEntity<>(new JsonResponse(true, "", clientesDTO), HttpStatus.BAD_REQUEST);
+    }
+
+    // Long gerenteId = Long.parseLong(gerente.ge);
+    System.out.println(gerente);
+
+    List<Cliente> clientes = repo.findByGerente(gerente);
+
+    List<ClienteDTO> clientesDTO = clientes.stream().map(c -> mapper.map(c, ClienteDTO.class))
+        .collect(Collectors.toList());
+
+    return new ResponseEntity<>(new JsonResponse(true, "", clientesDTO), HttpStatus.OK);
+
   }
 
 }

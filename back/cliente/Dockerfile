@@ -1,4 +1,7 @@
 FROM adoptopenjdk/openjdk11:latest
 VOLUME /tmp
-COPY target/cliente-*.jar app.jar
-ENTRYPOINT [ "java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar" ]
+COPY ./entrypoint.sh /app/entrypoint.sh
+WORKDIR /app
+
+ENTRYPOINT ["/app/entrypoint.sh"]
+CMD [ "java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar" ]
