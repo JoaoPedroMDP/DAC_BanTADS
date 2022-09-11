@@ -50,7 +50,7 @@ public class AuthConsumer {
         return null;
       }
 
-      if (login.getEmail() != null && login.getPassword() != null && login.getId() != null) {
+      if (login.getEmail() != null && login.getPassword() != null && login.getUser() != null) {
 
         Login loginEntity = repo.findByEmail(login.getEmail());
 
