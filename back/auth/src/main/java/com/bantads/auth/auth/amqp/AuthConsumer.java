@@ -27,7 +27,7 @@ public class AuthConsumer {
   private ModelMapper mapper;
 
   @RabbitHandler
-  public void receive(@Payload AuthTransfer authTransfer) {
+  public AuthTransfer receive(@Payload AuthTransfer authTransfer) {
     System.out.println("Received registration message for auth");
 
     if (authTransfer.getAction().equals("auth-register")) {
@@ -38,7 +38,7 @@ public class AuthConsumer {
         Login loginEntity = repo.findByEmail(login.getEmail());
 
         if (loginEntity != null) {
-          return;
+          return null;
         }
 
         if (login.getRole() == null) {
@@ -58,16 +58,14 @@ public class AuthConsumer {
 
         authTransfer.setAction("auth-ok");
 
-        this.template.convertAndSend("saga", authTransfer);
-
-        return;
+        return authTransfer;
       }
 
       authTransfer.setAction("auth-failed");
 
-      this.template.convertAndSend("saga", authTransfer);
-
       System.out.println("Auth registration failed");
+      return authTransfer;
+
     } else if (authTransfer.getAction().equals("auth-delete")) {
       LoginDTO login = authTransfer.getLogin();
 
@@ -77,7 +75,10 @@ public class AuthConsumer {
 
       authTransfer.setAction("auth-deleted");
 
-      this.template.convertAndSend("saga", authTransfer);
+      return authTransfer;
     }
+
+    System.out.println("Ação não reconhecida");
+    return null;
   }
 }
