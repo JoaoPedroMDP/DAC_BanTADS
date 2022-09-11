@@ -30,16 +30,23 @@ public class AuthConsumer {
   public AuthTransfer receive(@Payload AuthTransfer authTransfer) {
     System.out.println("Received registration message for auth " + authTransfer.getAction());
 
+    if (authTransfer.getAction() == null) {
+      System.out.println("Action is null");
+      System.out.println("Auth registration failed");
+      authTransfer.setAction("auth-failed");
+
+      return null;
+
+    }
+
     if (authTransfer.getAction().equals("auth-register")) {
       LoginDTO login = authTransfer.getLogin();
 
       if (login == null) {
         System.out.println("Login is null");
         System.out.println("Auth registration failed");
-        System.out.println(e);
         authTransfer.setAction("auth-failed");
 
-        return null;
         return null;
       }
 
