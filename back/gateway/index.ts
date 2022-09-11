@@ -11,6 +11,7 @@ const authService = "http://auth:8080/auth";
 const clienteService = "http://cliente:8080/clientes";
 const gerenteService = "http://gerente:8080/gerente";
 const accountsService = "http://account:5000/accounts";
+const sagaService = "http://saga:3030";
 
 app
   .get("/clientes/:id", async (req: any, res: Response) => {
@@ -23,9 +24,10 @@ app
     }
   })
 
+  // saga
   .post("/clientes", async (req: any, res: any) => {
     try {
-      const response = await axios.post(`${clienteService}`, {
+      const response = await axios.post(`${sagaService}`, {
         ...req.body,
       });
       return res.json(response.data);
