@@ -7,6 +7,7 @@ import com.bantads.cliente.cliente.serializers.ClienteDTO;
 public class ClienteTransfer implements Serializable {
   ClienteDTO cliente;
   String action;
+  String error;
 
   public ClienteTransfer() {
   }
@@ -30,6 +31,14 @@ public class ClienteTransfer implements Serializable {
 
   public void setAction(String action) {
     this.action = action;
+  }
+
+  public String getError() {
+    return error;
+  }
+
+  public void setError(String error) {
+    this.error = error;
   }
 
 }
