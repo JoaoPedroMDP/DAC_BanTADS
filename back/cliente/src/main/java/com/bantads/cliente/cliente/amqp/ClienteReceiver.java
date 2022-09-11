@@ -148,6 +148,8 @@ public class ClienteReceiver {
 
     }
 
-    return clienteTransfer;
+    System.out.println("Ação recebida não reconhecida: " + clienteTransfer.getAction());
+
+    return null;
   }
 }
