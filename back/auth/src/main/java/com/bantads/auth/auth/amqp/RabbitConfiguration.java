@@ -33,7 +33,8 @@ public class RabbitConfiguration {
   @Bean
   public DefaultClassMapper classMapper() {
     DefaultClassMapper classMapper = new DefaultClassMapper();
-    Map<String, Class<?>> idClassMapping = new HashMap<>();
+    Map<String, Class<?>> idClassMapping = new HashMap();
+    classMapper.setTrustedPackages("*");
     idClassMapping.put("com.bantads.saga.amqp.AuthTransfer", AuthTransfer.class);
     classMapper.setIdClassMapping(idClassMapping);
 
