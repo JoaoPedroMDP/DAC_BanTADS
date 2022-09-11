@@ -143,6 +143,37 @@ services:
       - account
     restart: unless-stopped
 
+  saga:
+    networks:
+      - auth
+      - cliente
+      - account
+      - gerente
+      - saga
+    image: "saga:latest"
+    build:
+      context: ./back/saga
+    container_name: bantads-saga
+    ports:
+      - "3030:3030"
+    volumes:
+      - ./back/saga:/app
+  gateway:
+    networks:
+      - auth
+      - cliente
+      - account
+      - gerente
+    image: "gateway:latest"
+    build:
+      context: ./back/gateway
+      dockerfile: Dockerfile
+    volumes:
+      - ./back/gateway/:/app
+    container_name: bantads-gateway
+    ports:
+      - "3000:3000"
+
 networks:
   auth:
     driver: bridge
