@@ -20,14 +20,14 @@
         <mat-card class="d-flex card" *ngFor="let day of statement.days">
             <mat-card-content class="d-flex card-content">
                 <h3>{{day.date.toLocaleDateString('pt-BR')}}</h3>
-                <h4 class="mb-30">Consolidado: R$ {{day.consolidatedValue}}</h4>
+                <h4 class="mb-30">Consolidado: R$ {{day.consolidatedValue | number:'1.0-2' }}</h4>
                 <div class="d-flex align-items-center content-line"
                     [style.background-color]="transaction.getTypeColor(false)"
                     [style.border-color]="transaction.getTypeColor(true)" *ngFor="let transaction of day.transactions">
                     <div>
                         <span class="fs-25 me-20">{{transaction.typeName}}</span>
                         <span class="fs-20 me-20">{{ transaction.datetime.toLocaleTimeString('pt-BR') }}</span>
-                        <span class="fw-bold fs-20">{{ transaction.value | currency: 'BRL': 'symbol': '1.2-2'}}</span>
+                        <span class="fw-bold fs-20">{{ transaction.value | currency: 'BRL': 'symbol': '1.0-2'}}</span>
                     </div>
                     <div *ngIf="transaction.type == 'transfer'">
                         <span
