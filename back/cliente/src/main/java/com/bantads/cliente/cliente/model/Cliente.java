@@ -19,7 +19,7 @@ public class Cliente implements Serializable {
   @Column(name = "aprovado")
   private String aprovado;
   @Column(name = "gerente")
-  private int gerente;
+  private Long gerente;
   @Column(name = "conta")
   private Long conta;
   @OneToOne(cascade = CascadeType.ALL)
@@ -66,11 +66,11 @@ public class Cliente implements Serializable {
     this.aprovado = aprovado;
   }
 
-  public int getGerente() {
+  public Long getGerente() {
     return gerente;
   }
 
-  public void setGerente(int gerente) {
+  public void setGerente(Long gerente) {
     this.gerente = gerente;
   }
 

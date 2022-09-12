@@ -4,13 +4,14 @@ import { Router } from "@angular/router";
 import { Auth } from "./types";
 
 import { ToastrService } from "ngx-toastr";
+import jwtDecode from "jwt-decode";
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
   private url = "http://localhost:5000/auth";
   private auth: Auth | null = null;
-  private role;
+  private role = "";
 
   constructor(
     private http: HttpClient,
@@ -83,7 +84,15 @@ export class AuthService {
 
   public isAuthenticated(): boolean {
     const token = localStorage.getItem("token"); // Check whether the token is expired and return
-    console.log(token);
+    if (!token) return false;
+    try {
+      const decoded: any = jwtDecode(token);
+
+      console.log(decoded.role);
+      this.role = decoded.role;
+    } catch (e) {
+      return false;
+    }
     // true or false
     return !!token;
     // return !this.jwtHelper.isTokenExpired(token || "");
