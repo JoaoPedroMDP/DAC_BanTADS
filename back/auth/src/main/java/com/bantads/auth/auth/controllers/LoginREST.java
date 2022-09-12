@@ -56,7 +56,7 @@ public class LoginREST {
         && isPasswordCorrect) {
       try {
         Algorithm alg = Algorithm.HMAC256("secret");
-        String token = JWT.create().withIssuer("auth0").sign(alg);
+        String token = JWT.create().withIssuer("auth0").withClaim("role", loginEntity.getRole().toString()).sign(alg);
 
         loginEntity.setToken(token);
         loginEntity.setPassword("");

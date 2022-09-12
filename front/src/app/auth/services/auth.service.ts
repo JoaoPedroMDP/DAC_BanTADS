@@ -10,6 +10,7 @@ import { ToastrService } from "ngx-toastr";
 export class AuthService {
   private url = "http://localhost:5000/auth";
   private auth: Auth | null = null;
+  private role;
 
   constructor(
     private http: HttpClient,
@@ -82,8 +83,13 @@ export class AuthService {
 
   public isAuthenticated(): boolean {
     const token = localStorage.getItem("token"); // Check whether the token is expired and return
+    console.log(token);
     // true or false
     return !!token;
     // return !this.jwtHelper.isTokenExpired(token || "");
+  }
+
+  public getRole() {
+    return this.role;
   }
 }
