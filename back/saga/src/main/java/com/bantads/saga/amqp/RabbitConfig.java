@@ -29,10 +29,10 @@ public class RabbitConfig {
   }
 
   @Bean
-  @Qualifier("account")
+  @Qualifier("account-saga")
   public Queue AccountQueue() {
     System.out.println("Criando fila account");
-    return new Queue("accouunt");
+    return new Queue("account-saga");
   }
 
   @Bean

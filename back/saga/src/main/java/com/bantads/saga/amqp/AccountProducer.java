@@ -12,7 +12,7 @@ public class AccountProducer {
     private RabbitTemplate template;
 
     @Autowired
-    @Qualifier("account")
+    @Qualifier("account-saga")
     private Queue queue;
 
     public void send(AccountDTO account, String action) {
@@ -21,7 +21,7 @@ public class AccountProducer {
 
     public AccountTransfer sendAndReceive(AccountDTO account, String action) {
         AccountTransfer dt = new AccountTransfer(account, action);
-        System.out.println("Chegou no sendandreceive");
+        System.out.println("Chegou no send an dreceive" + this.queue.getName());
         AccountTransfer resposta = (AccountTransfer) this.template.convertSendAndReceive(this.queue.getName(), dt);
         System.out.println("Resposta: " + resposta);
         return resposta;

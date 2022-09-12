@@ -26,6 +26,7 @@ import com.bantads.saga.utils.ValidarCpf;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @CrossOrigin
 @RestController
@@ -125,65 +126,76 @@ public class SagaREST {
   }
 
   @PostMapping(value = "/gerente")
-  public ResponseEntity<Object> postGerente(@RequestBody GerenteDTO gerente,
-      LoginDTO auth) {
+  public ResponseEntity<Object> postGerente(@RequestBody GerenteDTO gerente) {
     try {
-      GerenteTransfer resGerente = gerenteSender.sendAndReceive(gerente, "gerente-register");
-      System.out.println(resGerente);
+      GerenteTransfer resGerente = gerenteSender.sendAndReceive(gerente, "create-gerente");
+      System.out.println("resGerente" + resGerente);
 
-      if (resGerente.getAction() == "gerente-ok") {
-        AuthTransfer resAuth = authSender.sendAndReceive(auth, "auth-register");
-        System.out.println(resAuth);
+      if (resGerente.getAction().equals("gerente-ok")) {
+        Integer gerenteId = resGerente.getGerente().getId();
+        String senha = gerente.getPassword();
+        String email = gerente.getEmail();
 
-        if (resAuth.getAction() == "auth-ok") {
+        LoginDTO loginData = new LoginDTO();
+        loginData.setUser(Long.valueOf(gerenteId));
+        loginData.setEmail(email);
+        loginData.setPassword(senha);
+
+        AuthTransfer resAuth = authSender.sendAndReceive(loginData, "auth-register");
+        if (resAuth.getAction().equals("auth-ok")) {
           return new ResponseEntity<>(
               new JsonResponse(true, "Gerente criado com sucesso", gerente),
               HttpStatus.OK);
-        } else {
-          gerenteSender.sendAndReceive(gerente, "delete-gerente");
+        } else if (resAuth.getAction().equals("auth-failed/email-registered")) {
           return new ResponseEntity<>(
-              new JsonResponse(false, "Erro ao criar usuário", null),
-              HttpStatus.INTERNAL_SERVER_ERROR);
+              new JsonResponse(false, "Email já cadastrado, informe outro email", null),
+              HttpStatus.BAD_REQUEST);
+        } else {
+          gerenteSender.sendAndReceive(gerente, "remove-gerente");
+          return new ResponseEntity<>(
+              new JsonResponse(false, "Erro ao criar gerente", null),
+              HttpStatus.BAD_REQUEST);
         }
       }
     } catch (Exception e) {
       return new ResponseEntity<>(
-          new JsonResponse(false, "Erro interno ao criar usuário", null),
+          new JsonResponse(false, "Erro interno ao criar gerente", null),
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<>(
-        new JsonResponse(true, "gerente criado com sucesso", gerente),
-        HttpStatus.OK);
+        new JsonResponse(false, "Erro interno ao criar gerente", null),
+        HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
-  @PutMapping("/clientes/{id}")
-  public ResponseEntity<Object> updateCliente(@RequestBody ClienteDTO cliente,
-      AccountDTO account) {
+  @PostMapping(value = "/account")
+  public ResponseEntity<Object> updateCliente(@RequestBody AccountDTO account) {
     try {
-      ClienteTransfer resCliente = clienteSender.sendAndReceive(cliente, "update-cliente");
+      ClienteTransfer resCliente = clienteSender.sendAndReceiveInt(account.getUserId(),
+          "cliente-aprovado");
       System.out.println(resCliente);
 
-      if (resCliente.getAction() == "cliente-ok") {
+      if (resCliente.getAction().equals("cliente-approved-ok")) {
+        System.out.print(account.getLimit());
         AccountTransfer resAcc = accountSender.sendAndReceive(account, "create-account");
-
-        if (resAcc.getAction() == "account-ok") {
+        System.out.println("here" + resAcc.getAction());
+        if (resAcc.getAction().equals("create-account-ok")) {
           return new ResponseEntity<>(
-              new JsonResponse(true, "Conta criada com sucesso", cliente),
+              new JsonResponse(true, "Conta criada com sucesso", account),
               HttpStatus.OK);
         } else {
-          clienteSender.sendAndReceive(cliente, "update-cliente-rollback");
+          clienteSender.sendAndReceiveInt(account.getUserId(), "cliente-approved-rollback");
           return new ResponseEntity<>(
-              new JsonResponse(false, "Erro ao atualizar usuario", null),
+              new JsonResponse(false, "Erro ao criar conta", null),
               HttpStatus.INTERNAL_SERVER_ERROR);
         }
       }
     } catch (Exception e) {
       return new ResponseEntity<>(
-          new JsonResponse(false, "Erro interno ao criar usuário", null),
+          new JsonResponse(false, "Erro interno ao criar conta", e),
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<>(
-        new JsonResponse(true, "Usuário criado com sucesso", cliente),
-        HttpStatus.OK);
+        new JsonResponse(false, "Erro interno ao criar conta", null),
+        HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }

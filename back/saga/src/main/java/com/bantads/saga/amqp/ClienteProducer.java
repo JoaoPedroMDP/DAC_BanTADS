@@ -30,4 +30,14 @@ public class ClienteProducer {
     return resposta;
 
   }
+
+  public ClienteTransfer sendAndReceiveInt(Long cliente, String action) {
+    ClienteDTO cli = new ClienteDTO();
+    cli.setId(cliente);
+    ClienteTransfer dt = new ClienteTransfer(cli, action);
+    System.out.println("Chegou no send and receive");
+    ClienteTransfer resposta = (ClienteTransfer) this.template.convertSendAndReceive(this.queue.getName(), dt);
+    System.out.println("Resposta: " + resposta);
+    return resposta;
+  }
 }

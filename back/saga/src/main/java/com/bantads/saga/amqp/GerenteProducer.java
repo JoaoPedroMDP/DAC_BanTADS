@@ -23,7 +23,7 @@ public class GerenteProducer {
 
   public GerenteTransfer sendAndReceive(GerenteDTO gerente, String action) {
     GerenteTransfer dt = new GerenteTransfer(gerente, action);
-    System.out.println("Chegou no sendandreceive");
+    System.out.println("Chegou no send and receive");
     GerenteTransfer resposta = (GerenteTransfer) this.template.convertSendAndReceive(this.queue.getName(), dt);
     return resposta;
   }
