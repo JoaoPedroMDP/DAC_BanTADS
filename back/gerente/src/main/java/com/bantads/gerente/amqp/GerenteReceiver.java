@@ -113,6 +113,14 @@ public class GerenteReceiver {
       long i = gerenteTransfer.getGerente();
       Gerente g = repo.findById(i).get();
       GerenteDTO gerenteD = new GerenteDTO(Math.toIntExact(g.getId()), g.getNome(), g.getEmail(), g.getCpf());
+      gerenteD.setNumClientes(gerenteD.getNumClientes() - 1);
+      try {
+        repo.save(mapper.map(gerenteD, Gerente.class));
+      } catch (Exception e) {
+        gerenteTransfer.setError("Erro interno ao atualizar o gerente!");
+        gerenteTransfer.setAction("gerente-failed");
+        this.template.convertAndSend("saga", gerenteTransfer);
+      }
       return gerenteTransfer;
     }
     System.out.println("Ação recebida não reconhecida: " + gerenteTransfer.getAction());
