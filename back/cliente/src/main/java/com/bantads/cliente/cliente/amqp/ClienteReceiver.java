@@ -146,6 +146,57 @@ public class ClienteReceiver {
         return clienteTransfer;
       }
 
+    } else if (clienteTransfer.getAction().equals("cliente-approved")) {
+      ClienteDTO cliente = clienteTransfer.getCliente();
+
+      Cliente clienteObj = repo.findById(cliente.getId()).get();
+
+      if (clienteObj != null) {
+        try {
+
+          clienteObj.setAprovado(AccountStatus.APROVADO.name());
+          repo.save(clienteObj);
+
+          clienteTransfer.setAction("cliente-approved-ok");
+          // this.template.convertAndSend("saga", clienteTransfer);
+          return clienteTransfer;
+        } catch (Exception e) {
+
+          System.out.println(e.getLocalizedMessage());
+          clienteTransfer.setAction("cliente-approved-failed");
+
+          return clienteTransfer;
+        }
+      }
+      System.out.println("Cliente não encontrado");
+
+      return clienteTransfer;
+
+    } else if (clienteTransfer.getAction().equals("cliente-denied")) {
+      ClienteDTO cliente = clienteTransfer.getCliente();
+
+      Cliente clienteObj = repo.findById(cliente.getId()).get();
+
+      if (clienteObj != null) {
+        try {
+
+          clienteObj.setAprovado(AccountStatus.RECUSADO.name());
+          repo.save(clienteObj);
+
+          clienteTransfer.setAction("cliente-reproved-ok");
+          // this.template.convertAndSend("saga", clienteTransfer);
+          return clienteTransfer;
+        } catch (Exception e) {
+          clienteTransfer.setAction("cliente-reproved-failed");
+          // this.template.convertAndSend("saga", clienteTransfer);
+          System.out.println(e.getLocalizedMessage());
+          return clienteTransfer;
+        }
+      }
+
+      System.out.println("Cliente não encontrado");
+
+      return clienteTransfer;
     }
 
     System.out.println("Ação recebida não reconhecida: " + clienteTransfer.getAction());
