@@ -172,7 +172,7 @@ public class ClienteReceiver {
 
       return clienteTransfer;
 
-    } else if (clienteTransfer.getAction().equals("cliente-denied")) {
+    } else if (clienteTransfer.getAction().equals("cliente-approved-rollback")) {
       ClienteDTO cliente = clienteTransfer.getCliente();
 
       Cliente clienteObj = repo.findById(cliente.getId()).get();
@@ -180,20 +180,20 @@ public class ClienteReceiver {
       if (clienteObj != null) {
         try {
 
-          clienteObj.setAprovado(AccountStatus.RECUSADO.name());
+          clienteObj.setAprovado(AccountStatus.ANALISE.name());
           repo.save(clienteObj);
 
-          clienteTransfer.setAction("cliente-reproved-ok");
+          clienteTransfer.setAction("cliente-approved-rollback-ok");
           // this.template.convertAndSend("saga", clienteTransfer);
           return clienteTransfer;
         } catch (Exception e) {
-          clienteTransfer.setAction("cliente-reproved-failed");
-          // this.template.convertAndSend("saga", clienteTransfer);
+
           System.out.println(e.getLocalizedMessage());
+          clienteTransfer.setAction("cliente-approved-rollback-failed");
+
           return clienteTransfer;
         }
       }
-
       System.out.println("Cliente não encontrado");
 
       return clienteTransfer;

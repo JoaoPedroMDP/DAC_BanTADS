@@ -2,26 +2,25 @@ package com.bantads.gerente.amqp;
 
 import java.io.Serializable;
 
-import com.bantads.gerente.model.GerenteDTO;
-
-public class GerenteTransfer implements Serializable {
-  GerenteDTO gerente;
-  String action;
+public class BasicGerenteTransfer implements Serializable {
+  int gerente;
   Long cliente;
+  String action;
+  String error;
 
-  public GerenteTransfer() {
+  public BasicGerenteTransfer() {
   }
 
-  public GerenteTransfer(GerenteDTO gerente, String action) {
+  public BasicGerenteTransfer(int gerente, String action) {
     this.gerente = gerente;
     this.action = action;
   }
 
-  public GerenteDTO getGerente() {
+  public int getGerente() {
     return gerente;
   }
 
-  public void setGerente(GerenteDTO gerente) {
+  public void setGerente(int gerente) {
     this.gerente = gerente;
   }
 
@@ -41,4 +40,7 @@ public class GerenteTransfer implements Serializable {
     this.cliente = cliente;
   }
 
+  public void setError(String error) {
+    this.error = error;
+  }
 }

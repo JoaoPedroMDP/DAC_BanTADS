@@ -53,7 +53,7 @@ public class RabbitConfiguration {
     DefaultClassMapper classMapper = new DefaultClassMapper();
     Map<String, Class<?>> idClassMapping = new HashMap();
     classMapper.setTrustedPackages("*");
-    idClassMapping.put("com.bantads.gerente.amqp.GerenteTransfer", GerenteTransfer.class);
+    idClassMapping.put("com.bantads.gerente.amqp.BasicGerenteTransfer", GerenteTransfer.class);
     idClassMapping.put("com.bantads.account.account.amqp.ClienteTransfer", ClienteTransfer.class);
     idClassMapping.put("com.bantads.saga.amqp.ClienteTransfer", ClienteTransfer.class);
     classMapper.setIdClassMapping(idClassMapping);

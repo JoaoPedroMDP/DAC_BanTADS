@@ -2,24 +2,26 @@ package com.bantads.cliente.cliente.amqp;
 
 import java.io.Serializable;
 
+import com.bantads.cliente.cliente.serializers.GerenteDTO;
+
 public class GerenteTransfer implements Serializable {
-  int gerente;
-  Long cliente;
+  GerenteDTO gerente;
   String action;
+  Long cliente;
 
   public GerenteTransfer() {
   }
 
-  public GerenteTransfer(int gerente, String action) {
+  public GerenteTransfer(GerenteDTO gerente, String action) {
     this.gerente = gerente;
     this.action = action;
   }
 
-  public int getGerente() {
+  public GerenteDTO getGerente() {
     return gerente;
   }
 
-  public void setGerente(int gerente) {
+  public void setGerente(GerenteDTO gerente) {
     this.gerente = gerente;
   }
 

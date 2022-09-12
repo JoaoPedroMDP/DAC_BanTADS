@@ -42,67 +42,39 @@ public class GerenteReceiver {
       repo.save(gerente);
 
       ModelMapper modelMapper = new ModelMapper();
-      // GerenteDTO gerenteDTO = modelMapper.map(gerente, GerenteDTO.class);
+      GerenteDTO gerenteDTO = modelMapper.map(gerente, GerenteDTO.class);
 
       gerenteTransfer.setAction("set-gerente");
-      gerenteTransfer.setGerente(gerente.getId().intValue());
+
+      gerenteTransfer.setGerente(gerenteDTO);
       sender.send(gerenteTransfer);
       return gerenteTransfer;
     } else if (gerenteTransfer.getAction().equals("create-gerente")) {
       System.out.println("Criando um Gerente");
-      long i = gerenteTransfer.getGerente();
-      Gerente gerenteTemporario = repo.findById(i).get();
-      GerenteDTO gerenteD = new GerenteDTO();
-      if (gerenteTemporario.getNome() != null) {
-        gerenteD.setNome(gerenteTemporario.getNome());
-      } else {
-        gerenteTransfer.setError("Nome do Gerente inválido");
-
-        gerenteTransfer.setAction("gerente-failed");
-
-        this.template.convertAndSend("saga", gerenteTransfer);
-
-        return gerenteTransfer;
-      }
-      if (gerenteTemporario.getEmail() != null) {
-        gerenteD.setEmail(gerenteTemporario.getEmail());
-      } else {
-        gerenteTransfer.setError("Email do Gerente inválido");
-
-        gerenteTransfer.setAction("gerente-failed");
-
-        this.template.convertAndSend("saga", gerenteTransfer);
-
-        return gerenteTransfer;
-      }
-      if ((gerenteTemporario.getCpf() != null) || (!ValidarCpf.isCpfValid(gerenteTemporario.getCpf()))) {
-        gerenteD.setCpf(gerenteTemporario.getCpf());
-      } else {
-        gerenteTransfer.setError("Cpf do Gerente inválido");
-
-        gerenteTransfer.setAction("gerente-failed");
-
-        this.template.convertAndSend("saga", gerenteTransfer);
-        return gerenteTransfer;
-      }
       try {
-        Gerente gerenteObj = repo.save(mapper.map(gerenteD, Gerente.class));
-        gerenteD.setId(Math.toIntExact((gerenteObj.getId())));
+
+        GerenteDTO gerente = gerenteTransfer.getGerente();
+
+        Gerente gerenteModel = mapper.map(gerente, Gerente.class);
+
+        repo.save(gerenteModel);
+
+        gerenteTransfer.setAction("gerente-ok");
+        return gerenteTransfer;
       } catch (Exception e) {
-        gerenteTransfer.setError("Erro interno ao criar gerente!");
         gerenteTransfer.setAction("gerente-failed");
-        this.template.convertAndSend("saga", gerenteTransfer);
+        System.out.println(e.getLocalizedMessage());
+
+        return null;
       }
-      gerenteTransfer.setAction("gerente-ok");
-      return gerenteTransfer;
 
     } else if (gerenteTransfer.getAction().equals("remove-gerente")) {
       System.out.println("Removendo Gerente");
 
-      long i = gerenteTransfer.getGerente();
-      Gerente gerente = repo.findById(i).get();
-      if (gerente != null) {
-        repo.delete(gerente);
+      GerenteDTO gerente = gerenteTransfer.getGerente();
+      Gerente gerenteModel = repo.findById(gerente.getId()).get();
+      if (gerenteModel != null) {
+        repo.delete(gerenteModel);
 
         gerenteTransfer.setAction("gerente-deleted");
         // this.template.convertAndSend("saga", gerenteTransfer);
@@ -110,17 +82,15 @@ public class GerenteReceiver {
       }
     } else if (gerenteTransfer.getAction().equals("deny-cliente")) {
       System.out.println("Reprovando cliente");
-      long i = gerenteTransfer.getGerente();
-      Gerente g = repo.findById(i).get();
-      GerenteDTO gerenteD = new GerenteDTO(Math.toIntExact(g.getId()), g.getNome(), g.getEmail(), g.getPassword(),
-          g.getCpf());
-      gerenteD.setNumClientes(gerenteD.getNumClientes() - 1);
+      GerenteDTO gerente = gerenteTransfer.getGerente();
+      Gerente g = repo.findById(gerente.getId()).get();
       try {
-        repo.save(mapper.map(gerenteD, Gerente.class));
+        g.setNumClientes(g.getNumClientes() - 1);
+        repo.save(g);
       } catch (Exception e) {
-        gerenteTransfer.setError("Erro interno ao atualizar o gerente!");
         gerenteTransfer.setAction("gerente-failed");
-        this.template.convertAndSend("saga", gerenteTransfer);
+        System.out.println(e.getLocalizedMessage());
+        return null;
       }
       return gerenteTransfer;
     }
