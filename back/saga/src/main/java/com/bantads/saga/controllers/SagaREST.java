@@ -167,7 +167,7 @@ public class SagaREST {
         HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
-  @PostMapping(value = "/account")
+  @PostMapping(value = "/accounts")
   public ResponseEntity<Object> updateCliente(@RequestBody AccountDTO account) {
     try {
       ClienteTransfer resCliente = clienteSender.sendAndReceiveInt(account.getUserId(),

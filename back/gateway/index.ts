@@ -18,7 +18,7 @@ app
   // saga
   .post("/clientes", async (req: any, res: any) => {
     try {
-      const response = await axios.post(`${sagaService}`, {
+      const response = await axios.post(`${sagaService}/clientes`, {
         ...req.body,
       });
       return res.json(response.data);
@@ -28,7 +28,7 @@ app
   })
   .post("/gerente", async (req: any, res: any) => {
     try {
-      const response = await axios.post(`${sagaService}`, {
+      const response = await axios.post(`${sagaService}/gerente`, {
         ...req.body,
       });
       return res.json(response.data);
@@ -38,7 +38,7 @@ app
   })
   .post("/accounts", async (req: any, res: any) => {
     try {
-      const response = await axios.post(`${sagaService}`, {
+      const response = await axios.post(`${sagaService}/accounts`, {
         ...req.body,
       });
       return res.json(response.data);
