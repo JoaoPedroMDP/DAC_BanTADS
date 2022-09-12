@@ -15,30 +15,10 @@ public class RestService {
         this.restTemplate = restTemplateBuilder.build();
     }
 
-    // public CustomerDTO getCustomer(String id) throws CustomerNotFound {
-    // String url = "https://cliente:8080/clientes/" + id;
-    // System.out.println("ASDASDASDASD");
-    // try {
-    // // return this.restTemplate.getForObject(url, CustomerDTO.class);
-    // ResponseEntity<CustomerDTO> res = this.restTemplate.getForEntity(url,
-    // CustomerDTO.class);
-    // System.out.println(res.getStatusCode());
-    // System.out.println(res.toString());
-    // return res.getBody();
-    // } catch (RestClientException e) {
-    // throw new CustomerNotFound();
-    // } catch (Exception e) {
-    // System.out.println(e);
-    // throw new CustomerNotFound();
-    // }
-    // }
-
     public CustomerDTO getCustomer(String id) {
         String url = "http://cliente:8080/clientes/" + id;
 
         try {
-            // String resp = this.restTemplate.getForObject(url, String.class);
-            // System.out.println(resp);
             ResponseEntity<JsonResponse> res = this.restTemplate.getForEntity(url, JsonResponse.class);
             ModelMapper mapper = new ModelMapper();
             return mapper.map(res.getBody().getData(), CustomerDTO.class);

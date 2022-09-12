@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
@@ -11,7 +13,12 @@ export class WithdrawalComponent implements OnInit {
   withdrawalValue!: number;
   balance!: number;
 
-  constructor(private http: HttpClient, private notifyService: NotificationService) {}
+  constructor(
+    private http: HttpClient,
+    private auth: AuthService,
+    private notifyService: NotificationService,
+    private router: Router
+    ) {}
 
   ngOnInit(): void {
     this.withdrawalValue = 0;
@@ -19,6 +26,13 @@ export class WithdrawalComponent implements OnInit {
   }
 
   async withdraw(): Promise<void> {
+    let userId: number | undefined = this.auth.getAuth()?.user
+    if (userId === undefined) {
+      console.log("Usuário não encontrado");
+      this.notifyService.showError("", 'Usuário não encontrado');
+      this.router.navigate(['/login']);
+    }
+
     this.notifyService.showInfo("", `Sacando ${this.withdrawalValue}...`);
     // Espera puxar do back end os recusos pra depois efetuar o resto da função
     await this.callApiBalance();
