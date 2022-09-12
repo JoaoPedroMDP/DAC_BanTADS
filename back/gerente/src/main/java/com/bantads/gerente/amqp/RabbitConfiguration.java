@@ -2,7 +2,7 @@ package com.bantads.gerente.amqp;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.support.converter.DefaultClassMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -16,7 +16,8 @@ import com.bantads.gerente.amqp.GerenteTransfer;
 public class RabbitConfiguration {
 
   @Bean
-  public Queue clientQueue() {
+  @Qualifier("gerente")
+  public Queue gerenteQueue() {
     System.out.println("Criando fila gerente");
     return new Queue("gerente");
   }
@@ -37,6 +38,7 @@ public class RabbitConfiguration {
     Map<String, Class<?>> idClassMapping = new HashMap<>();
     classMapper.setTrustedPackages("*");
     idClassMapping.put("com.bantads.cliente.cliente.amqp.GerenteTransfer", GerenteTransfer.class);
+    idClassMapping.put("com.bantads.saga.amqp.GerenteTransfer", GerenteTransfer.class);
     classMapper.setIdClassMapping(idClassMapping);
 
     return classMapper;
