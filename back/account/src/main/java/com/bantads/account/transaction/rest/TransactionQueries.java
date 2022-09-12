@@ -8,10 +8,12 @@ import com.bantads.account.lib.Statement;
 import com.bantads.account.transaction.models.TransactionDTO;
 import com.bantads.account.transaction.services.TransactionServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
+@CrossOrigin
 @RestController
 public class TransactionQueries {
     @Autowired
@@ -20,9 +22,9 @@ public class TransactionQueries {
     @Autowired
     private TransactionServices serv;
 
-    @CrossOrigin
     @GetMapping(value = "/accounts/{id}/statement", produces = "application/json")
-    public JsonResponse getStatement(@PathVariable Long id, @RequestParam String from, @RequestParam String to) {
+    public ResponseEntity<JsonResponse> getStatement(@PathVariable Long id, @RequestParam String from,
+            @RequestParam String to) {
         try {
             Long fromTS = Long.parseLong(from);
             Long toTS = Long.parseLong(to);
@@ -30,12 +32,13 @@ public class TransactionQueries {
             ArrayList<TransactionDTO> dtos = serv.getAccountTransactions(acc, fromTS, toTS);
             Statement statement = serv.buildStatement(dtos, fromTS, toTS);
 
-            return new JsonResponse(true, "Extrato", statement);
+            return JsonResponse.ok("Extrato gerado!", statement);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return new JsonResponse(false, "Revise os dados passados!", null);
+            e.printStackTrace();
+            return JsonResponse.badRequest("Revise os dados passados!", null);
         } catch (AccountNotFound e) {
-            return new JsonResponse(false, "Conta não encontrada!", null);
+            e.printStackTrace();
+            return JsonResponse.notFound("Conta não encontrada!", null);
         }
 
     }
