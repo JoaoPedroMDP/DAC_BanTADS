@@ -14,15 +14,6 @@ const accountsService = "http://account:5000/accounts";
 const sagaService = "http://saga:3030";
 
 app
-  .get("/clientes/:id", async (req: any, res: Response) => {
-    try {
-      const response = await axios.get(`${clienteService}/${req.params.id}`);
-
-      return res.json(response.data);
-    } catch (error: any) {
-      return res.status(error.response.status).json(error.response.data);
-    }
-  })
 
   // saga
   .post("/clientes", async (req: any, res: any) => {
@@ -35,6 +26,37 @@ app
       return res.status(error.response.status).json(error.response.data);
     }
   })
+  .post("/gerente", async (req: any, res: any) => {
+    try {
+      const response = await axios.post(`${sagaService}`, {
+        ...req.body,
+      });
+      return res.json(response.data);
+    } catch (error: any) {
+      return res.status(error.response.status).json(error.response.data);
+    }
+  })
+  .post("/accounts", async (req: any, res: any) => {
+    try {
+      const response = await axios.post(`${sagaService}`, {
+        ...req.body,
+      });
+      return res.json(response.data);
+    } catch (error: any) {
+      return res.status(error.response.status).json(error.response.data);
+    }
+  })
+
+  .get("/clientes/:id", async (req: any, res: Response) => {
+    try {
+      const response = await axios.get(`${clienteService}/${req.params.id}`);
+
+      return res.json(response.data);
+    } catch (error: any) {
+      return res.status(error.response.status).json(error.response.data);
+    }
+  })
+
   .put("/clientes/:id", async (req: any, res: any) => {
     try {
       const response = await axios.put(`${clienteService}/${req.params.id}`, {
@@ -101,16 +123,6 @@ app
       return res.status(error.response.status).json(error.response.data);
     }
   })
-  .post("/gerente", async (req: any, res: any) => {
-    try {
-      const response = await axios.post(`${gerenteService}`, {
-        ...req.body,
-      });
-      return res.json(response.data);
-    } catch (error: any) {
-      return res.status(error.response.status).json(error.response.data);
-    }
-  })
   .put("/gerente/:id", async (req: any, res: any) => {
     try {
       const response = await axios.put(`${gerenteService}/${req.params.id}`, {
@@ -129,16 +141,6 @@ app
           ...req.body,
         }
       );
-      return res.json(response.data);
-    } catch (error: any) {
-      return res.status(error.response.status).json(error.response.data);
-    }
-  })
-  .post("/accounts", async (req: any, res: any) => {
-    try {
-      const response = await axios.post(`${accountsService}`, {
-        ...req.body,
-      });
       return res.json(response.data);
     } catch (error: any) {
       return res.status(error.response.status).json(error.response.data);
