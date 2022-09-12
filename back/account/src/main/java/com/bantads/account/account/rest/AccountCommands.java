@@ -34,7 +34,6 @@ public class AccountCommands {
     @PostMapping(value = "/accounts", produces = "application/json")
     public ResponseEntity<JsonResponse> createAccount(@RequestBody AccountDTO account) {
         try {
-            account.setId(null); // Para o caso de tentarem colocar um id
             AccountDTO created = serv.createAccount(account);
 
             return JsonResponse.created("Conta criada com sucesso!", created);

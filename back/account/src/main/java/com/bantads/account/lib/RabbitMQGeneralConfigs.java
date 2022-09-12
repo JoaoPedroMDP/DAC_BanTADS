@@ -1,16 +1,14 @@
 package com.bantads.account.lib;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.bantads.account.account.amqp.AccountTransfer;
 import org.springframework.amqp.support.converter.DefaultClassMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.bantads.account.account.amqp.AccountTransfer;
-
-import ch.qos.logback.classic.pattern.MessageConverter;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 public class RabbitMQGeneralConfigs {
