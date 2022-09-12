@@ -67,6 +67,7 @@ public class AccountServices {
     }
 
     public AccountDTO createAccount(AccountDTO newAccount) {
+        newAccount.setId(null); // Para o caso de tentarem colocar um id
         AccountC toAccount = newAccount.toCommand();
         AccountC created = commands.save(toAccount);
         AccountDTO toDTO = created.toDto();
