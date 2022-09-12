@@ -168,7 +168,7 @@ public class ClienteREST {
   }
 
   @GetMapping(value = "/clientes")
-  ResponseEntity<Object> show(@RequestParam(required = false) Long gerente) {
+  ResponseEntity<Object> show(@RequestParam(required = false) int gerente) {
     System.out.println(gerente);
     if (gerente == 0) {
       List<Cliente> clientes = repo.findAll();

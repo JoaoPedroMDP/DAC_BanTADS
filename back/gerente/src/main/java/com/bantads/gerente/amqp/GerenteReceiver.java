@@ -32,7 +32,7 @@ public class GerenteReceiver {
 
   @RabbitHandler
   public GerenteTransfer receive(@Payload GerenteTransfer gerenteTransfer) {
-    System.out.println("Recebido: " + gerenteTransfer.getGerente().getId());
+    // System.out.println("Recebido: " + gerenteTransfer.getGerente().getId());
     if (gerenteTransfer.getAction().equals("create-cliente")) {
       System.out.println("Recebendo cliente");
       Gerente gerente = repo.findFirstByOrderByNumClientes();
@@ -46,10 +46,11 @@ public class GerenteReceiver {
       GerenteDTO gerenteDTO = modelMapper.map(gerente, GerenteDTO.class);
 
       gerenteTransfer.setAction("set-gerente");
+      System.out.println("Enviando gerente " + gerente.getId());
 
       gerenteTransfer.setGerente(gerenteDTO);
       sender.send(gerenteTransfer);
-      return gerenteTransfer;
+      return null;
     } else if (gerenteTransfer.getAction().equals("create-gerente")) {
       System.out.println("Criando um Gerente " + gerenteTransfer.getGerente().getNome());
       try {
