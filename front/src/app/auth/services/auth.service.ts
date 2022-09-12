@@ -19,9 +19,7 @@ export class AuthService {
     private toast: ToastrService
   ) {}
 
-  public navigateToUserHome() {
-    const userRole = this.auth?.role;
-
+  public navigateToUserHome(userRole: string) {
     switch (userRole) {
       case "ADMIN":
         return this.router.navigate(["/admin"]);
@@ -37,6 +35,7 @@ export class AuthService {
 
   private setAuth(auth: Auth | null) {
     this.auth = auth;
+    this.role = auth?.role || "";
     if (!auth) {
       return localStorage.removeItem("auth");
     }
@@ -51,7 +50,7 @@ export class AuthService {
           //TODO: error handling
           if (response.success) {
             this.setAuth(response.data);
-            this.navigateToUserHome();
+            this.navigateToUserHome(response.data.role);
             this.toast.success(
               "Login realizado com sucesso!",
               "Bem vindo ao BanTADS!"
@@ -74,6 +73,7 @@ export class AuthService {
     if (auth) {
       this.auth = JSON.parse(auth);
     }
+    this.navigateToUserHome(this.auth?.role || "");
     return this.auth;
   }
 
@@ -83,17 +83,18 @@ export class AuthService {
   }
 
   public isAuthenticated(): boolean {
-    const token = localStorage.getItem("token"); // Check whether the token is expired and return
-    if (!token) return false;
-    try {
-      const decoded: any = jwtDecode(token);
+    const token = localStorage.getItem("auth"); // Check whether the token is expired and return
+    // if (!token) return false;
+    // try {
+    //   const decoded: any = jwtDecode(token);
 
-      console.log(decoded.role);
-      this.role = decoded.role;
-    } catch (e) {
-      return false;
-    }
+    //   console.log(decoded.role);
+    //   this.role = decoded.role;
+    // } catch (e) {
+    //   return false;
+    // }
     // true or false
+    console.log(token);
     return !!token;
     // return !this.jwtHelper.isTokenExpired(token || "");
   }

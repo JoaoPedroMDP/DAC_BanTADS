@@ -20,6 +20,7 @@ import { GerenteModule } from "./gerente";
 
 import { AdminModule } from "./admin/admin.module";
 import { ToastrModule } from "ngx-toastr";
+import { AuthGuardService } from "./auth-guard.service";
 // import { JwtModule } from "@auth0/angular-jwt";
 
 @NgModule({
@@ -43,7 +44,7 @@ import { ToastrModule } from "ngx-toastr";
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
   ],
-  providers: [],
+  providers: [AuthGuardService],
   bootstrap: [AppComponent],
   exports: [MatTableModule],
 })

@@ -17,13 +17,15 @@ import { StatementComponent } from "./cliente/transactions/statement/statement.c
 import { AdminSideBarComponent } from "./admin/adminSideBar/admin.component";
 import { FullComponent } from "./gerente/full/full.component";
 import { ConsultarClienteComponent } from "./gerente/consultar-cliente/consultar-cliente.component";
-import { AuthGuardService } from "./auth/services/auth-guard.service";
-
+import { AuthGuardService } from "./auth-guard.service";
 const routes: Routes = [
   {
     path: "gerente",
     component: FullComponent,
     canActivate: [AuthGuardService],
+    data: {
+      expectedRole: "GERENTE",
+    },
     children: [
       { path: "", component: ConsultaClientesComponent },
       { path: "consultar-cliente", component: ConsultarClienteComponent },
@@ -36,6 +38,9 @@ const routes: Routes = [
     path: "admin",
     component: AdminSideBarComponent,
     canActivate: [AuthGuardService],
+    data: {
+      expectedRole: "ADMIN",
+    },
     children: [
       { path: "", component: AdminComponent },
       { path: "gerente", component: CriarGerenteComponent },
@@ -50,6 +55,9 @@ const routes: Routes = [
     path: "cliente",
     component: ClientComponent,
     canActivate: [AuthGuardService],
+    data: {
+      expectedRole: "CLIENTE",
+    },
     children: [
       { path: "", component: HomeComponent },
       {

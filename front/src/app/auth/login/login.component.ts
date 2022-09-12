@@ -15,9 +15,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.initAuth();
-    if (this.authService.getAuth()) {
-      this.authService.navigateToUserHome();
-    }
   }
 
   async handleLogin() {
