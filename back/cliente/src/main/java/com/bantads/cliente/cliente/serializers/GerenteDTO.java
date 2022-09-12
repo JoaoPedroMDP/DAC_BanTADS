@@ -12,7 +12,7 @@ public class GerenteDTO implements Serializable {
     super();
   }
 
-  public GerenteDTO(Long id, String nome, String email, String password, String cpf) {
+  public GerenteDTO(int id, String nome, String email, String password, String cpf) {
     super();
     this.id = id;
     this.nome = nome;
@@ -21,7 +21,7 @@ public class GerenteDTO implements Serializable {
     this.password = password;
   }
 
-  private Long id;
+  private int id;
   private String nome;
   private String email;
   private String cpf;
@@ -36,11 +36,11 @@ public class GerenteDTO implements Serializable {
     this.numClientes = numClientes;
   }
 
-  public Long getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(int id) {
     this.id = id;
   }
 

@@ -18,7 +18,7 @@ public class Gerente implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name = "id_ger")
-	private Long id;
+	private int id;
 	@Column(name = "nome_ger")
 	private String nome;
 	@Column(name = "email_ger")
@@ -34,7 +34,7 @@ public class Gerente implements Serializable {
 		super();
 	}
 
-	public Gerente(Long id, String nome, String email, String password, String cpf) {
+	public Gerente(int id, String nome, String email, String password, String cpf) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -43,11 +43,11 @@ public class Gerente implements Serializable {
 		this.cpf = cpf;
 	}
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
