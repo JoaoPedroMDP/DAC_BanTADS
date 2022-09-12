@@ -22,10 +22,10 @@ const routes: Routes = [
   {
     path: "gerente",
     component: FullComponent,
-    canActivate: [AuthGuardService],
-    data: {
-      expectedRole: "GERENTE",
-    },
+    // canActivate: [AuthGuardService],
+    // data: {
+    //   expectedRole: "GERENTE",
+    // },
     children: [
       { path: "", component: ConsultaClientesComponent },
       { path: "consultar-cliente", component: ConsultarClienteComponent },

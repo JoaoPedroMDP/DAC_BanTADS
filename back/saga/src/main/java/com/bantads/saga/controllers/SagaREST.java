@@ -128,12 +128,18 @@ public class SagaREST {
   @PostMapping(value = "/gerente")
   public ResponseEntity<Object> postGerente(@RequestBody GerenteDTO gerente) {
     try {
+      if (gerente.getEmail() == null || gerente.getCpf() == null || gerente.getNome() == null) {
+        return new ResponseEntity<>(
+            new JsonResponse(false, "Dados do gerente inválidos", null),
+            HttpStatus.BAD_REQUEST);
+      }
+
       GerenteTransfer resGerente = gerenteSender.sendAndReceive(gerente, "create-gerente");
       System.out.println("resGerente" + resGerente);
 
       if (resGerente.getAction().equals("gerente-ok")) {
         Integer gerenteId = resGerente.getGerente().getId();
-        String senha = gerente.getPassword();
+        String senha = gerente.getCpf();
         String email = gerente.getEmail();
 
         LoginDTO loginData = new LoginDTO();
@@ -158,6 +164,7 @@ public class SagaREST {
         }
       }
     } catch (Exception e) {
+      System.out.println(e.getLocalizedMessage());
       return new ResponseEntity<>(
           new JsonResponse(false, "Erro interno ao criar gerente", null),
           HttpStatus.INTERNAL_SERVER_ERROR);

@@ -12,13 +12,12 @@ public class GerenteDTO implements Serializable {
 		super();
 	}
 
-	public GerenteDTO(int id, String nome, String email, String password, String cpf) {
+	public GerenteDTO(int id, String nome, String email, String cpf) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpf = cpf;
-		this.password = password;
 	}
 
 	private int id;
@@ -26,7 +25,6 @@ public class GerenteDTO implements Serializable {
 	private String email;
 	private String cpf;
 	private Integer numClientes;
-	private String password;
 
 	public Integer getNumClientes() {
 		return numClientes;
@@ -68,11 +66,4 @@ public class GerenteDTO implements Serializable {
 		this.cpf = cpf;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 }
