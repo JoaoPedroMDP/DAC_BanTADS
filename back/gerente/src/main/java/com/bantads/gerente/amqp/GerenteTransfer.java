@@ -6,6 +6,7 @@ public class GerenteTransfer implements Serializable {
   int gerente;
   Long cliente;
   String action;
+  String error;
 
   public GerenteTransfer() {
   }
@@ -39,4 +40,7 @@ public class GerenteTransfer implements Serializable {
     this.cliente = cliente;
   }
 
+  public void setError(String error) {
+    this.error = error;
+  }
 }
