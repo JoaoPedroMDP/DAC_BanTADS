@@ -69,6 +69,8 @@ public class GerenteReceiver {
         return null;
       }
 
+      System.out.println("Gerente criado com sucesso!");
+
       return gerenteTransfer;
 
     } else if (gerenteTransfer.getAction().equals("remove-gerente")) {
