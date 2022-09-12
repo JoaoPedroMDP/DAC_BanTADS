@@ -5,7 +5,7 @@ services:
     image: "front:latest"
     container_name: "bantads-front"
     build:
-      context: .
+      context: ./front
       dockerfile: Dockerfile
     ports:
       - "4200:4200"
@@ -176,6 +176,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./back/gateway/:/app
+      - /app/node_modules
     container_name: bantads-gateway
     ports:
       - "3000:3000"

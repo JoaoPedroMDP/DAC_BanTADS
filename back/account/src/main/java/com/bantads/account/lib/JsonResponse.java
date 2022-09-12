@@ -1,5 +1,8 @@
 package com.bantads.account.lib;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 public class JsonResponse {
 	private Boolean success;
 	private String message;
@@ -9,6 +12,30 @@ public class JsonResponse {
 		this.success = success;
 		this.message = message;
 		this.data = data;
+	}
+
+	public static ResponseEntity<JsonResponse> ok(String message, Object data) {
+		return ResponseEntity.ok(new JsonResponse(true, message, data));
+	}
+
+	public static ResponseEntity<JsonResponse> created(String message, Object data) {
+		return new ResponseEntity<>(new JsonResponse(true, message, data), HttpStatus.CREATED);
+	}
+
+	public static ResponseEntity<JsonResponse> badRequest(String message, Object data) {
+		return ResponseEntity.badRequest().body(new JsonResponse(false, message, data));
+	}
+
+	public static ResponseEntity<JsonResponse> notFound(String message, Object data) {
+		return new ResponseEntity<>(
+				new JsonResponse(false, message, data),
+				HttpStatus.NOT_FOUND);
+	}
+
+	public static ResponseEntity<JsonResponse> internalServerError(String message, Object data) {
+		return new ResponseEntity<>(
+				new JsonResponse(false, message, data),
+				HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	public Boolean isSuccess() {

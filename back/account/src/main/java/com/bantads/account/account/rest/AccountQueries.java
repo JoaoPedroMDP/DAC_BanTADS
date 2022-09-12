@@ -6,6 +6,7 @@ import com.bantads.account.account.services.AccountServices;
 import com.bantads.account.exceptions.AccountNotFound;
 import com.bantads.account.lib.JsonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,51 +15,52 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 public class AccountQueries {
     @Autowired
     private AccountServices serv;
 
     @GetMapping(value = "/accounts", produces = "application/json")
-    public JsonResponse getAllAccounts() {
+    public ResponseEntity<JsonResponse> getAllAccounts() {
         try {
             List<AccountDTO> dtos = serv.getAllAccounts();
-            return new JsonResponse(true, "Listando " + dtos.size() + " contas.", dtos);
+            return JsonResponse.ok("Listando " + dtos.size() + " contas.", dtos);
         } catch (Exception e) {
             e.printStackTrace();
-            return new JsonResponse(false, "Erro ao listar contas.", null);
+            return JsonResponse.internalServerError("Erro ao listar contas!", null);
         }
     }
 
     @GetMapping(value = "/accounts/{id}", produces = "application/json")
-    public JsonResponse getAccount(@PathVariable("id") Long id) {
+    public ResponseEntity<JsonResponse> getAccount(@PathVariable("id") Long id) {
         try {
             AccountDTO acc = serv.getAccountDTO(id);
-            return new JsonResponse(true, "Retornando conta " + acc.getId(), acc);
+            return JsonResponse.ok("Conta encontrada!", acc);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            return new JsonResponse(false, "Id passado é nulo!", null);
+            return JsonResponse.badRequest("O id da conta é inválido!", null);
         } catch (AccountNotFound e) {
             e.printStackTrace();
-            return new JsonResponse(false, "Conta não encontrada!", null);
+            return JsonResponse.notFound("Conta não encontrada!", null);
         }
     }
 
     @GetMapping(value = "/accounts/{id}/balance", produces = "application/json")
-    public JsonResponse getBalance(@PathVariable Long id) {
+    public ResponseEntity<JsonResponse> getBalance(@PathVariable Long id) {
         try {
             AccountQ account = serv.getAccount(id);
 
             LinkedHashMap<String, Double> balance = new LinkedHashMap<>();
             balance.put("balance", account.getBalance());
 
-            return new JsonResponse(true, "Saldo!", balance);
+            return JsonResponse.ok("Retornando saldo", balance);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            return new JsonResponse(false, "Revise os dados passados!", null);
+            return JsonResponse.badRequest("O id da conta é inválido!", null);
         } catch (AccountNotFound e) {
             e.printStackTrace();
-            return new JsonResponse(false, "Conta não encontrada!", null);
+            return JsonResponse.notFound("Conta não encontrada!", null);
         }
     }
 }

@@ -13,9 +13,6 @@ public class AccountSender {
     @Autowired
     private Queue accountQueue;
 
-    @Autowired
-    private Queue sagaQueue;
-
     public void send(AccountDTO account, String action) {
         AccountTransfer dt = new AccountTransfer(account, action);
         System.out.println("Queue name: " + this.accountQueue.getName());
