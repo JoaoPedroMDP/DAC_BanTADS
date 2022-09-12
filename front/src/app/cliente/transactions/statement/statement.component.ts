@@ -189,13 +189,13 @@ export class StatementComponent implements OnInit {
   dateChangeHandler() {
     let startDate: string = new Date(this.datepicker.value.start).valueOf().toString();
     let endDate: string = new Date(this.datepicker.value.end).valueOf().toString();
-    this.chamaApi(startDate, endDate);
+    this.callApiStatement(startDate, endDate);
   }
 
-  async chamaApi(inicio: string, fim: string) {
+  async callApiStatement(inicio: string, fim: string) {
     this.http
       .get<Record<string, any>>(
-        "https://joaopedromdp-dac-bantads-q99j6vgv9p52x94x-5003.githubpreview.dev/accounts/7/statement?from="+inicio+"&to=" + fim
+        "https://joaopedromdp-dac-bantads-q99j6vgv9p52x94x-5003.githubpreview.dev/accounts/1/statement?from="+inicio+"&to=" + fim
       )
       .subscribe((response) => {
         // O '+' é pra converter para numerico

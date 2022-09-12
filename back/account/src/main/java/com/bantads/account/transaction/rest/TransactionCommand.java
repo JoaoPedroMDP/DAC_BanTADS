@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@CrossOrigin
 public class TransactionCommand {
     @Autowired
     private AccountServices accServ;
@@ -22,6 +21,7 @@ public class TransactionCommand {
     @Autowired
     private TransactionServices serv;
 
+    @CrossOrigin
     @PostMapping(value = "/accounts/{id}/deposit", produces = "application/json")
     public ResponseEntity<JsonResponse> deposit(@PathVariable Long id, @RequestBody Map<String, String> json) {
         try {
@@ -40,6 +40,7 @@ public class TransactionCommand {
         }
     }
 
+    @CrossOrigin
     @PostMapping(value = "/accounts/{id}/withdraw", produces = "application/json")
     public ResponseEntity<JsonResponse> withdraw(@PathVariable Long id, @RequestBody Map<String, String> json) {
         try {
@@ -62,6 +63,7 @@ public class TransactionCommand {
         }
     }
 
+    @CrossOrigin
     @PostMapping(value = "/accounts/{id}/transfer", produces = "application/json")
     public ResponseEntity<JsonResponse> transfer(@PathVariable Long id, @RequestBody Map<String, String> json) {
         try {
