@@ -41,7 +41,7 @@ public class GerenteREST {
 	}
 
 	@GetMapping("/gerente/{id}")
-	public ResponseEntity<Object> obterTodosGerentes(@PathVariable("id") Long id) {
+	public ResponseEntity<Object> obterTodosGerentes(@PathVariable("id") int id) {
 		Gerente g = repo.findById(id).get();
 
 		if (g == null) {
@@ -66,7 +66,7 @@ public class GerenteREST {
 	}
 
 	@PutMapping("/gerente/{id}")
-	public ResponseEntity<Object> alterarGerente(@PathVariable("id") Long id, @RequestBody Gerente gerente) {
+	public ResponseEntity<Object> alterarGerente(@PathVariable("id") int id, @RequestBody Gerente gerente) {
 		Gerente g = repo.findById(id).get();
 		if (g != null) {
 			g.setNome(gerente.getNome());
@@ -80,7 +80,7 @@ public class GerenteREST {
 	}
 
 	@DeleteMapping("/gerente/{id}")
-	public ResponseEntity<Object> removerGerente(@PathVariable("id") Long id) {
+	public ResponseEntity<Object> removerGerente(@PathVariable("id") int id) {
 		Gerente g = repo.findById(id).get();
 		if (g != null) {
 			repo.deleteById(g.getId());

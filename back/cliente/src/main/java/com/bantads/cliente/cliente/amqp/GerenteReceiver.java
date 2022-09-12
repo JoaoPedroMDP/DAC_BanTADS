@@ -23,7 +23,7 @@ public class GerenteReceiver {
     if (gerenteTransfer.getAction().equals("set-gerente")) {
       Cliente cliente = repo.findById(gerenteTransfer.getCliente()).get();
 
-      cliente.setGerente(gerenteTransfer.getGerente());
+      cliente.setGerente(gerenteTransfer.getGerente().getId());
       repo.save(cliente);
     }
   }

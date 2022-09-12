@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.bantads.gerente.model.Gerente;
 
-public interface GerenteRepository extends JpaRepository<Gerente, Long> {
+public interface GerenteRepository extends JpaRepository<Gerente, Integer> {
 	public Gerente findByCpf(String cpf);
 
 	@Query("from Gerente where email = :email and cpf = :cpf")
@@ -19,6 +19,6 @@ public interface GerenteRepository extends JpaRepository<Gerente, Long> {
 
 	public Gerente findFirstByOrderByNumClientes();
 
-	public Optional<Gerente> findById(Long id);
+	public Optional<Gerente> findById(int id);
 
 }
