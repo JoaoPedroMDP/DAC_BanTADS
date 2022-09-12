@@ -53,6 +53,17 @@ public class GerenteReceiver {
       long i = gerenteTransfer.getGerente();
       Gerente gerenteTemporario = repo.findById(i).get();
       GerenteDTO gerenteD = new GerenteDTO();
+      if (gerenteTemporario.getNome() != null) {
+        gerenteD.setNome(gerenteTemporario.getNome());
+      } else {
+        gerenteTransfer.setError("Nome do Gerente inválido");
+
+        gerenteTransfer.setAction("gerente-failed");
+
+        this.template.convertAndSend("saga", gerenteTransfer);
+
+        return gerenteTransfer;
+      }
       if (gerenteTemporario.getEmail() != null) {
         gerenteD.setEmail(gerenteTemporario.getEmail());
       } else {
@@ -99,7 +110,9 @@ public class GerenteReceiver {
       }
     } else if (gerenteTransfer.getAction().equals("deny-cliente")) {
       System.out.println("Reprovando cliente");
-      gerenteTransfer.setCliente(null);
+      long i = gerenteTransfer.getGerente();
+      Gerente g = repo.findById(i).get();
+      GerenteDTO gerenteD = new GerenteDTO(Math.toIntExact(g.getId()), g.getNome(), g.getEmail(), g.getCpf());
       return gerenteTransfer;
     }
     System.out.println("Ação recebida não reconhecida: " + gerenteTransfer.getAction());
