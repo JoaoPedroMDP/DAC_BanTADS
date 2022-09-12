@@ -146,7 +146,7 @@ public class ClienteReceiver {
         return clienteTransfer;
       }
 
-    } else if (clienteTransfer.getAction().equals("cliente-approved")) {
+    } else if (clienteTransfer.getAction().equals("cliente-aprovado")) {
       ClienteDTO cliente = clienteTransfer.getCliente();
 
       Cliente clienteObj = repo.findById(cliente.getId()).get();
