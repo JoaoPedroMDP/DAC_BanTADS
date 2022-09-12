@@ -1,6 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
+import { AuthService } from "src/app/auth/services/auth.service";
+import { NotificationService } from "src/app/services/notification.service";
 
 const transactionTypes: Record<string, any> = {
   out: {
@@ -181,7 +184,12 @@ export class StatementComponent implements OnInit {
 
   statement!: Statement;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private auth: AuthService,
+    private notifyService: NotificationService,
+    private router: Router
+    ) {}
 
   ngOnInit(): void {
   }
@@ -193,6 +201,13 @@ export class StatementComponent implements OnInit {
   }
 
   async callApiStatement(inicio: string, fim: string) {
+    let userId: number | undefined = this.auth.getAuth()?.user
+    if (userId === undefined) {
+      console.log("Usuário não encontrado");
+      this.notifyService.showError("", 'Usuário não encontrado');
+      this.router.navigate(['/login']);
+    }
+
     this.http
       .get<Record<string, any>>(
         "https://joaopedromdp-dac-bantads-q99j6vgv9p52x94x-5003.githubpreview.dev/accounts/1/statement?from="+inicio+"&to=" + fim

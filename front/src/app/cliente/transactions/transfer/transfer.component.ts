@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
@@ -12,7 +14,12 @@ export class TransferComponent implements OnInit {
   transferDestiny!: string;
   balance!: number;
 
-  constructor(private http: HttpClient, private notifyService: NotificationService) {}
+  constructor(
+    private http: HttpClient,
+    private auth: AuthService,
+    private notifyService: NotificationService,
+    private router: Router
+    ) {}
 
   ngOnInit(): void {
     this.transferValue = 0;
@@ -21,6 +28,13 @@ export class TransferComponent implements OnInit {
   }
 
   async transfer(): Promise<void> {
+    let userId: number | undefined = this.auth.getAuth()?.user
+    if (userId === undefined) {
+      console.log("Usuário não encontrado");
+      this.notifyService.showError("", 'Usuário não encontrado');
+      this.router.navigate(['/login']);
+    }
+
     this.notifyService.showInfo("", `Transferindo ${this.transferValue} para ${this.transferDestiny}...`);
     // Espera puxar do back end os recusos pra depois efetuar o resto da função
     await this.callApiBalance();

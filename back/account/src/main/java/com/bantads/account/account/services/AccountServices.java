@@ -8,6 +8,8 @@ import com.bantads.account.account.repository.command.AccountRepositoryC;
 import com.bantads.account.account.repository.query.AccountRepositoryQ;
 import com.bantads.account.exceptions.AccountNotFound;
 import com.bantads.account.exceptions.InsufficientFunds;
+import com.bantads.account.lib.CustomerDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -64,6 +66,25 @@ public class AccountServices {
 
         AccountDTO dto = acc.toDto();
         return dto;
+    }
+
+    public AccountDTO getUserAccountDTO(Long userId) throws AccountNotFound {
+        AccountQ acc = null;
+        try {
+            acc = queries.findByUserId(userId).get();
+        } catch (NoSuchElementException e) {
+            throw new AccountNotFound();
+        }
+
+        AccountDTO dto = acc.toDto();
+        return dto;
+    }
+
+    public List<AccountDTO> getAccountsByUsers(List<CustomerDTO> users) {
+        List<AccountQ> accounts = queries.findAllByUserIdIn(users.stream().map(CustomerDTO::getId).collect(Collectors.toList()));
+        return accounts.stream()
+                .map(AccountQ::toDto)
+                .collect(Collectors.toList());
     }
 
     public AccountDTO createAccount(AccountDTO newAccount) {
