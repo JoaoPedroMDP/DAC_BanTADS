@@ -27,16 +27,19 @@ public class Gerente implements Serializable {
 	private String cpf;
 	@Column(name = "num_clientes_ger")
 	private int numClientes = 0;
+	@Column(name = "password_ger")
+	private String password;
 
 	public Gerente() {
 		super();
 	}
 
-	public Gerente(Long id, String nome, String email, String cpf) {
+	public Gerente(Long id, String nome, String email, String password, String cpf) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
+		this.password = password;
 		this.cpf = cpf;
 	}
 
@@ -84,4 +87,11 @@ public class Gerente implements Serializable {
 		this.numClientes = numClientes;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }

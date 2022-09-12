@@ -112,7 +112,8 @@ public class GerenteReceiver {
       System.out.println("Reprovando cliente");
       long i = gerenteTransfer.getGerente();
       Gerente g = repo.findById(i).get();
-      GerenteDTO gerenteD = new GerenteDTO(Math.toIntExact(g.getId()), g.getNome(), g.getEmail(), g.getCpf());
+      GerenteDTO gerenteD = new GerenteDTO(Math.toIntExact(g.getId()), g.getNome(), g.getEmail(), g.getPassword(),
+          g.getCpf());
       gerenteD.setNumClientes(gerenteD.getNumClientes() - 1);
       try {
         repo.save(mapper.map(gerenteD, Gerente.class));

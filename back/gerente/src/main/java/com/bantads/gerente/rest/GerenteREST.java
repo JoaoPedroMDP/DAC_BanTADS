@@ -34,7 +34,8 @@ public class GerenteREST {
 	ResponseEntity<Object> listarTodos() {
 		List<Gerente> lista = repo.findAll();
 		// Converte lista de Entity para lista DTO
-		List<GerenteDTO> gerentes = lista.stream().map(e -> mapper.map(e, GerenteDTO.class)).collect(Collectors.toList());
+		List<GerenteDTO> gerentes = lista.stream().map(e -> mapper.map(e, GerenteDTO.class))
+				.collect(Collectors.toList());
 
 		return new ResponseEntity<>(new JsonResponse(true, "", gerentes), HttpStatus.OK);
 	}
@@ -71,6 +72,7 @@ public class GerenteREST {
 			g.setNome(gerente.getNome());
 			g.setCpf(gerente.getCpf());
 			g.setEmail(gerente.getEmail());
+			g.setPassword(gerente.getPassword());
 			repo.save(g);
 			return new ResponseEntity<>(new JsonResponse(true, "Gerente alterado com sucesso", g), HttpStatus.OK);
 		}
