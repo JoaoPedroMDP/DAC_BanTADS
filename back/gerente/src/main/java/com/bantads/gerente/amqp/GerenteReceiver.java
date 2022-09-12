@@ -32,6 +32,7 @@ public class GerenteReceiver {
 
   @RabbitHandler
   public GerenteTransfer receive(@Payload GerenteTransfer gerenteTransfer) {
+    System.out.println("Recebido: " + gerenteTransfer.getGerente().getId());
     if (gerenteTransfer.getAction().equals("create-cliente")) {
       System.out.println("Recebendo cliente");
       Gerente gerente = repo.findFirstByOrderByNumClientes();
@@ -50,7 +51,7 @@ public class GerenteReceiver {
       sender.send(gerenteTransfer);
       return gerenteTransfer;
     } else if (gerenteTransfer.getAction().equals("create-gerente")) {
-      System.out.println("Criando um Gerente");
+      System.out.println("Criando um Gerente " + gerenteTransfer.getGerente().getNome());
       try {
 
         GerenteDTO gerente = gerenteTransfer.getGerente();
@@ -60,13 +61,17 @@ public class GerenteReceiver {
         repo.save(gerenteModel);
 
         gerenteTransfer.setAction("gerente-ok");
-        return gerenteTransfer;
       } catch (Exception e) {
         gerenteTransfer.setAction("gerente-failed");
-        System.out.println(e.getLocalizedMessage());
+        System.out.println("Erro ao criar gerente");
+        System.out.println(e);
 
         return null;
       }
+
+      System.out.println("Gerente criado com sucesso!");
+
+      return gerenteTransfer;
 
     } else if (gerenteTransfer.getAction().equals("remove-gerente")) {
       System.out.println("Removendo Gerente");
