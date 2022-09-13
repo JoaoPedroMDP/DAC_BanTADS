@@ -11,6 +11,7 @@ import com.bantads.saga.models.ClienteDTO;
 import com.bantads.saga.models.EnderecoDTO;
 import com.bantads.saga.models.GerenteDTO;
 import com.bantads.saga.models.LoginDTO;
+import com.bantads.saga.models.Role;
 import com.bantads.saga.models.AccountDTO;
 import com.bantads.saga.amqp.ClienteProducer;
 import com.bantads.saga.amqp.ClienteTransfer;
@@ -135,7 +136,7 @@ public class SagaREST {
       }
 
       GerenteTransfer resGerente = gerenteSender.sendAndReceive(gerente, "create-gerente");
-      System.out.println("resGerente" + resGerente);
+      System.out.println("resGerente " + resGerente.getAction());
 
       if (resGerente.getAction().equals("gerente-ok")) {
         Integer gerenteId = resGerente.getGerente().getId();
@@ -145,9 +146,11 @@ public class SagaREST {
         LoginDTO loginData = new LoginDTO();
         loginData.setUser(Long.valueOf(gerenteId));
         loginData.setEmail(email);
+        loginData.setRole("GERENTE");
         loginData.setPassword(senha);
 
         AuthTransfer resAuth = authSender.sendAndReceive(loginData, "auth-register");
+
         if (resAuth.getAction().equals("auth-ok")) {
           return new ResponseEntity<>(
               new JsonResponse(true, "Gerente criado com sucesso", gerente),

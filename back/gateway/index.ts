@@ -195,6 +195,45 @@ app
     } catch (error: any) {
       return res.status(error.response.status).json(error.response.data);
     }
+  })
+  .post("/accounts/:id/deposit", async (req: any, res: any) => {
+    try {
+      const response = await axios.post(
+        `${accountsService}/${req.params.id}/deposit`,
+        {
+          ...req.body,
+        }
+      );
+      return res.json(response.data);
+    } catch (error: any) {
+      return res.status(error.response.status).json(error.response.data);
+    }
+  })
+  .post("/accounts/:id/withdraw", async (req: any, res: any) => {
+    try {
+      const response = await axios.post(
+        `${accountsService}/${req.params.id}/withdraw`,
+        {
+          ...req.body,
+        }
+      );
+      return res.json(response.data);
+    } catch (error: any) {
+      return res.status(error.response.status).json(error.response.data);
+    }
+  })
+  .post("/accounts/:id/transfer", async (req: any, res: any) => {
+    try {
+      const response = await axios.post(
+        `${accountsService}/${req.params.id}/transfer`,
+        {
+          ...req.body,
+        }
+      );
+      return res.json(response.data);
+    } catch (error: any) {
+      return res.status(error.response.status).json(error.response.data);
+    }
   });
 
 app.listen(port, () => {
