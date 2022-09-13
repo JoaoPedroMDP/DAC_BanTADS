@@ -234,6 +234,26 @@ app
     } catch (error: any) {
       return res.status(error.response.status).json(error.response.data);
     }
+  })
+  .get("/accounts/user/:id", async (req: any, res: any) => {
+    try {
+      const response = await axios.get(
+        `${accountsService}/user/${req.params.id}/`
+      );
+      return res.json(response.data);
+    } catch (error: any) {
+      return res.status(error.response.status).json(error.response.data);
+    }
+  })
+  .get("/accounts/users:id", async (req: any, res: any) => {
+    try {
+      const response = await axios.get(
+        `${accountsService}/users/${req.params.id}`
+      );
+      return res.json(response.data);
+    } catch (error: any) {
+      return res.status(error.response.status).json(error.response.data);
+    }
   });
 
 app.listen(port, () => {
