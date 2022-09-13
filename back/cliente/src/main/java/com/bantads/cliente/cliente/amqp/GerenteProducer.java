@@ -10,7 +10,7 @@ public class GerenteProducer {
   private RabbitTemplate template;
 
   @Autowired
-  @Qualifier("gerente")
+  @Qualifier("gerente-cliente")
   private Queue queue;
 
   public void send(GerenteTransfer gerente) {

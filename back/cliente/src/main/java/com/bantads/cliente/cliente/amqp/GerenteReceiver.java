@@ -11,7 +11,7 @@ import com.bantads.cliente.cliente.repositories.ClienteRepository;
 
 // import com.bantads.auth.auth.serializers.BasicClienteDTO;
 
-@RabbitListener(queues = "gerente")
+@RabbitListener(queues = "gerente-cliente")
 public class GerenteReceiver {
 
   @Autowired

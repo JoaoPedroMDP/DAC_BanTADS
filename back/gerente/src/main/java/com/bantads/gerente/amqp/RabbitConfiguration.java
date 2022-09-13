@@ -33,6 +33,11 @@ public class RabbitConfiguration {
   }
 
   @Bean
+  public GerenteClienteReceiver gerenteClienteReceiver() {
+    return new GerenteClienteReceiver();
+  }
+
+  @Bean
   public DefaultClassMapper classMapper() {
     DefaultClassMapper classMapper = new DefaultClassMapper();
     Map<String, Class<?>> idClassMapping = new HashMap<>();

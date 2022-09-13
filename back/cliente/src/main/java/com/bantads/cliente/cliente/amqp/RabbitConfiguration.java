@@ -22,10 +22,10 @@ public class RabbitConfiguration {
   }
 
   @Bean
-  @Qualifier("gerente")
+  @Qualifier("gerente-cliente")
   public Queue gerenteQueue() {
-    System.out.println("Criando fila gerente");
-    return new Queue("gerente");
+    System.out.println("Criando fila gerente-cliente");
+    return new Queue("gerente-cliente");
   }
 
   @Bean
