@@ -8,12 +8,11 @@ import com.bantads.account.account.repository.command.AccountRepositoryC;
 import com.bantads.account.account.repository.query.AccountRepositoryQ;
 import com.bantads.account.exceptions.AccountNotFound;
 import com.bantads.account.exceptions.InsufficientFunds;
-import com.bantads.account.lib.CustomerDTO;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -80,8 +79,17 @@ public class AccountServices {
         return dto;
     }
 
-    public List<AccountDTO> getAccountsByUsers(List<CustomerDTO> users) {
-        List<AccountQ> accounts = queries.findAllByUserIdIn(users.stream().map(CustomerDTO::getId).collect(Collectors.toList()));
+    public List<AccountDTO> getAccountsByUsers(List<String> usersIds) {
+        List<AccountQ> accounts = new ArrayList<>();
+
+        for(String id : usersIds) {
+            try{
+                accounts.add(queries.findByUserId(Long.parseLong(id)).get());
+            }catch (NoSuchElementException e) {
+                continue;
+            }
+        }
+
         return accounts.stream()
                 .map(AccountQ::toDto)
                 .collect(Collectors.toList());

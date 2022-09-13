@@ -4,7 +4,6 @@ import com.bantads.account.account.models.AccountDTO;
 import com.bantads.account.account.models.query.AccountQ;
 import com.bantads.account.account.services.AccountServices;
 import com.bantads.account.exceptions.AccountNotFound;
-import com.bantads.account.lib.CustomerDTO;
 import com.bantads.account.lib.JsonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class AccountQueries {
     @GetMapping(value = "/accounts/user/{id}", produces = "application/json")
     public ResponseEntity<JsonResponse> getUserAccount(@PathVariable("id") Long id) {
         try {
-            AccountDTO acc = serv.getAccountDTO(id);
+            AccountDTO acc = serv.getUserAccountDTO(id);
             return JsonResponse.ok("Conta encontrada!", acc);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
@@ -65,18 +66,15 @@ public class AccountQueries {
 
     @CrossOrigin
     @GetMapping(value = "/accounts/users/{users}", produces = "application/json")
-    // Passa uma lista de ClienteDTO para mim e eu devolvo uma lista de AccountDTO
-    public ResponseEntity<JsonResponse> getAccountsByUsers(@PathVariable("id") String users) {
+    public ResponseEntity<JsonResponse> getAccountsByUsers(@PathVariable("users") String users) {
         try {
-            List<String> ids = new ArrayList(users.split(",")).;
-            List<AccountDTO> accounts = serv.getAccountsByUsers(users);
+            List<String> ids = new ArrayList<String>(Arrays.asList(users.split(",")));
+            List<AccountDTO> accounts = this.serv.getAccountsByUsers(ids);
+
             return JsonResponse.ok("Contas encontradas!", accounts);
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            return JsonResponse.badRequest("O id da conta é inválido!", null);
-        } catch (AccountNotFound e) {
-            e.printStackTrace();
-            return JsonResponse.notFound("Conta não encontrada!", null);
+            return JsonResponse.badRequest("Erro ao recuperar contas", null);
         }
     }
 
