@@ -13,6 +13,7 @@ public class ClienteDTO implements Serializable {
   private String email;
   private String password;
   private String role;
+  private int salario;
 
   public String getEmail() {
     return email;
@@ -92,6 +93,14 @@ public class ClienteDTO implements Serializable {
 
   public void setConta(Long conta) {
     this.conta = conta;
+  }
+
+  public int getSalario() {
+    return salario;
+  }
+
+  public void setSalario(int salario) {
+    this.salario = salario;
   }
 
 }

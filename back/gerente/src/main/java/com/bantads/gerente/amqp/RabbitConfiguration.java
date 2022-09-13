@@ -23,8 +23,10 @@ public class RabbitConfiguration {
   }
 
   @Bean
-  public GerenteProducer sender() {
-    return new GerenteProducer();
+  @Qualifier("gerente-cliente")
+  public Queue gerenteClienteQueue() {
+    System.out.println("Criando fila gerente-cliente");
+    return new Queue("gerente-cliente");
   }
 
   @Bean

@@ -25,6 +25,8 @@ public class Cliente implements Serializable {
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "endereco", referencedColumnName = "id")
   private Endereco endereco;
+  @Column(name = "salario")
+  private int salario = 0;
 
   public String getNome() {
     return nome;
@@ -80,6 +82,14 @@ public class Cliente implements Serializable {
 
   public void setConta(Long conta) {
     this.conta = conta;
+  }
+
+  public int getSalario() {
+    return salario;
+  }
+
+  public void setSalario(int salario) {
+    this.salario = salario;
   }
 
 }

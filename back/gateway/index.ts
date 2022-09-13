@@ -58,9 +58,9 @@ app
   })
   .get("/clientes", async (req: any, res: Response) => {
     try {
-      const response = await axios.get(
-        `${clienteService}?gerente=${req.query.gerente}&conta=${req.query.conta}`
-      );
+      const response = await axios.get(`${clienteService}`, {
+        params: req.query,
+      });
       return res.json(response.data);
     } catch (error: any) {
       return res.status(error.response.status).json(error.response.data);
@@ -179,7 +179,9 @@ app
   })
   .get("/accounts", async (req: any, res: Response) => {
     try {
-      const response = await axios.get(`${accountsService}`);
+      const response = await axios.get(`${accountsService}`, {
+        params: req.query,
+      });
 
       return res.json(response.data);
     } catch (error: any) {
@@ -188,7 +190,23 @@ app
   })
   .get("/accounts/:id", async (req: any, res: Response) => {
     try {
-      const response = await axios.get(`${accountsService}/${req.params.id}`);
+      const response = await axios.get(`${accountsService}/${req.params.id}`, {
+        params: req.query,
+      });
+
+      return res.json(response.data);
+    } catch (error: any) {
+      return res.status(error.response.status).json(error.response.data);
+    }
+  })
+  .get("/accounts/:id/statement", async (req: any, res: Response) => {
+    try {
+      const response = await axios.get(
+        `${accountsService}/${req.params.id}/statement`,
+        {
+          params: req.query,
+        }
+      );
 
       return res.json(response.data);
     } catch (error: any) {

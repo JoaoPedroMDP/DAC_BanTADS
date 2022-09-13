@@ -22,16 +22,13 @@ public class GerenteClienteReceiver {
   private GerenteRepository repo;
 
   @Autowired
-  GerenteProducer sender;
-
-  @Autowired
   private RabbitTemplate template;
 
   @Autowired
   private ModelMapper mapper;
 
   @RabbitHandler
-  public GerenteTransfer receive(@Payload GerenteTransfer gerenteTransfer) {
+  public void receive(@Payload GerenteTransfer gerenteTransfer) {
     System.out.println("Gerente cliente recebido");
     if (gerenteTransfer.getAction().equals("create-cliente")) {
       System.out.println("Recebendo cliente");
@@ -50,10 +47,10 @@ public class GerenteClienteReceiver {
 
       gerenteTransfer.setGerente(gerenteDTO);
       this.template.convertAndSend("gerente-cliente", gerenteTransfer);
-      return null;
+      // return null;
     }
     System.out.println("Ação recebida não reconhecida: " + gerenteTransfer.getAction());
 
-    return null;
+    // return null;
   }
 }

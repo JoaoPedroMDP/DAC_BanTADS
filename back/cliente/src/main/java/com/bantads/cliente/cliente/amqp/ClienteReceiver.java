@@ -151,6 +151,8 @@ public class ClienteReceiver {
 
       Cliente clienteObj = repo.findById(cliente.getId()).get();
 
+      cliente = mapper.map(clienteObj, ClienteDTO.class);
+
       if (clienteObj != null) {
         try {
 
@@ -158,6 +160,7 @@ public class ClienteReceiver {
           repo.save(clienteObj);
 
           clienteTransfer.setAction("cliente-approved-ok");
+          clienteTransfer.setCliente(cliente);
           // this.template.convertAndSend("saga", clienteTransfer);
           return clienteTransfer;
         } catch (Exception e) {

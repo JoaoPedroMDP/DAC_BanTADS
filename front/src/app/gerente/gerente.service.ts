@@ -39,7 +39,7 @@ export class GerenteService {
     console.log(this.gerente);
     await this.http
       .get(
-        "http://localhost:5001/clientes?gerente=" +
+        "http://localhost:3000/clientes?gerente=" +
           this.gerente.id +
           "&conta=true"
       )

@@ -14,6 +14,6 @@ public class GerenteProducer {
   private Queue queue;
 
   public void send(GerenteTransfer gerente) {
-    this.template.convertAndSend(this.queue.getName(), gerente);
+    this.template.convertAndSend("gerente-cliente", gerente);
   }
 }

@@ -22,9 +22,6 @@ public class GerenteReceiver {
   private GerenteRepository repo;
 
   @Autowired
-  GerenteProducer sender;
-
-  @Autowired
   private RabbitTemplate template;
 
   @Autowired

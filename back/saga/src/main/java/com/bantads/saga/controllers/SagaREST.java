@@ -186,7 +186,12 @@ public class SagaREST {
       System.out.println(resCliente);
 
       if (resCliente.getAction().equals("cliente-approved-ok")) {
-        System.out.print(account.getLimit());
+        System.out.println("Salario " + resCliente.getCliente().getSalario());
+        if (resCliente.getCliente().getSalario() > 2000) {
+          Double limite = (Double) (resCliente.getCliente().getSalario() * 0.5);
+          account.setLimit(limite);
+          System.out.println("limite " + limite);
+        }
         AccountTransfer resAcc = accountSender.sendAndReceive(account, "create-account");
         System.out.println("here" + resAcc.getAction());
         if (resAcc.getAction().equals("create-account-ok")) {

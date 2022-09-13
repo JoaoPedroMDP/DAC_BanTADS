@@ -49,11 +49,11 @@
                 <h4 class="mb-32">Dados da Conta</h4>
                 <mat-form-field class="me-24 fs-16" appearance="fill">
                     <mat-label>Cliente:</mat-label>
-                    <input matInput type="text" [value]="cliente.id" readonly>
+                    <input matInput type="text" [value]="cliente?.id" readonly>
                 </mat-form-field>
                 <mat-form-field class="me-24 fs-16" appearance="fill">
                     <mat-label>Número da Conta:</mat-label>
-                    <input matInput type="text" [value]="conta.id" readonly>
+                    <input matInput type="text" [value]="conta?.id" readonly>
                 </mat-form-field>
                 <!-- <mat-form-field class="me-24 fs-16" appearance="fill">
                 <mat-label>Data de Criação:</mat-label>
@@ -61,11 +61,11 @@
             </mat-form-field> -->
                 <mat-form-field class="mb-32 fs-16" appearance="fill">
                     <mat-label>Limite:</mat-label>
-                    <input matInput type="text" [value]="conta.limit" readonly>
+                    <input matInput type="text" [value]="conta?.limit" readonly>
                 </mat-form-field>
                 <mat-form-field class="mb-32 fs-16" appearance="fill">
                     <mat-label>Saldo:</mat-label>
-                    <input matInput type="text" [value]="conta.balance" readonly>
+                    <input matInput type="text" [value]="conta?.balance" readonly>
                 </mat-form-field>
             </div>
             <button mat-button [routerLink]="['/gerente/consulta-clientes']"
