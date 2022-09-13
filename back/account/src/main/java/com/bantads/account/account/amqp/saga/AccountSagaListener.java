@@ -5,6 +5,8 @@ import com.bantads.account.account.amqp.account.AccountSender;
 import com.bantads.account.account.models.AccountDTO;
 import com.bantads.account.account.services.AccountServices;
 import com.bantads.account.exceptions.AccountNotFound;
+import com.bantads.account.exceptions.DuplicateAccountException;
+
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -29,9 +31,14 @@ public class AccountSagaListener {
             break;
             case "create-account":
                 // Vindo da SAGA
-                AccountDTO created = this.service.createAccount(dt.getAccount());
-                dt.setAccount(created);
-                dt.setAction("create-account-ok");
+                try{
+                    AccountDTO created = this.service.createAccount(dt.getAccount());
+                    dt.setAccount(created);
+                    dt.setAction("create-account-ok");
+                }catch(DuplicateAccountException e){
+                    dt.setAction("create-account-error");
+                    dt.setAccount(null);
+                }
             break;
             case "delete-account":
                 // Vindo da SAGA

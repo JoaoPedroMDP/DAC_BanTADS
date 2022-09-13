@@ -65,6 +65,7 @@ export class AuthService {
   }
 
   public getAuth(): Auth | null {
+    console.log(this.auth);
     return this.auth;
   }
 
@@ -78,6 +79,7 @@ export class AuthService {
   }
 
   public logOut() {
+    console.log("LOGGIN OUT");
     this.setAuth(null);
     localStorage.removeItem("auth");
     this.router.navigate(["/login"]);

@@ -21,4 +21,6 @@ public interface GerenteRepository extends JpaRepository<Gerente, Integer> {
 
 	public Optional<Gerente> findById(int id);
 
+	public Gerente findByEmail(String email);
+
 }

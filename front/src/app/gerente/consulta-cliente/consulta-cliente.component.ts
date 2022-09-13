@@ -11,7 +11,7 @@ export interface Cliente{
   tipo: string;
   logradouro: string;
   numero: number;
-  complemento:string;
+  complemento: string;
   cep: string;
   cidade: string;
   estado: string;
@@ -24,10 +24,10 @@ const matrizCliente: Cliente[] = [
   complemento: 'Casa 3', cep: '59090-647', cidade:'Natal', estado: 'RN'},
   { id: 2, nome: 'Camila da Silva', email: 'camiladasilvaprog@rocketmail.com', cpf: '525.160.851-92',
   salario: 1500.00, tipo: 'Via', logradouro: 'Via Secundária 6', numero: 5040,
-  complemento: ' ', cep: '75913-562', cidade: 'Rio Verde', estado: 'GO'},
+  complemento: 'Apartamento 1503 ', cep: '75913-562', cidade: 'Rio Verde', estado: 'GO'},
   { id: 3, nome: 'Emerson Vieira',email: 'emersonvieira@gmail.com', cpf: '614.553.173-81',
   salario: 6700.00, tipo: 'Rua', logradouro: 'Rua da Paz', numero: 150,
-  complemento: ' ', cep:'69908-048', cidade: 'Rio Branco',estado: 'AC' },
+  complemento: ' Apartamento 701 ', cep:'69908-048', cidade: 'Rio Branco',estado: 'AC' },
   { id: 4, nome: 'Everaldo Costa', email:'everaldoCosta21@gmail.com', cpf: '220.221.419-46',
   salario: 1800.00, tipo: 'Rua', logradouro: 'Rua Rio de Janeiro', numero: 28,
   complemento: 'Apartamento 1023', cep:'93280-390', cidade: 'Esteio', estado: 'RS'},

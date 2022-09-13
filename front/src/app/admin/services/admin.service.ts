@@ -6,7 +6,7 @@ import { ToastrService } from "ngx-toastr";
   providedIn: "root",
 })
 export class AdminService {
-  private gerenteUrl = "http://localhost:5002/gerente";
+  private gerenteUrl = "http://localhost:3000/gerente";
   private gerentes: any[] = [];
 
   constructor(private http: HttpClient, private toast: ToastrService) {}

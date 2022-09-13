@@ -3,7 +3,7 @@ CREATE DATABASE accountcommands;
 
 CREATE TABLE public.accounts (
  id serial4 NOT NULL,
- user_id int4 NULL,
+ user_id int4 UNIQUE NULL,
  balance float8 NOT NULL,
  acc_limit float8 NULL,
  CONSTRAINT accounts_pkey PRIMARY KEY (id)
@@ -27,7 +27,7 @@ CREATE DATABASE accountqueries;
 \c accountqueries;
 CREATE TABLE public.accounts (
  id serial4 NOT NULL,
- user_id int4 NULL,
+ user_id int4 UNIQUE NULL,
  balance float8 NOT NULL,
  acc_limit float8 NULL,
  CONSTRAINT accounts_pkey PRIMARY KEY (id)

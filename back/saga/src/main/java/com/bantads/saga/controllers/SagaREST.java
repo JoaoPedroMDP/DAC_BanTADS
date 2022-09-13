@@ -140,11 +140,12 @@ public class SagaREST {
 
       if (resGerente.getAction().equals("gerente-ok")) {
         Integer gerenteId = resGerente.getGerente().getId();
+        System.out.println("GERENTE ID " + gerenteId);
         String senha = gerente.getCpf();
         String email = gerente.getEmail();
 
         LoginDTO loginData = new LoginDTO();
-        loginData.setUser(Long.valueOf(gerenteId));
+        loginData.setUser(gerenteId.longValue());
         loginData.setEmail(email);
         loginData.setRole("GERENTE");
         loginData.setPassword(senha);
