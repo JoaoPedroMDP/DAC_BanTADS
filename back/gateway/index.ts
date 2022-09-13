@@ -245,7 +245,7 @@ app
       return res.status(error.response.status).json(error.response.data);
     }
   })
-  .get("/accounts/users:id", async (req: any, res: any) => {
+  .get("/accounts/users/:id", async (req: any, res: any) => {
     try {
       const response = await axios.get(
         `${accountsService}/users/${req.params.id}`
