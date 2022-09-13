@@ -27,9 +27,11 @@ export class ConsultaClientesComponent implements OnInit {
   colunas: string[] = ["nome", "cpf", "cidade", "estado", "saldo"];
   dataSource = matrizCliente;
   cpfMask = { mask: "000.000.000-00" };
+  top5Clientes: any = [];
+  filtrando: boolean = false;
 
-  nome = "";
-  cpf = "";
+  // nome = "";
+  // cpf = "";
 
   constructor(
     private gerenteService: GerenteService,
@@ -53,16 +55,30 @@ export class ConsultaClientesComponent implements OnInit {
     }, 1200);
   }
 
-  pesquisar() {
-    if (this.cpf !== "") {
-      return (this.dataSource = this.gerenteService.filtrarPorCpf(this.cpf));
+  pesquisar(nome: string) {
+    console.log(nome);
+    if (nome !== "") {
+      let aux: any = [];
+      this.gerenteService.getClientesObj().forEach((cliente: any) => {
+        if (cliente.nome.toLowerCase().includes(nome.toLowerCase())) {
+          aux.push(cliente);
+        }
+      });
+      console.log(aux);
+      return (this.dataSource = aux);
     }
-    if (this.nome !== "") {
-      return (this.dataSource = this.gerenteService.filtrarPorNome(this.nome));
-    }
+
+    this.dataSource = this.gerenteService.getClientesObj();
   }
 
   top5() {
-    return (this.dataSource = this.gerenteService.getTop5());
+    let aux = this.gerenteService
+      .getClientesObj()
+      .sort(
+        (a: any, b: any) =>
+          (b?.conta?.balance || -99999999) - (a?.conta?.balance || -9999999)
+      )
+      .splice(0, 5);
+    return (this.dataSource = aux);
   }
 }
