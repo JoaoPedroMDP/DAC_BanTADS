@@ -36,9 +36,8 @@
 
       <div class="ms-auto">
         <button mat-button class="fs-16 pt-4 pb-4 ps-8 pe-8 text-light-muted" [matMenuTriggerFor]="menu">
-          <img src="assets/images/user2.webp" class="rounded-circle" alt="">
           <span class="fw-light ms-8 text-secondary">Hi,</span>
-          <span class="fw-bold ms-8">Julia</span>
+          <span class="fw-bold ms-8">{{gerente?.nome}}</span>
           <i-feather name="chevron-down" class="feather-base mt-n2"></i-feather>
         </button>
         <mat-menu #menu="matMenu" class="profile-dropdown">
@@ -52,7 +51,7 @@
           <hr>
 
           <div class="p-16">
-            <button mat-button class="btn btn-info w-100" routerLink="/login">Logout</button>
+            <button mat-button class="btn btn-info w-100" (click)="logout()">Logout</button>
           </div>
 
         </mat-menu>

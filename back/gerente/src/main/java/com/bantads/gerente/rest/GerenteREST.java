@@ -40,9 +40,9 @@ public class GerenteREST {
 		return new ResponseEntity<>(new JsonResponse(true, "", gerentes), HttpStatus.OK);
 	}
 
-	@GetMapping("/gerente/{id}")
-	public ResponseEntity<Object> obterTodosGerentes(@PathVariable("id") int id) {
-		Gerente g = repo.findById(id).get();
+	@GetMapping("/gerente/{email}")
+	public ResponseEntity<Object> obterTodosGerentes(@PathVariable("email") String email) {
+		Gerente g = repo.findByEmail(email);
 
 		if (g == null) {
 			return new ResponseEntity<>(new JsonResponse(false, "Gerente não encontrado", null), HttpStatus.NOT_FOUND);
