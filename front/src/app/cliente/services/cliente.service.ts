@@ -8,9 +8,11 @@ import { AuthService } from "src/app/auth/services/auth.service";
   providedIn: "root",
 })
 export class ClienteService {
-  private url = "http://localhost:5001";
+  private url = "http://localhost:3000";
 
   private cliente = {};
+  private balance = {};
+  private account = {};
 
   constructor(
     private http: HttpClient,
@@ -40,11 +42,38 @@ export class ClienteService {
     );
   }
 
-  public getCliente() {
-    return this.cliente;
+  public async loadBalance() {
+    const auth = await this.authService.getAuth();
+    console.log(auth?.user);
+    return this.http.get(this.url + "/accounts/" + auth?.user + "/balance");
+  }
+
+  public async loadAccount() {
+    const auth = await this.authService.getAuth();
+    console.log(auth?.user);
+    return this.http.get(this.url + "/accounts/" + auth?.user);
+  }
+
+  public getAccount() {
+    return this.account;
+  }
+
+  public setAccount(account: any) {
+    this.account = account;
+  }
+
+  public getBalance() {
+    return this.balance;
+  }
+
+  public setBalance(balance: any) {
+    this.balance = balance;
   }
 
   public setCliente(cliente: any) {
     this.cliente = cliente;
+  }
+  public getCliente() {
+    return this.cliente;
   }
 }

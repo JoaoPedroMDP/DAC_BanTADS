@@ -9,7 +9,7 @@ import jwtDecode from "jwt-decode";
   providedIn: "root",
 })
 export class AuthService {
-  private url = "http://localhost:5000/auth";
+  private url = "http://localhost:3000/auth";
   private auth: Auth | null = null;
   private role = "";
 

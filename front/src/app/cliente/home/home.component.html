@@ -1,34 +1,43 @@
 <div class="container">
-  <h2>Olá {{cliente?.nome}}</h2>
+  <h2>Olá {{ cliente?.nome }}</h2>
   <h3>Seu saldo:</h3>
-  <h1 class="negative">- R$1234,56</h1>
 
+  <h1 class="negative">{{balance?.balance}</h1>
 
-  <h3 style="margin-top: 50px;">Seu limite:</h3>
-  <h3>R$2000,00</h3>
-  <button mat-flat-button color="accent" (click)="handleRaiseLimit()">Pedir aumento de limite</button>
+  <h3 style="margin-top: 50px">Seu limite:</h3>
+  <h3>{{ account?.limit }}</h3>
+  <button mat-flat-button color="accent" (click)="handleRaiseLimit()">
+    Pedir aumento de limite
+  </button>
 
-
-  <h3 style="margin-top: 50px;">Seus benefícios</h3>
+  <h3 style="margin-top: 50px">Seus benefícios</h3>
   <mat-card>
     <div class="card">
       <h4>Desconto no cinema</h4>
-      <p>Com o BanTADS você tem descontos exclusivos para cinemas da UFPR! Meia entrada para todas as sessões!</p>
+      <p>
+        Com o BanTADS você tem descontos exclusivos para cinemas da UFPR! Meia
+        entrada para todas as sessões!
+      </p>
     </div>
   </mat-card>
 
   <mat-card>
     <div class="card">
       <h4>Desconto no cinema</h4>
-      <p>Com o BanTADS você tem descontos exclusivos para cinemas da UFPR! Meia entrada para todas as sessões!</p>
+      <p>
+        Com o BanTADS você tem descontos exclusivos para cinemas da UFPR! Meia
+        entrada para todas as sessões!
+      </p>
     </div>
   </mat-card>
 
   <mat-card>
     <div class="card">
       <h4>Desconto no cinema</h4>
-      <p>Com o BanTADS você tem descontos exclusivos para cinemas da UFPR! Meia entrada para todas as sessões!</p>
+      <p>
+        Com o BanTADS você tem descontos exclusivos para cinemas da UFPR! Meia
+        entrada para todas as sessões!
+      </p>
     </div>
   </mat-card>
-
 </div>
