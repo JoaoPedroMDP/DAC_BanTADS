@@ -56,6 +56,16 @@ app
       return res.status(error.response.status).json(error.response.data);
     }
   })
+  .get("/clientes", async (req: any, res: Response) => {
+    try {
+      const response = await axios.get(
+        `${clienteService}?gerente=${req.query.gerente}&conta=${req.query.conta}`
+      );
+      return res.json(response.data);
+    } catch (error: any) {
+      return res.status(error.response.status).json(error.response.data);
+    }
+  })
 
   .put("/clientes/:id", async (req: any, res: any) => {
     try {
