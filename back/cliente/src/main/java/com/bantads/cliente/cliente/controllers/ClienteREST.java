@@ -21,10 +21,13 @@ import com.bantads.cliente.cliente.model.Cliente;
 import com.bantads.cliente.cliente.model.Endereco;
 import com.bantads.cliente.cliente.repositories.ClienteRepository;
 import com.bantads.cliente.cliente.repositories.EnderecoRepository;
+import com.bantads.cliente.cliente.serializers.AccountDTO;
 import com.bantads.cliente.cliente.serializers.AccountStatus;
+import com.bantads.cliente.cliente.serializers.ClientAccountsDTO;
 import com.bantads.cliente.cliente.serializers.ClienteDTO;
 import com.bantads.cliente.cliente.serializers.EnderecoDTO;
 import com.bantads.cliente.cliente.utils.JsonResponse;
+import com.bantads.cliente.cliente.utils.RestService;
 import com.bantads.cliente.cliente.utils.ValidarCpf;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,6 +53,9 @@ public class ClienteREST {
 
   @Autowired
   private GerenteProducer gerenteSender;
+
+  @Autowired
+  private RestService rest;
 
   @PostMapping(value = "/clientes")
   public ResponseEntity<Object> postMethodName(@RequestBody ClienteDTO cliente) {
@@ -168,7 +174,8 @@ public class ClienteREST {
   }
 
   @GetMapping(value = "/clientes")
-  ResponseEntity<Object> show(@RequestParam(required = false) int gerente) {
+  ResponseEntity<Object> show(@RequestParam(required = false) int gerente,
+      @RequestParam(required = false) Boolean conta) {
     System.out.println(gerente);
     if (gerente == 0) {
       List<Cliente> clientes = repo.findAll();
@@ -184,6 +191,22 @@ public class ClienteREST {
 
     List<ClienteDTO> clientesDTO = clientes.stream().map(c -> mapper.map(c, ClienteDTO.class))
         .collect(Collectors.toList());
+
+    if (conta == true) {
+      String ids = clientesDTO.stream().map(c -> c.getId().toString()).collect(Collectors.joining(","));
+
+      Object accounts = rest.getAccountDTOs(ids);
+
+      ClientAccountsDTO cad = new ClientAccountsDTO();
+
+      cad.setClientes(clientesDTO);
+      cad.setAccounts(accounts);
+
+      System.out.println("Lista de clientes recebida");
+
+      return new ResponseEntity<>(new JsonResponse(true, "", cad), HttpStatus.OK);
+
+    }
 
     return new ResponseEntity<>(new JsonResponse(true, "", clientesDTO), HttpStatus.OK);
 
