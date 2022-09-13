@@ -7,6 +7,7 @@ import com.bantads.account.account.models.query.AccountQ;
 import com.bantads.account.account.repository.command.AccountRepositoryC;
 import com.bantads.account.account.repository.query.AccountRepositoryQ;
 import com.bantads.account.exceptions.AccountNotFound;
+import com.bantads.account.exceptions.DuplicateAccountException;
 import com.bantads.account.exceptions.InsufficientFunds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -95,13 +96,18 @@ public class AccountServices {
                 .collect(Collectors.toList());
     }
 
-    public AccountDTO createAccount(AccountDTO newAccount) {
+    public AccountDTO createAccount(AccountDTO newAccount) throws DuplicateAccountException {
         newAccount.setId(null); // Para o caso de tentarem colocar um id
         AccountC toAccount = newAccount.toCommand();
-        AccountC created = commands.save(toAccount);
-        AccountDTO toDTO = created.toDto();
-        sender.send(toDTO, "create");
-        return toDTO;
+        try{
+            AccountC created = commands.save(toAccount);
+            AccountDTO toDTO = created.toDto();
+            sender.send(toDTO, "create");
+            return toDTO;
+        }catch(Exception e){
+            e.printStackTrace();
+            throw new DuplicateAccountException();
+        }
     }
 
     public AccountDTO updateAccount(Long accountId, AccountDTO newData) throws AccountNotFound {

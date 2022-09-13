@@ -3,6 +3,8 @@ package com.bantads.account.account.rest;
 import com.bantads.account.account.models.AccountDTO;
 import com.bantads.account.account.services.AccountServices;
 import com.bantads.account.exceptions.AccountNotFound;
+import com.bantads.account.exceptions.BenignException;
+import com.bantads.account.exceptions.DuplicateAccountException;
 import com.bantads.account.lib.JsonResponse;
 import com.bantads.account.lib.ValidationViolations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +46,10 @@ public class AccountCommands {
             e.printStackTrace();
             ValidationViolations violations = new ValidationViolations(e.getConstraintViolations());
             return JsonResponse.badRequest("Erro de validação!", violations);
-        } catch (Exception e) {
+        } catch (BenignException e) {
+            e.printStackTrace();
+            return JsonResponse.internalServerError(e.getMessage(), null);
+        }  catch (Exception e) {
             e.printStackTrace();
             return JsonResponse.internalServerError("Erro ao criar conta!", null);
         }
