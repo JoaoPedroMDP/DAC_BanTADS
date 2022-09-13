@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -64,6 +65,34 @@ public class AccountServices {
 
         AccountDTO dto = acc.toDto();
         return dto;
+    }
+
+    public AccountDTO getUserAccountDTO(Long userId) throws AccountNotFound {
+        AccountQ acc = null;
+        try {
+            acc = queries.findByUserId(userId).get();
+        } catch (NoSuchElementException e) {
+            throw new AccountNotFound();
+        }
+
+        AccountDTO dto = acc.toDto();
+        return dto;
+    }
+
+    public List<AccountDTO> getAccountsByUsers(List<String> usersIds) {
+        List<AccountQ> accounts = new ArrayList<>();
+
+        for(String id : usersIds) {
+            try{
+                accounts.add(queries.findByUserId(Long.parseLong(id)).get());
+            }catch (NoSuchElementException e) {
+                continue;
+            }
+        }
+
+        return accounts.stream()
+                .map(AccountQ::toDto)
+                .collect(Collectors.toList());
     }
 
     public AccountDTO createAccount(AccountDTO newAccount) {
