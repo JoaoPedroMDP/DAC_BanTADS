@@ -14,7 +14,6 @@ export class HomeComponent implements OnInit {
   ) {}
 
   public cliente: any = null;
-  public balance: any = null;
   public account: any = null;
 
   handleRaiseLimit() {
@@ -27,12 +26,6 @@ export class HomeComponent implements OnInit {
         res.subscribe((value: any) => {
           this.clienteService.setCliente(value.data);
           this.cliente = value.data;
-        });
-      });
-      this.clienteService.loadBalance().then((res) => {
-        res.subscribe((value: any) => {
-          this.clienteService.setBalance(value.data);
-          this.balance = value.data;
         });
       });
       this.clienteService.loadAccount().then((res) => {

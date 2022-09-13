@@ -2,7 +2,9 @@
   <h2>Olá {{ cliente?.nome }}</h2>
   <h3>Seu saldo:</h3>
 
-  <h1 class="negative">{{balance?.balance}</h1>
+  <h1 [class]="account?.balance > 0 ? '' : 'negative'">
+    {{ account?.balance }}
+  </h1>
 
   <h3 style="margin-top: 50px">Seu limite:</h3>
   <h3>{{ account?.limit }}</h3>

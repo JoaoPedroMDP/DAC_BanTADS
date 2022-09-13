@@ -11,7 +11,6 @@ export class ClienteService {
   private url = "http://localhost:3000";
 
   private cliente = {};
-  private balance = {};
   private account = {};
 
   constructor(
@@ -51,7 +50,7 @@ export class ClienteService {
   public async loadAccount() {
     const auth = await this.authService.getAuth();
     console.log(auth?.user);
-    return this.http.get(this.url + "/accounts/" + auth?.user);
+    return this.http.get(this.url + "/accounts/user/" + auth?.user);
   }
 
   public getAccount() {
@@ -59,15 +58,8 @@ export class ClienteService {
   }
 
   public setAccount(account: any) {
+    console.log(account);
     this.account = account;
-  }
-
-  public getBalance() {
-    return this.balance;
-  }
-
-  public setBalance(balance: any) {
-    this.balance = balance;
   }
 
   public setCliente(cliente: any) {

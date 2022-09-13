@@ -11,6 +11,7 @@ import { ClienteService } from "../services/cliente.service";
 export class ClientComponent implements OnInit {
   public cliente: any = null;
   search = false;
+  public account: any = null;
 
   routerActive = "";
   sidebarMenu = [
@@ -51,6 +52,12 @@ export class ClientComponent implements OnInit {
     setTimeout(() => {
       this.cliente = this.clienteService.getCliente();
     }, 500);
+    this.clienteService.loadAccount().then((res) => {
+      res.subscribe((value: any) => {
+        this.clienteService.setAccount(value.data);
+        this.account = value.data;
+      });
+    });
   }
 
   public handleLogout() {
