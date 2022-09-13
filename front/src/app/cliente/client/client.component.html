@@ -13,17 +13,9 @@
         <h4>Menu do Cliente</h4>
         <ul>
           <li class="list-group mb-8" *ngFor="let sidenav of sidebarMenu">
-            <a
-              matRipple
-              [matRippleColor]="'#f7f8f443'"
-              routerLink="{{ sidenav.link }}"
-              class="sidebar-menu fs-16 w-100 d-flex align-items-center"
-              [routerLinkActive]="routerActive"
-            >
-              <i-feather
-                name="{{ sidenav.icon }}"
-                class="feather-base me-16"
-              ></i-feather>
+            <a matRipple [matRippleColor]="'#f7f8f443'" routerLink="{{ sidenav.link }}"
+              class="sidebar-menu fs-16 w-100 d-flex align-items-center" [routerLinkActive]="routerActive">
+              <i-feather name="{{ sidenav.icon }}" class="feather-base me-16"></i-feather>
               <span class="ps-4">{{ sidenav.label }}</span>
             </a>
           </li>
@@ -36,11 +28,7 @@
     <!-- Header -->
     <mat-toolbar class="header ps-24 pe-24">
       <div class="ms-auto">
-        <button
-          mat-button
-          class="fs-16 pt-4 pb-4 ps-8 pe-8 text-light-muted"
-          [matMenuTriggerFor]="menu"
-        >
+        <button mat-button class="fs-16 pt-4 pb-4 ps-8 pe-8 text-light-muted" [matMenuTriggerFor]="menu">
           <!-- <img src="assets/images/user2.webp" class="rounded-circle" alt="" /> -->
           <span class="fw-light ms-8 text-secondary">Hi,</span>
           <span class="fw-bold ms-8">{{ cliente?.nome }}</span>
@@ -52,20 +40,16 @@
             <button mat-menu-item class="fs-16">Account</button>
             <button mat-menu-item class="fs-16">Change Password</button>
             <button mat-menu-item class="fs-16">My Settings</button> -->
+            <div>
+              Saldo: {{ account?.balance | currency: 'R$' }}
+            </div>
           </div>
 
           <hr />
 
           <div class="p-16">
-            <button
-              mat-button
-              class="btn btn-info w-100"
-              (click)="handleLogout()"
-            >
+            <button mat-button class="btn btn-info w-100" (click)="handleLogout()">
               Logout
-            </button>
-            <button mat-button class="btn btn-info black w-100">
-              Saldo: {{ account?.balance }}
             </button>
           </div>
         </mat-menu>

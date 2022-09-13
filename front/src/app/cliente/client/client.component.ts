@@ -51,13 +51,14 @@ export class ClientComponent implements OnInit {
   ngOnInit(): void {
     setTimeout(() => {
       this.cliente = this.clienteService.getCliente();
+      this.account = this.clienteService.getAccount();
     }, 500);
-    this.clienteService.loadAccount().then((res) => {
-      res.subscribe((value: any) => {
-        this.clienteService.setAccount(value.data);
-        this.account = value.data;
-      });
-    });
+    // this.clienteService.loadAccount().then((res) => {
+    //   res.subscribe((value: any) => {
+    //     this.clienteService.setAccount(value.data);
+    //     this.account = value.data;
+    //   });
+    // });
   }
 
   public handleLogout() {

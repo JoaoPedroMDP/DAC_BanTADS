@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from "src/app/auth/services/auth.service";
 import { NotificationService } from "src/app/services/notification.service";
+import { ClienteService } from "../../services/cliente.service";
 
 const transactionTypes: Record<string, any> = {
   out: {
@@ -124,7 +125,8 @@ class Day {
   ): Array<Transaction> {
     let assembledTransactions = new Array<Transaction>();
     transactions.forEach((transaction) => {
-      const extraData = transaction["extraData"] == "" ? undefined : transaction["extraData"];
+      const extraData =
+        transaction["extraData"] == "" ? undefined : transaction["extraData"];
 
       let assembledTransaction = new Transaction(
         new Date(+transaction["timestamp"]),
@@ -188,34 +190,45 @@ export class StatementComponent implements OnInit {
     private http: HttpClient,
     private auth: AuthService,
     private notifyService: NotificationService,
-    private router: Router
-    ) {}
+    private router: Router,
+    private clienteService: ClienteService
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   dateChangeHandler() {
-    let startDate: string = new Date(this.datepicker.value.start).valueOf().toString();
-    let endDate: string = new Date(this.datepicker.value.end).valueOf().toString();
+    let startDate: string = new Date(this.datepicker.value.start)
+      .valueOf()
+      .toString();
+    let endDate: string = new Date(this.datepicker.value.end)
+      .valueOf()
+      .toString();
     this.callApiStatement(startDate, endDate);
   }
 
   async callApiStatement(inicio: string, fim: string) {
-    let userId: number | undefined = this.auth.getAuth()?.user
+    let userId: number | undefined = this.auth.getAuth()?.user;
     if (userId === undefined) {
       console.log("Usuário não encontrado");
-      this.notifyService.showError("", 'Usuário não encontrado');
-      this.router.navigate(['/login']);
+      this.notifyService.showError("", "Usuário não encontrado");
+      this.router.navigate(["/login"]);
       return;
     }
 
+    const account: any = this.clienteService.getAccount();
+
     this.http
       .get<Record<string, any>>(
-        "https://joaopedromdp-dac-bantads-q99j6vgv9p52x94x-5003.githubpreview.dev/accounts/"+userId+"/statement?from="+inicio+"&to=" + fim
+        "http://localhost:3000/accounts/" +
+          account.id +
+          "/statement?from=" +
+          inicio +
+          "&to=" +
+          fim
       )
       .subscribe((response) => {
         // O '+' é pra converter para numerico
-        const data = response["data"]
+        const data = response["data"];
         const startDate = new Date(+data["startDate"]);
         const endDate = new Date(+data["endDate"]);
         const days = data["days"];

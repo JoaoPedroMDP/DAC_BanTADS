@@ -1,73 +1,74 @@
 <div class="card">
     <div class="card-body">
-      <h4 class="mb-32">Cliente</h4>
-      <form #formCliente="ngForm">    
-      <mat-form-field class="w-100 fs-16" appearance="fill">
-            <mat-label>Nome:</mat-label>
-            <input matInput type="text" name="nome" [(ngModel)]="cliente.nome"required>
-        </mat-form-field>
-        <mat-form-field class="w-100 fs-16" appearance="fill">
-            <mat-label>Email:</mat-label>
-            <input matInput name="email" [(ngModel)]="cliente.email" type="email" value="cliente1@emai.com" readonly>
-        </mat-form-field>
-        <mat-form-field class="w-100 fs-16" appearance="fill">
-            <mat-label>CPF:</mat-label>
-            <input matInput type="text" name="cpf" [(ngModel)]="cliente.cpf" readonly>
-        </mat-form-field>
-        <mat-form-field class="w-100 fs-16" appearance="fill">
-            <mat-label>Salario:</mat-label>
-            <input matInput type="text" name="salario" [(ngModel)]="cliente.salario" readonly>
-        </mat-form-field>
-        <div class="card-body">
-            <h4 class="mb-32">Endereço</h4>
-            <mat-form-field class="me-24 fs-16" appearance="fill">
-                <mat-label>Tipo:</mat-label>
-                <input matInput name="tipo" [(ngModel)]="cliente.tipo" type="text" readonly>
+        <h4 class="mb-32">Cliente</h4>
+        <form #formCliente="ngForm">
+            <mat-form-field class="w-100 fs-16" appearance="fill">
+                <mat-label>Nome:</mat-label>
+                <input matInput type="text" name="nome" [value]="cliente?.nome" required>
             </mat-form-field>
-            <mat-form-field class="me-24 fs-16" appearance="fill">
-                <mat-label>Logradouro:</mat-label>
-                <input  matInput type="text" name="logradouro" [(ngModel)]="cliente.logradouro" readonly>
+            <!-- <mat-form-field class="w-100 fs-16" appearance="fill">
+                <mat-label>Email:</mat-label>
+                <input matInput name="email" [value]="cliente?.email" type="email" readonly>
+            </mat-form-field> -->
+            <mat-form-field class="w-100 fs-16" appearance="fill">
+                <mat-label>CPF:</mat-label>
+                <input matInput type="text" name="cpf" [value]="cliente?.cpf" readonly>
             </mat-form-field>
-            <mat-form-field class="me-24 fs-16" appearance="fill">
-                <mat-label>Numero:</mat-label>
-                <input matInput type="text" name="numero" [(ngModel)]="cliente.numero" readonly>
-            </mat-form-field>
-            <mat-form-field class="me-24 fs-16" appearance="fill">
-                <mat-label>complemento:</mat-label>
-                <input matInput type="text" name="complemento" [(ngModel)]="cliente.complemento" readonly>
-            </mat-form-field>
-            <mat-form-field class="me-24 fs-16" appearance="fill">
-                <mat-label>CEP:</mat-label>
-                <input matInput type="text" name="cep" [(ngModel)]="cliente.cep"  readonly>
-            </mat-form-field>
-            <mat-form-field class="me-24 fs-16" appearance="fill">
-                <mat-label>Cidade:</mat-label>
-                <input matInput type="text" name="cidade" [(ngModel)]="cliente.cidade" readonly>
-            </mat-form-field>
-            <mat-form-field class="mb-32 fs-16" appearance="fill">
-                <mat-label>Estado:</mat-label>
-                <input matInput type="text" name="estado" [(ngModel)]="cliente.estado" readonly>
-            </mat-form-field>
-        </div>
-        <div class="card-body">
-            <h4 class="mb-32">Dados da Conta</h4>
-            <mat-form-field class="me-24 fs-16" appearance="fill">
-                <mat-label>Cliente:</mat-label>
-                <input matInput type="text" value="Cliente Numero 1" readonly>
-            </mat-form-field>
-            <mat-form-field class="me-24 fs-16" appearance="fill">
-                <mat-label>Número da Conta:</mat-label>
-                <input matInput type="text" value="25680242-9" readonly>
-            </mat-form-field>
-            <mat-form-field class="me-24 fs-16" appearance="fill">
+            <!-- <mat-form-field class="w-100 fs-16" appearance="fill">
+                <mat-label>Salario:</mat-label>
+                <input matInput type="text" name="salario" [value]="cliente?.salario" readonly>
+            </mat-form-field> -->
+            <div class="card-body">
+                <h4 class="mb-32">Endereço</h4>
+                <mat-form-field class="me-24 fs-16" appearance="fill">
+                    <mat-label>Logradouro:</mat-label>
+                    <input matInput type="text" name="logradouro" [value]="cliente?.endereco?.rua" readonly>
+                </mat-form-field>
+                <mat-form-field class="me-24 fs-16" appearance="fill">
+                    <mat-label>Numero:</mat-label>
+                    <input matInput type="text" name="numero" [value]="cliente?.endereco?.numero" readonly>
+                </mat-form-field>
+                <mat-form-field class="me-24 fs-16" appearance="fill">
+                    <mat-label>complemento:</mat-label>
+                    <input matInput type="text" name="complemento" [value]="cliente?.endereco?.complemento" readonly>
+                </mat-form-field>
+                <mat-form-field class="me-24 fs-16" appearance="fill">
+                    <mat-label>CEP:</mat-label>
+                    <input matInput type="text" name="cep" [value]="cliente?.endereco?.cep" readonly>
+                </mat-form-field>
+                <mat-form-field class="me-24 fs-16" appearance="fill">
+                    <mat-label>Cidade:</mat-label>
+                    <input matInput type="text" name="cidade" [value]="cliente?.endereco?.cidade" readonly>
+                </mat-form-field>
+                <mat-form-field class="mb-32 fs-16" appearance="fill">
+                    <mat-label>Estado:</mat-label>
+                    <input matInput type="text" name="estado" [value]="cliente?.endereco?.estado" readonly>
+                </mat-form-field>
+            </div>
+            <div class="card-body">
+                <h4 class="mb-32">Dados da Conta</h4>
+                <mat-form-field class="me-24 fs-16" appearance="fill">
+                    <mat-label>Cliente:</mat-label>
+                    <input matInput type="text" [value]="cliente.id" readonly>
+                </mat-form-field>
+                <mat-form-field class="me-24 fs-16" appearance="fill">
+                    <mat-label>Número da Conta:</mat-label>
+                    <input matInput type="text" [value]="conta.id" readonly>
+                </mat-form-field>
+                <!-- <mat-form-field class="me-24 fs-16" appearance="fill">
                 <mat-label>Data de Criação:</mat-label>
                 <input matInput type="text" value="03/10/2021" readonly>
-            </mat-form-field>
-            <mat-form-field class="mb-32 fs-16" appearance="fill">
-                <mat-label>Limite:</mat-label>
-                <input matInput type="text" value="1.000,00" readonly>
-            </mat-form-field>
-        </div>
-        <button mat-button [routerLink]="['/gerente/consulta-clientes']" class="btn btn-info fw-normal">Voltar</button>
-    </form>
-</div>
+            </mat-form-field> -->
+                <mat-form-field class="mb-32 fs-16" appearance="fill">
+                    <mat-label>Limite:</mat-label>
+                    <input matInput type="text" [value]="conta.limit" readonly>
+                </mat-form-field>
+                <mat-form-field class="mb-32 fs-16" appearance="fill">
+                    <mat-label>Saldo:</mat-label>
+                    <input matInput type="text" [value]="conta.balance" readonly>
+                </mat-form-field>
+            </div>
+            <button mat-button [routerLink]="['/gerente/consulta-clientes']"
+                class="btn btn-info fw-normal">Voltar</button>
+        </form>
+    </div>

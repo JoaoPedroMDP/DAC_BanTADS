@@ -38,21 +38,31 @@ export class GerenteService {
   public async getClientes() {
     console.log(this.gerente);
     await this.http
-      .get(this.url + "/clientes?gerente=" + this.gerente.id + "&conta=true")
+      .get(
+        "http://localhost:5001/clientes?gerente=" +
+          this.gerente.id +
+          "&conta=true"
+      )
       .subscribe(
         (response: any) => {
-          this.clientes = response.data.clientes;
-          this.clientes = this.clientes.map((c: any) => {
-            c.account = response.data.accounts.find(
-              (a: any) => a.userId == c.id
+          let clientes = response.data.clientes;
+          clientes.map((c: any) => {
+            c.conta = response.data.accounts.find(
+              (a: any) => a.userId === c.id
             );
           });
+          console.log(clientes);
+          this.clientes = clientes;
           return this.clientes;
         },
         ({ error }) => {
           this.toast.error(error.message, "Erro ao buscar clientes");
         }
       );
+  }
+
+  public getClientesObj() {
+    return this.clientes;
   }
 
   public filtrarPorNome(nome: string) {
@@ -77,7 +87,8 @@ export class GerenteService {
   }
 
   public getUnaprroved() {
-    return this.clientes.filter((c: any) => c.aprovado === "ANALISE");
+    console.log(this.clientes.filter((c: any) => c?.aprovado === "ANALISE"));
+    return this.clientes.filter((c: any) => c?.aprovado === "ANALISE");
   }
 
   public getCliente() {

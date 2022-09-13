@@ -46,6 +46,11 @@ export class ConsultaClientesComponent implements OnInit {
         this.dataSource = clientes;
       });
     }, 700);
+
+    setTimeout(() => {
+      this.dataSource = this.gerenteService.getClientesObj();
+      console.log(this.dataSource);
+    }, 1200);
   }
 
   pesquisar() {
