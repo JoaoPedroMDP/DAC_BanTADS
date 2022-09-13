@@ -22,22 +22,24 @@ export class DepositComponent implements OnInit {
     this.depositValue = 0;
   }
 
-  deposit(): void {
-    alert(`Depositando ${this.depositValue}`)
-    this.callApiDeposit();
-  }
-
-  async callApiDeposit() {
+  async deposit(): Promise<void> {
     let userId: number | undefined = this.auth.getAuth()?.user
     if (userId === undefined) {
       console.log("Usuário não encontrado");
       this.notifyService.showError("", 'Usuário não encontrado');
       this.router.navigate(['/login']);
+      return;
     }
+    
+    this.notifyService.showInfo("", `Depositando ${this.depositValue}...`);
+    await this.callApiDeposit(userId);
+    this.notifyService.showSuccess("", "Depósito realizado.");
+  }
 
+  async callApiDeposit(userId: number) {
     this.http
       .post<Record<string, any>>(
-        "https://joaopedromdp-dac-bantads-q99j6vgv9p52x94x-5003.githubpreview.dev/accounts/1/deposit",
+        "https://joaopedromdp-dac-bantads-q99j6vgv9p52x94x-5003.githubpreview.dev/accounts/"+userId+"/deposit",
         { amount: this.depositValue }
       )
       .subscribe((response) => {

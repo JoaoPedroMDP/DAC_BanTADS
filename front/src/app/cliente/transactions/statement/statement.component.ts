@@ -206,11 +206,12 @@ export class StatementComponent implements OnInit {
       console.log("Usuário não encontrado");
       this.notifyService.showError("", 'Usuário não encontrado');
       this.router.navigate(['/login']);
+      return;
     }
 
     this.http
       .get<Record<string, any>>(
-        "https://joaopedromdp-dac-bantads-q99j6vgv9p52x94x-5003.githubpreview.dev/accounts/1/statement?from="+inicio+"&to=" + fim
+        "https://joaopedromdp-dac-bantads-q99j6vgv9p52x94x-5003.githubpreview.dev/accounts/"+userId+"/statement?from="+inicio+"&to=" + fim
       )
       .subscribe((response) => {
         // O '+' é pra converter para numerico

@@ -31,34 +31,35 @@ export class WithdrawalComponent implements OnInit {
       console.log("Usuário não encontrado");
       this.notifyService.showError("", 'Usuário não encontrado');
       this.router.navigate(['/login']);
+      return;
     }
 
     this.notifyService.showInfo("", `Sacando ${this.withdrawalValue}...`);
     // Espera puxar do back end os recusos pra depois efetuar o resto da função
-    await this.callApiBalance();
+    await this.callApiBalance(userId);
     if(this.withdrawalValue > this.balance){
       this.notifyService.showError("Saldo insuficiente", "Erro");
     }else{
-      await this.callApiWithdrawal();
+      await this.callApiWithdrawal(userId);
       this.notifyService.showSuccess("Saque realizado com sucesso", "Sucesso");
     }
   }
 
-  async callApiBalance(){
+  async callApiBalance(userId: number){
     // Puxa o saldo do back end e armazena na variavel da classe
     this.http
       .get<Record<string, any>>(
-        "https://joaopedromdp-dac-bantads-q99j6vgv9p52x94x-5003.githubpreview.dev/accounts/1/balance"
+        "https://joaopedromdp-dac-bantads-q99j6vgv9p52x94x-5003.githubpreview.dev/accounts/"+userId+"/balance"
       )
       .subscribe((response) => {
         this.balance = response["balance"];
       });
   }
 
-  async callApiWithdrawal() {
+  async callApiWithdrawal(userId: number) {
     this.http
       .post<Record<string, any>>(
-        "https://joaopedromdp-dac-bantads-q99j6vgv9p52x94x-5003.githubpreview.dev/accounts/1/withdraw",
+        "https://joaopedromdp-dac-bantads-q99j6vgv9p52x94x-5003.githubpreview.dev/accounts/"+userId+"/withdraw",
         { amount: this.withdrawalValue }
       )
       .subscribe((response) => {
