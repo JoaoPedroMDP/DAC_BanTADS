@@ -18,7 +18,8 @@
           </mat-form-field>
           <mat-form-field class="me-24 fs-16" appearance="outline">
             <mat-label>CPF:</mat-label>
-            <input  matInput type="text" [imask]="cpfMask" [unmask]="true" matInput type="text" required  placeholder="242.839.355-30">
+            <input matInput type="text" [imask]="cpfMask" [unmask]="true" matInput type="text" required
+              placeholder="242.839.355-30">
           </mat-form-field>
           <button mat-button [routerLink]="['/gerente/consulta-clientes']"
             class="btn me-8 btn-info fw-normal">Pesquisar</button>
@@ -61,7 +62,7 @@
           <ng-container matColumnDef="saldo">
             <th mat-header-cell *matHeaderCellDef>Saldo</th>
             <td mat-cell *matCellDef="let element">
-              <p class="mb-0 fw-medium op-1">R$ 1.000,00</p>
+              <p class="mb-0 fw-medium op-1">{{element?.account?.balance}}</p>
             </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="colunas"></tr>

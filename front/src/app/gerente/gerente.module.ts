@@ -8,9 +8,10 @@ import { RouterModule } from "@angular/router";
 import { FullComponent } from "./full/full.component";
 import { FeatherModule } from "angular-feather";
 import { allIcons } from "angular-feather/icons";
-import { ConsultarClienteComponent } from './consultar-cliente/consultar-cliente.component';
+import { ConsultarClienteComponent } from "./consultar-cliente/consultar-cliente.component";
 import { IMaskModule } from "angular-imask";
 import { FormsModule } from "@angular/forms";
+import { GerenteService } from "./gerente.service";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { FormsModule } from "@angular/forms";
     RouterModule,
     FormsModule,
     FeatherModule.pick(allIcons),
-    IMaskModule
+    IMaskModule,
   ],
   exports: [
     ConsultaClienteComponent,

@@ -41,6 +41,7 @@ services:
   cliente:
     networks:
       - cliente
+      - account
     image: "cliente:latest"
     build:
       context: ./back/cliente
