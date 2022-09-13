@@ -16,7 +16,7 @@
           <ng-container matColumnDef="assigned">
             <th mat-header-cell *matHeaderCellDef>Nome</th>
             <td mat-cell *matCellDef="let element">
-              <a class="mb-0 fw-medium" href="#" [routerLink]="['/admin/gerenteperfil/'+ element.id]">{{ element.nome
+              <a class="mb-0 fw-medium" href="#" [routerLink]="['/admin/gerenteperfil/'+ element.email]">{{ element.nome
                 }}</a>
             </td>
           </ng-container>
@@ -45,7 +45,8 @@
           <ng-container matColumnDef="acao">
             <th mat-header-cell *matHeaderCellDef>Ação</th>
             <td mat-cell *matCellDef="let element">
-              <button mat-mini-fab class="mb-8 me-8" color="primary" [routerLink]="['/admin/gerente/' + element?.id]">
+              <button mat-mini-fab class="mb-8 me-8" color="primary"
+                [routerLink]="['/admin/gerente/' + element?.email]">
                 <feather-icon name="Edit" class="w-2 h-2"></feather-icon>
               </button>
               <button mat-mini-fab class="mb-8 me-8" color="warn" (click)="deletarGerente(element.id)">

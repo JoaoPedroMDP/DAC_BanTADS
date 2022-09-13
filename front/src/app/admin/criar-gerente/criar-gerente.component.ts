@@ -18,7 +18,7 @@ export class CriarGerenteComponent implements OnInit {
   storedGerente: any = null;
 
   isEditing = false;
-  id = -1;
+  id = "";
 
   constructor(
     private adminService: AdminService,
@@ -29,15 +29,13 @@ export class CriarGerenteComponent implements OnInit {
   ngOnInit(): void {
     if (!!this.route.snapshot.paramMap.get("id")) {
       this.isEditing = true;
-      this.id = parseInt(this.route.snapshot.paramMap.get("id") || "-1");
-      this.adminService
-        .getGerenteById(this.id > 0 ? this.id : null)
-        ?.subscribe(({ data }: any) => {
-          this.nome = data.nome;
-          this.email = data.email;
-          this.cpf = data.cpf;
-          this.storedGerente = data;
-        });
+      this.id = this.route.snapshot.paramMap.get("id") || "";
+      this.adminService.getGerenteById(this.id)?.subscribe(({ data }: any) => {
+        this.nome = data.nome;
+        this.email = data.email;
+        this.cpf = data.cpf;
+        this.storedGerente = data;
+      });
     }
   }
 

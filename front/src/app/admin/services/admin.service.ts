@@ -61,7 +61,7 @@ export class AdminService {
     );
   }
 
-  public getGerenteById(id: number | null) {
+  public getGerenteById(id: any) {
     if (!id) return;
     return this.http.get(this.gerenteUrl + "/" + id);
   }
