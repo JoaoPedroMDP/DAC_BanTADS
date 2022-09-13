@@ -71,6 +71,7 @@ public class RabbitConfig {
     idClassMapping.put("com.bantads.account.account.amqp.AccountTransfer", AccountTransfer.class);
     idClassMapping.put("com.bantads.auth.auth.amqp.AuthTransfer", AuthTransfer.class);
     idClassMapping.put("com.bantads.cliente.cliente.amqp.ClienteTransfer", ClienteTransfer.class);
+    idClassMapping.put("com.bantads.cliente.cliente.amqp.GerenteTransfer", GerenteTransfer.class);
     idClassMapping.put("com.bantads.account.account.amqp.ClienteTransfer", ClienteTransfer.class);
     classMapper.setIdClassMapping(idClassMapping);
 
