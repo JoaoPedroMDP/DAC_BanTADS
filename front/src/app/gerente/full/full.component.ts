@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Observable } from "rxjs";
 import { map, shareReplay } from "rxjs/operators";
+import { GerenteService } from "../gerente.service";
+import { AuthService } from "src/app/auth/services/auth.service";
 
 interface sidebarMenu {
   link: string;
@@ -32,9 +34,23 @@ export class FullComponent implements OnInit {
       link: "/gerente/consultar-cliente",
       icon: "search",
       label: "Pesquisar Cliente por CPF",
-    }
+    },
   ];
 
-  constructor() {}
-  ngOnInit(): void {}
+  gerente: any = {};
+
+  constructor(
+    private gerenteService: GerenteService,
+    private authService: AuthService
+  ) {}
+  ngOnInit(): void {
+    // this.gerenteService.loadGerente()
+    setTimeout(() => {
+      this.gerente = this.gerenteService.getGerente();
+    }, 500);
+  }
+
+  logout() {
+    this.authService.logOut();
+  }
 }

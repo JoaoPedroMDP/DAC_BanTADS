@@ -8,7 +8,7 @@ import { AuthService } from "src/app/auth/services/auth.service";
   providedIn: "root",
 })
 export class ClienteService {
-  private url = "http://localhost:5001";
+  private url = "http://localhost:3000";
 
   private cliente = {};
 

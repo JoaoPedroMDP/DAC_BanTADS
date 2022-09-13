@@ -1,50 +1,53 @@
 <html>
-  <head>
-    <title>Lista de Clientes para Aprovary</title>
-  </head>
-  <body>
-    <!-- Daily Activity -->
-    <mat-card class="w-100">
-      <mat-card-content>
-        <h4 class="mb-56">Lista de Clientes para Aprovar</h4>
-        <div class="table-responsive">
-          <table mat-table [dataSource]="dataSource" class="text-nowrap w-100">
-            <!-- Nome Column -->
-            <ng-container matColumnDef="nome">
-              <th mat-header-cell *matHeaderCellDef>Nome</th>
-              <td mat-cell *matCellDef="let element">
-                <!--<a class="mb-0 fw-medium" href="#" [routerLink]="['/gerente/consultar-cliente', element.id]">{{ element.nome }}</a>-->
-                <p class="mb-0 fw-medium op-1">{{ element.nome }}</p>
-              </td>
-            </ng-container>
-            <!-- CPF Column -->
-            <ng-container matColumnDef="cpf">
-              <th mat-header-cell *matHeaderCellDef>CPF</th>
-              <td mat-cell *matCellDef="let element">
-                <p class="mb-0 fw-medium op-1">{{ element.cpf }}</p>
-              </td>
-            </ng-container>
-            <!-- Salario Column -->
-            <ng-container matColumnDef="salario">
-              <th mat-header-cell *matHeaderCellDef>Salário</th>
-              <td mat-cell *matCellDef="let element">
-                <p class="mb-0 fw-medium op-1">R$ {{ element.salario }}</p>
-              </td>
-            </ng-container>
-            <!-- Ação Column -->
-            <ng-container matColumnDef="acao">
-              <th mat-header-cell *matHeaderCellDef>Ação</th>
-              <td mat-cell *matCellDef="let element">
-                <button mat-button color="primary" (click)="aceitar(element.nome)">&#10004;</button>
-                <button mat-button color="warn" (click)="rejeitar(element.nome)">&#65368;</button>
-              </td>
-            </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="colunas"></tr>
-            <tr mat-row *matRowDef="let row; columns: colunas"></tr>
-          </table>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </body>
+<head>
+  <title>Lista de Clientes para Aprovary</title>
+</head>
+
+<body>
+  <!-- Daily Activity -->
+  <mat-card class="w-100">
+    <mat-card-content>
+      <h4 class="mb-56">Lista de Clientes para Aprovar</h4>
+      <div class="table-responsive">
+        <table mat-table [dataSource]="dataSource" class="text-nowrap w-100">
+          <!-- Nome Column -->
+          <ng-container matColumnDef="nome">
+            <th mat-header-cell *matHeaderCellDef>Nome</th>
+            <td mat-cell *matCellDef="let element">
+              <!--<a class="mb-0 fw-medium" href="#" [routerLink]="['/gerente/consultar-cliente', element.id]">{{ element.nome }}</a>-->
+              <p class="mb-0 fw-medium op-1">{{ element.nome }}</p>
+            </td>
+          </ng-container>
+          <!-- CPF Column -->
+          <ng-container matColumnDef="cpf">
+            <th mat-header-cell *matHeaderCellDef>CPF</th>
+            <td mat-cell *matCellDef="let element">
+              <p class="mb-0 fw-medium op-1">{{ element.cpf }}</p>
+            </td>
+          </ng-container>
+          <!-- Salario Column -->
+          <ng-container matColumnDef="salario">
+            <th mat-header-cell *matHeaderCellDef>Salário</th>
+            <td mat-cell *matCellDef="let element">
+              <p class="mb-0 fw-medium op-1">R$ {{ element.salario }}</p>
+            </td>
+          </ng-container>
+          <!-- Ação Column -->
+          <ng-container matColumnDef="acao">
+            <th mat-header-cell *matHeaderCellDef>Ação</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-button color="primary" (click)="aceitar(element.id)">&#10004;</button>
+              <button mat-button color="warn" (click)="rejeitar(element.id)">&#65368;</button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+          <tr mat-row *matRowDef="let row; columns: colunas"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</body>
+
 </html>
